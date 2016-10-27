@@ -17,7 +17,7 @@
 	font-style: normal;
 }
 *{ margin:0; padding: 0; outline: 0; border: 0; font-family: 'NotoRegular'; }
-body{  background-color: #2e3e4e; }
+body{  background-color: #2e3e4e; overflow-y: auto !important; }
 .roboto-font{ font-family: 'roboto';  }
 .hide-me{ display: none; }
 .margin-top-0{ margin-top: 0px; }
@@ -26,6 +26,7 @@ body{  background-color: #2e3e4e; }
 .width-100-pr-20{ width: calc(100% - 40px); }
 .sign-in-box{ margin: 60px auto; padding: 20px; width: 400px; background-color: white; }
 .login-button{ margin: 20px 0 0 0;  }
+h4{ font-family: 'arc_bold'; }
 h5{ font-family: 'arc_bold'; }
 .mainContainer{ margin: 0 auto; padding: 0; width: 1100px; background-color: white;  }
 .mainContainer nav{ background-color: #2bbbad; }
@@ -34,6 +35,7 @@ h5{ font-family: 'arc_bold'; }
 .mainContainer table tr td a{ color: #2bbbad; padding: 0 5px; }
 .backdrop{ background-color: #2bbbad; }
 .pagination li.active{ background-color: #2bbbad; }
+.modal{ max-height: none !important; position: absolute !important; }
 footer.page-footer .active a{ text-decoration: underline; }
 footer.page-footer{ background-color: #f2f2f2; color: rgba(0, 0, 0, 0.87); }
 footer.page-footer a{ color: #2bbbad; }

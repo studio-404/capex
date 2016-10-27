@@ -3,6 +3,7 @@ class user
 {
 	public function index($conn, $args)
 	{
+		$out = 0;
 		if(method_exists("user", $args["method"]))
 		{
 			$out = $this->$args["method"]($conn, $args['user'], $args['pass']);

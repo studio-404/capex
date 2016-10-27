@@ -6,7 +6,12 @@ class managerNavigation
 	public function index(){
 		$nav = sprintf("<ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">");
 		$getUrl = explode("/",$this->getUrl());
-		$slug = $getUrl[0]."/".$getUrl[1];
+		if(isset($getUrl[0]) && isset($getUrl[1])){
+			$slug = $getUrl[0]."/".$getUrl[1];	
+		}else{
+			$slug = "";
+		}
+		
 		foreach ($this->navigation as $key => $value) {
 			$active = ($key==$slug) ? "class='active'" : "";
 			$nav .= sprintf(
@@ -25,7 +30,12 @@ class managerNavigation
 	{
 		$nav = sprintf("<ul>");
 		$getUrl = explode("/",$this->getUrl());
-		$slug = $getUrl[0]."/".$getUrl[1];
+		if(isset($getUrl[0]) && isset($getUrl[1])){
+			$slug = $getUrl[0]."/".$getUrl[1];	
+		}else{
+			$slug = "";
+		}
+		
 		foreach ($this->navigation as $key => $value) {
 			$active = ($key==$slug) ? "class='active'" : "";
 			$nav .= sprintf(

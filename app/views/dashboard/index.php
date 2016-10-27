@@ -11,6 +11,14 @@
 	<script src="<?=$data["header"]["public"]?>js/manager-scripts.js"></script>
 </head>
 <body>
+<!-- MOdals START -->
+	<div id="modal1" class="modal">
+		<div class="modal-content">
+		</div>
+		<div class="modal-footer">
+		</div>
+	</div>
+<!-- MOdals END-->
 	<section class="mainContainer">
 		<nav>
 			<div class="nav-wrapper">
@@ -19,7 +27,7 @@
 		</nav>
 
 		<section class="body">
-			<a class="waves-effect waves-light btn margin-bottom-20"><i class="material-icons left">note_add</i>დამატება</a>
+			<a href="javascript:void(0)" onclick="add_page()" class="waves-effect waves-light btn margin-bottom-20"><i class="material-icons left">note_add</i>დამატება</a>
 			<ul class="collapsible margin-top-0" data-collapsible="accordion">
 				<li>
 					<div class="collapsible-header active"><i class="material-icons">subject</i>მთავარი</div>
@@ -35,7 +43,8 @@
 							</thead>
 
 							<tbody>
-								<tr>
+							<?=$data['mainNavigation']?>
+								<!-- <tr>
 									<td>15</td>
 									<td><a href="">კითხვა პასუხი</a></td>
 									<td class="roboto-font">plugin</td>
@@ -67,7 +76,7 @@
 										<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="რედაქტირება">mode_edit</i></a>
 										<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="წაშლა">delete</i></a>
 									</td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
 
