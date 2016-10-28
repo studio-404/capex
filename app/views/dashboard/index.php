@@ -39,6 +39,7 @@
 							<thead>
 								<tr>
 									<th data-field="id">ს.კ</th>
+									<th data-field="id">პოზიცია</th>
 									<th data-field="name">დასახელება</th>
 									<th data-field="type">ტიპი</th>
 									<th data-field="action">მოქმედება</th>
@@ -59,13 +60,14 @@
 							<thead>
 								<tr>
 									<th data-field="id">ს.კ</th>
+									<th data-field="id">პოზიცია</th>
 									<th data-field="name">დასახელება</th>
 									<th data-field="type">ტიპი</th>
 									<th data-field="action">მოქმედება</th>
 								</tr>
 							</thead>
 
-							<tbody>
+							<tbody class="sortablePagePositionChange2">
 							<?=$data['additionalNavigation']?>
 							</tbody>
 						</table>

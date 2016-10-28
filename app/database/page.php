@@ -70,7 +70,7 @@ class page
 
 	private function add($args)
 	{
-		$navtype = $args["chooseNavType"];
+		$navtype = (int)$args["chooseNavType"];
 		$type = $args["choosePageType"];
 		$title = $args["title"];
 		$slug = $args["slug"];
@@ -89,9 +89,12 @@ class page
 		$fetch2 = $prepare2->fetch(PDO::FETCH_ASSOC);
 		$maxId = ($fetch2["maxidx"]) ? $fetch2["maxidx"] + 1 : 1;
 
-		$max2 = "SELECT MAX(`position`) as maxidx FROM `navigation` WHERE `status`!=:one";
-		$prepare3 = $this->conn->prepare($max);
-		$prepare3->execute(array(":one"=>1));
+		$max2 = "SELECT MAX(`position`) as maxidx FROM `navigation` WHERE `status`!=:one AND `nav_type`=:navType";
+		$prepare3 = $this->conn->prepare($max2);
+		$prepare3->execute(array(
+			":one"=>1,
+			":navType"=>$navtype
+		));
 		$fetch3 = $prepare3->fetch(PDO::FETCH_ASSOC);
 		$maxPosition = ($fetch3["maxidx"]) ? $fetch3["maxidx"] + 1 : 1;
 
@@ -181,9 +184,10 @@ class page
 		{
 			$position = 1;
 			foreach ($unserialize as $val) {
-				$update = "UPDATE `navigation` SET `position`=:position WHERE `idx`=:idx"; 
+				$update = "UPDATE `navigation` SET `position`=:position WHERE `idx`=:idx AND `nav_type`=:navType"; 
 				$prepare = $this->conn->prepare($update); 
 				$prepare->execute(array(
+					":navType"=>$args['navType'], 
 					":position"=>$position, 
 					":idx"=>$val
 				));
@@ -196,6 +200,7 @@ class page
 
 	private function removePage($args)
 	{
+		$navType = $args['navType'];
 		$position = $args['pos'];
 		$idx = $args['idx'];
 
@@ -210,7 +215,7 @@ class page
 			$prepare2 = $this->conn->prepare($select);
 			$prepare2->execute(array(
 				":deletedItemPosition"=>$position, 
-				":nav_type"=>0, 
+				":nav_type"=>$navType, 
 				":one"=>1
 			));
 			if($prepare2->rowCount()){

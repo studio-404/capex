@@ -14,6 +14,7 @@ class websiteAdditionalNavigation
 					"
 					<tr data-item=\"%d\" class=\"level2-0\">
 					<td class=\"roboto-font\">%d</td>
+					<td class=\"roboto-font\">%d</td>
 					<td><a href=\"%s\" target=\"_blank\">%s</a></td>
 					<td class=\"roboto-font\">%s</td>
 					<td>
@@ -23,7 +24,7 @@ class websiteAdditionalNavigation
 					<a href=\"javascript:void(0)\" onclick=\"editPage('%s','%s')\">
 						<i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"რედაქტირება\">mode_edit</i>
 					</a>
-					<a href=\"javascript:void(0)\" onclick=\"askRemovePage('%s','%s')\">
+					<a href=\"javascript:void(0)\" onclick=\"askRemovePage('1','%s','%s')\">
 						<i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"წაშლა\">delete</i>
 					</a>
 					</td>
@@ -31,6 +32,7 @@ class websiteAdditionalNavigation
 					",
 					$val['idx'],
 					$val['idx'],
+					$val['position'],
 					$slug,				
 					$val['title'],
 					$val['type'],

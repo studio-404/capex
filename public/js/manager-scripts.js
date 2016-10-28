@@ -171,10 +171,10 @@ var changeVisibility = function(vis, idx){
 	}
 }
 
-var askRemovePage = function(pos, idx){
+var askRemovePage = function(navType, pos, idx){
 	console.log(pos + " " + idx);
 	var header = "<h4>შეტყობინება</h4><p class=\"modal-message-box\">გნებავთ წაშალოთ მონაცემი ?</p>";
-	var footer = "<a href=\"javascript:void(0)\" onclick=\"removePage('"+pos+"', '"+idx+"')\" class=\"waves-effect waves-green btn-flat\">დიახ</a>";
+	var footer = "<a href=\"javascript:void(0)\" onclick=\"removePage('"+navType+"', '"+pos+"', '"+idx+"')\" class=\"waves-effect waves-green btn-flat\">დიახ</a>";
 	footer += "<a href=\"javascript:void(0)\" class=\"waves-effect waves-green btn-flat modal-close\">დახურვა</a>";
 
 	$("#modal1 .modal-content").html(header);
@@ -182,16 +182,16 @@ var askRemovePage = function(pos, idx){
 	$('#modal1').openModal();
 }
 
-var removePage = function(pos, idx){
+var removePage = function(navType, pos, idx){
 	console.log(pos + " " + idx);
 	var ajaxFile = "/removePage";
-	if(typeof pos === "undefined" || typeof idx === "undefined"){
+	if(typeof navType == "undefined" || typeof pos === "undefined" || typeof idx === "undefined"){
 		$(".modal-message-box").html("E4");
 	}else{
 		$.ajax({
 			method: "POST",
 			url: Config.ajax + ajaxFile,
-			data: { pos: pos, idx: idx }
+			data: { navType: navType, pos: pos, idx: idx }
 		}).done(function( msg ) {
 			var obj = $.parseJSON(msg);
 			if(obj.Error.Code==1){
@@ -206,11 +206,11 @@ var removePage = function(pos, idx){
 	}
 }
 
-var changePositionsOfPages = function(){
+var changePositionsOfPages = function(navType, selector){
 	var ajaxFile = "/changePagePositions";
 	var i = "";
 	var arr = new Array(); 
-	$('.sortablePagePositionChange tr').each(function(){
+	$('.'+selector+' tr').each(function(){
 		i = $(this).attr("data-item");
 		arr.push(i)
 	});
@@ -226,7 +226,7 @@ var changePositionsOfPages = function(){
 	$.ajax({
 		method: "POST",
 		url: Config.ajax + ajaxFile,
-		data: { s:serialized }
+		data: { s:serialized, navType: navType }
 	}).done(function( msg ) {
 		var obj = $.parseJSON(msg);
 		if(obj.Error.Code==1){
@@ -279,9 +279,17 @@ $(document).ready(function(){
     $('.tooltipped').tooltip({delay: 50});
     $('.sortablePagePositionChange').sortable({
     	items: ".level-0",
-		update: function( event, ui ) { changePositionsOfPages(); }
+		update: function( event, ui ) { changePositionsOfPages(0, 'sortablePagePositionChange'); }
 	});
 	$('.sortablePagePositionChange').disableSelection();
+
+	$('.sortablePagePositionChange2').sortable({
+    	items: ".level2-0",
+		update: function( event, ui ) { changePositionsOfPages(1, 'sortablePagePositionChange2'); }
+	});
+	$('.sortablePagePositionChange2').disableSelection();
+
+	//sortablePagePositionChange2
  });
 
 /* Additional functions */

@@ -15,11 +15,12 @@ class removePage
 			)
 		);
 
+		$navType = functions\request::index("POST","navType");
 		$pos = functions\request::index("POST","pos");
 		$idx = functions\request::index("POST","idx");
 		
 
-		if($pos=="" || $idx=="")
+		if($navType=="" || $pos=="" || $idx=="")
 		{
 			$this->out = array(
 				"Error" => array(
@@ -31,6 +32,7 @@ class removePage
 		}else{
 			$Database = new Database('page', array(
 					'method'=>'removePage', 
+					'navType'=>$navType, 
 					'pos'=>$pos, 
 					'idx'=>$idx
 			));

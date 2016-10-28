@@ -15,6 +15,7 @@ class changePagePositions
 		);
 
 		$serialized = functions\request::index("POST","s");
+		$navType = functions\request::index("POST","navType");
 
 		if(empty($serialized))
 		{
@@ -28,7 +29,8 @@ class changePagePositions
 		}else{
 			$Database = new Database('page', array(
 					'method'=>'changePagePositions', 
-					'unserialize'=>$serialized
+					'unserialize'=>$serialized, 
+					'navType'=>$navType 
 			));
 			$output = $Database->getter();
 			if($output){
