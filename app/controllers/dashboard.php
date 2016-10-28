@@ -3,6 +3,7 @@ class dashboard extends Controller
 {
 	public $managerNavigation; 
 	public $websiteNavigation; 
+	public $websiteNavigation2; 
 
 	public function __construct()
 	{
@@ -15,12 +16,24 @@ class dashboard extends Controller
 		$page = new Database('page', array(
 			"method"=>"select",
 			"cid"=>0,
+			"nav_type"=>0, 
+			"lang"=>"ge",
+			"status"=>0
+		));
+
+		$page2 = new Database('page', array(
+			"method"=>"select",
+			"cid"=>0,
+			"nav_type"=>1, 
 			"lang"=>"ge",
 			"status"=>0
 		));
 
 		$this->websiteNavigation = $this->model('websiteNavigation');
 		$this->websiteNavigation->navigation = $page->getter();
+
+		$this->websiteNavigation2 = $this->model('websiteAdditionalNavigation');
+		$this->websiteNavigation2->navigation = $page2->getter();
 
 		$this->managerNavigation = $this->model('managerNavigation');
 		$this->managerNavigation->navigation = array(
@@ -40,6 +53,7 @@ class dashboard extends Controller
 				"public" => Config::PUBLIC_FOLDER
 			),
 			"nav" => $this->managerNavigation->index(),
+			"additionalNavigation"=>$this->websiteNavigation2->index(), 
 			"mainNavigation" => $this->websiteNavigation->index(),
 			"footerNav" => $this->managerNavigation->footer()
 		]);
@@ -68,5 +82,5 @@ class dashboard extends Controller
 			"footerNav" => $this->managerNavigation->footer()
 		]);
 	}
-	
+
 }

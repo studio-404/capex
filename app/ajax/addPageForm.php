@@ -26,36 +26,72 @@ class addPageForm
 		));
 
 		$form .= functions\makeForm::select(array(
+			"id"=>"chooseNavType",
+			"choose"=>"აირჩიეთ ნავიგაციის ტიპი",
+			"options"=>array("მთავარი", "დამატებითი"),
+			"selected"=>"false",
+			"disabled"=>"false"
+		));
+
+		$form .= functions\makeForm::select(array(
 			"id"=>"choosePageType",
 			"choose"=>"აირჩიეთ გვერდის ტიპი",
 			"options"=>array(
 				"text"=>"ტექსტური",
 				"plugin"=>"პლაგინი"
-			)
+			),
+			"selected"=>"false",
+			"disabled"=>"false"
 		));
 
 		$form .= functions\makeForm::inputText(array(
 			"placeholder"=>"დასახელება", 
 			"id"=>"title", 
-			"name"=>"title" 
+			"name"=>"title",
+			"value"=>""
 		));
+
 
 		$form .= functions\makeForm::inputText(array(
 			"placeholder"=>"ბმული", 
 			"id"=>"slug", 
-			"name"=>"slug" 
+			"name"=>"slug",
+			"value"=>""
+		));
+
+		$form .= functions\makeForm::inputText(array(
+			"placeholder"=>"გადამისამართება", 
+			"id"=>"redirect", 
+			"name"=>"redirect",
+			"value"=>"" 
+		));
+
+		$form .= functions\makeForm::label(array(
+			"id"=>"shortDescription", 
+			"for"=>"pageDescription", 
+			"name"=>"მოკლე აღწერა",
+			"require"=>""
 		));
 
 		$form .= functions\makeForm::textarea(array(
 			"id"=>"pageDescription",
 			"name"=>"pageDescription",
-			"value"=>"მოკლე აღწერა"
+			"placeholder"=>"მოკლე აღწერა",
+			"value"=>""
+		));
+
+		$form .= functions\makeForm::label(array(
+			"id"=>"longDescription", 
+			"for"=>"pageText", 
+			"name"=>"ვრცელი აღწერა",
+			"require"=>""
 		));
 
 		$form .= functions\makeForm::textarea(array(
 			"id"=>"pageText",
 			"name"=>"pageText",
-			"value"=>"ვრცელი აღწერა"
+			"placeholder"=>"ვრცელი აღწერა",
+			"value"=>""
 		));
 
 		$form .= functions\makeForm::close();

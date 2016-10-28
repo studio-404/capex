@@ -15,13 +15,15 @@ class addPage
 			)
 		);
 
+		$chooseNavType = functions\request::index("POST","chooseNavType");
 		$choosePageType = functions\request::index("POST","choosePageType");
 		$title = functions\request::index("POST","title");
 		$slug = functions\request::index("POST","slug");
+		$redirect = functions\request::index("POST","redirect");
 		$pageDescription = functions\request::index("POST","pageDescription");
 		$pageText = functions\request::index("POST","pageText");
 
-		if($choosePageType=="" || $title=="" || $slug=="" || $pageDescription=="" || $pageText=="")
+		if($chooseNavType=="" || $choosePageType=="" || $title=="" || $slug=="" || $pageDescription=="" || $pageText=="")
 		{
 			$this->out = array(
 				"Error" => array(
@@ -33,9 +35,11 @@ class addPage
 		}else{
 			$Database = new Database('page', array(
 					'method'=>'add', 
+					'chooseNavType'=>$chooseNavType, 
 					'choosePageType'=>$choosePageType, 
 					'title'=>$title, 
 					'slug'=>$slug, 
+					'redirect'=>$redirect, 
 					'pageDescription'=>$pageDescription, 
 					'pageText'=>$pageText
 			));

@@ -16,12 +16,17 @@ class makeForm
 
 	public static function select($args)
 	{
+		$disabled = ($args["disabled"]=="true") ? "disabled" : "";
 		$out = "<div class=\"input-field\">";
-		$out .= "<select id=\"".$args['id']."\">";
-		$out .= "<option value=\"\" disabled selected>".$args['choose']."</option>";
-
+		$out .= "<select id=\"".$args['id']."\" ".$disabled.">";
+		if($args['selected']=="false"){
+			$out .= "<option value=\"\" disabled selected>".$args['choose']."</option>";
+		}else{
+			$out .= "<option value=\"\" disabled>".$args['choose']."</option>";
+		}
 		foreach ($args["options"] as $key => $value) {
-			$out .= "<option value=\"".$key."\">".$value."</option>";
+			$selected = ($key==$args['selected']) ? 'selected' : '';
+			$out .= "<option value=\"".$key."\" ".$selected.">".$value."</option>";
 		}
 
 		$out .= "</select>";
@@ -44,13 +49,13 @@ class makeForm
 
 	public static function label($args){
 		$require = ($args['require']=="true") ? '<font color="red">*</font>' : '';
-		$out = "<label for=\"".$args['for']."\">".$args['name'].": ".$require."</label>";
+		$out = "<label for=\"".$args['for']."\" style=\"margin:10px 0\">".$args['name'].": ".$require."</label>";
 		return $out;
 	}
 
 	public static function inputText($args){
 		$out = "<div class=\"input-field\">";
-		$out .= "<input type=\"text\" placeholder=\"".$args['placeholder']."\" id=\"".$args['id']."\" name=\"".$args['name']."\" />";
+		$out .= "<input type=\"text\" placeholder=\"".$args['placeholder']."\" id=\"".$args['id']."\" name=\"".$args['name']."\" value=\"".$args['value']."\" />";
 		$out .= "</div>";
 
 		return $out;
@@ -72,8 +77,8 @@ class makeForm
 	}
 
 	public static function textarea($args){
-		$out = "<div class=\"input-field\">";
-		$out .= "<textarea id=\"".$args["id"]."\" name=\"".$args["name"]."\" class=\"materialize-textarea\" placeholder=\"".$args["value"]."\"></textarea>";
+		$out = "<div class=\"textarea\">";
+		$out .= "<textarea id=\"".$args["id"]."\" name=\"".$args["name"]."\" class=\"tinymceTextArea\" placeholder=\"".$args["placeholder"]."\">".$args['value']."</textarea><br />";
 		$out .= "</div>";
 		return $out;
 	}

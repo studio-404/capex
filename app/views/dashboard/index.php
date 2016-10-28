@@ -7,10 +7,11 @@
 	<link href="<?=$data["header"]["public"]?>css/materialize.css" type="text/css" rel="stylesheet" />
 	<link href="<?=$data["header"]["public"]?>css/jquery-ui.min.css" type="text/css" rel="stylesheet" />
 	<link href="<?=$data["header"]["public"]?>css/manager-style.css" type="text/css" rel="stylesheet" />
-	<script src="<?=$data["header"]["public"]?>js/jquery-3.1.1.min.js"></script>
-	<script src="<?=$data["header"]["public"]?>js/jquery-ui.min.js"></script>
-	<script src="<?=$data["header"]["public"]?>js/materialize.min.js"></script>
-	<script src="<?=$data["header"]["public"]?>js/manager-scripts.js"></script>
+	<script src="<?=$data["header"]["public"]?>js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/materialize.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/tinymce/tinymce.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/manager-scripts.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 <!-- MOdals START -->
@@ -65,32 +66,7 @@
 							</thead>
 
 							<tbody>
-								<tr>
-									<td>15</td>
-									<td><a href="">სესხის მიღება</a></td>
-									<td class="roboto-font">plugin</td>
-									<td>
-										<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="გამოჩენა">visibility_off</i></a>
-
-										<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="რედაქტირება">mode_edit</i></a>
-
-
-										<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="წაშლა">delete</i></a>
-									</td>
-								</tr>
-								<tr>
-									<td>15</td>
-									<td><a href="">მომხმარებლის გვერდი</a></td>
-									<td class="roboto-font">plugin</td>
-									<td>
-										<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="გამოჩენა">visibility_off</i></a>
-
-										<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="რედაქტირება">mode_edit</i></a>
-
-
-										<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="წაშლა">delete</i></a>
-									</td>
-								</tr>
+							<?=$data['additionalNavigation']?>
 							</tbody>
 						</table>
 

@@ -43,27 +43,32 @@ var add_page = function(){
 	}).done(function( msg ) {
 		var obj = $.parseJSON(msg);
 		if(obj.Error.Code==1){
-			errorMsg.text(obj.Error.Text).fadeIn();
+			// errorMsg.text(obj.Error.Text).fadeIn();
 			var errorText = "<p>" + obj.Error.Text +"</p>";
 			$("#modal1 .modal-content").html(header + errorText);
 		}else{
 			var form = "<p>" + obj.form +"</p>";
 			$("#modal1 .modal-content").html(header + form);
 			$("#choosePageType").material_select();
+			$("#chooseNavType").material_select();
 			$("#modalButton").attr({"onclick": obj.attr });
+			tiny(".tinymceTextArea");
 		}
 	});
 };
 
 var formPageAdd = function(){
 	var ajaxFile = "/addPage";
+	var chooseNavType = $("#chooseNavType").val();
 	var choosePageType = $("#choosePageType").val();
 	var title = $("#title").val();
 	var slug = $("#slug").val();
-	var pageDescription = $("#pageDescription").val();
-	var pageText = $("#pageText").val();
+	var redirect = $("#redirect").val();
+	var pageDescription = tinymce.get('pageDescription').getContent();
+	var pageText = tinymce.get('pageText').getContent();
 	$(".modal-message-box").html("გთხოვთ დაიცადოთ...");
 	if(
+		(typeof chooseNavType === "undefined" || chooseNavType=="") || 
 		(typeof choosePageType === "undefined" || choosePageType=="") || 
 		(typeof title === "undefined" || title=="") || 
 		(typeof slug === "undefined" || slug=="") || 
@@ -75,7 +80,7 @@ var formPageAdd = function(){
 		$.ajax({
 			method: "POST",
 			url: Config.ajax + ajaxFile,
-			data: { choosePageType: choosePageType, title: title, slug: slug, pageDescription: pageDescription, pageText: pageText }
+			data: { chooseNavType: chooseNavType, choosePageType: choosePageType, title: title, slug: slug, redirect:redirect, pageDescription: pageDescription, pageText: pageText }
 		}).done(function( msg ) {
 			var obj = $.parseJSON(msg);
 			if(obj.Error.Code==1){
@@ -89,6 +94,44 @@ var formPageAdd = function(){
 				$("#pageText").val("");
 				scrollTop();
 				location.reload();
+			}else{
+				$(".modal-message-box").html("E");
+			}
+		});
+	}
+};
+
+var formPageEdit = function(idx, lang){
+	var ajaxFile = "/editPage";
+	var chooseNavType = $("#chooseNavType").val();
+	var choosePageType = $("#choosePageType").val();
+	var title = $("#title").val();
+	var slug = $("#slug").val();
+	var redirect = $("#redirect").val();
+	var pageDescription = tinymce.get('pageDescription').getContent();
+	var pageText = tinymce.get('pageText').getContent();
+	$(".modal-message-box").html("გთხოვთ დაიცადოთ...");
+	if(
+		(typeof chooseNavType === "undefined" || chooseNavType=="") || 
+		(typeof choosePageType === "undefined" || choosePageType=="") || 
+		(typeof title === "undefined" || title=="") || 
+		(typeof slug === "undefined" || slug=="") || 
+		(typeof pageDescription === "undefined" || pageDescription=="") || 
+		(typeof pageText === "undefined" || pageText=="")
+	){
+		$(".modal-message-box").html("ყველა ველი სავალდებულოა !");
+	}else{
+		$.ajax({
+			method: "POST",
+			url: Config.ajax + ajaxFile,
+			data: { idx:idx, lang: lang, chooseNavType: chooseNavType, choosePageType: choosePageType, title: title, slug: slug, redirect:redirect, pageDescription: pageDescription, pageText: pageText }
+		}).done(function( msg ) {
+			var obj = $.parseJSON(msg);
+			if(obj.Error.Code==1){
+				$(".modal-message-box").html(obj.Error.Text);
+			}else if(obj.Success.Code==1){
+				$(".modal-message-box").html(obj.Success.Text);
+				scrollTop();
 			}else{
 				$(".modal-message-box").html("E");
 			}
@@ -196,6 +239,39 @@ var changePositionsOfPages = function(){
 	});
 };
 
+var editPage = function(idx, lang){
+	console.log(idx + " " + lang);
+	var ajaxFile = "/editPageForm";
+	var header = "<h4>გვერდის რედაქტირება</h4><p class=\"modal-message-box\"></p>";
+	var content = "<p>გთხოვთ დაიცადოთ...</p>";
+	var footer = "<a href=\"javascript:void(0)\" id=\"modalButton\" class=\"waves-effect waves-green btn-flat\">რედაქტირება</a>";
+
+	$("#modal1 .modal-content").html(header + content);
+	$("#modal1 .modal-footer").html(footer);
+	$('#modal1').openModal();
+
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { idx: idx, lang:lang }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Error.Code==1){
+			var errorText = "<p>" + obj.Error.Text +"</p>";
+			$("#modal1 .modal-content").html(header + errorText);
+		}else{
+			var form = "<p>" + obj.form +"</p>";
+			$("#modal1 .modal-content").html(header + form);
+			$("#choosePageType").material_select();
+			$("#chooseNavType").material_select();
+			$("#modalButton").attr({"onclick": obj.attr });
+			tiny(".tinymceTextArea");
+			console.log("tiny 20");
+			
+		}
+	});
+};
+
 $(document).ready(function(){
     $('.collapsible').collapsible({
       accordion : false 
@@ -208,9 +284,28 @@ $(document).ready(function(){
 	$('.sortablePagePositionChange').disableSelection();
  });
 
-
-
 /* Additional functions */
+var tiny = function(selector){
+	tinymce.remove();
+	tinymce.init({
+		selector: selector, 
+		theme: "modern",
+	    plugins: [
+	        "autolink lists link image hr pagebreak",
+	        "wordcount visualblocks",
+	        "insertdatetime save table contextmenu directionality",
+	        "paste textcolor colorpicker textpattern",
+	        "code", 
+	        "textcolor"
+	    ],
+	    toolbar1: "insertfile undo redo | styleselect | bold italic | link image | numlist | bullist | table | code | forecolor | backcolor",
+	    image_advtab: true, 
+	    extended_valid_elements : "iframe[src|width|height|name|align]", 
+	    relative_urls : 0, 
+		remove_script_host : 0
+	});
+};
+
 var serialize = function(mixed_value) {
 	var val, key, okey,
 	ktype = '',

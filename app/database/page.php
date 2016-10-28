@@ -21,7 +21,7 @@ class page
 		$prepare = $this->conn->prepare($select);
 		$prepare->execute(array(
 			":cid"=>$args['cid'], 
-			":nav_type"=>0,
+			":nav_type"=>$args['nav_type'],
 			":lang"=>$args['lang'], 
 			":status"=>$args['status'], 
 		));
@@ -49,11 +49,32 @@ class page
 		return 0;
 	}
 
+	private function selectById($args)
+	{
+		$fetch = array();
+		$idx = $args['idx']; 
+		$lang = $args['lang'];
+
+		$select = "SELECT * FROM `navigation` WHERE `idx`=:idx AND `lang`=:lang AND `status`!=:one";
+		$prepare = $this->conn->prepare($select);
+		$prepare->execute(array(
+			":idx"=>$idx, 
+			":lang"=>$lang, 
+			":one"=>1 
+		)); 
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);
+		}
+		return $fetch;
+	}
+
 	private function add($args)
 	{
+		$navtype = $args["chooseNavType"];
 		$type = $args["choosePageType"];
 		$title = $args["title"];
 		$slug = $args["slug"];
+		$redirect = $args["redirect"];
 		$description = $args["pageDescription"];
 		$textx = $args["pageText"];
 
@@ -90,6 +111,7 @@ class page
 			`description`=:description, 
 			`text`=:textx, 
 			`slug`=:slug, 
+			`redirect`=:redirect, 
 			`lang`=:lang, 
 			`position`=:position,
 			`visibility`=:visibility, 
@@ -100,11 +122,12 @@ class page
 				":cid"=>$cid,
 				":datex"=>$datex,
 				":type"=>$type,
-				":nav_type"=>0, 
+				":nav_type"=>(int)$navtype, 
 				":title"=>$title,
 				":description"=>$description,
 				":textx"=>$textx,
 				":slug"=>$slug,
+				":redirect"=>$redirect,
 				":lang"=>$val['title'],
 				":position"=>$maxPosition,
 				":visibility"=>$visibility,
@@ -113,6 +136,42 @@ class page
 		}
 
 		return 1;
+	}
+
+	private function edit($args)
+	{
+		$idx = $args["idx"];
+		$lang = $args["lang"];
+		$navtype = $args["chooseNavType"];
+		$type = $args["choosePageType"];
+		$title = $args["title"];
+		$slug = $args["slug"];
+		$redirect = $args["redirect"];
+		$description = $args["pageDescription"];
+		$textx = $args["pageText"];
+
+		$update = "UPDATE `navigation` SET 
+		`type`=:type, 
+		`title`=:title, 
+		`description`=:description, 
+		`text`=:textx, 
+		`slug`=:slug, 
+		`redirect`=:redirect WHERE `idx`=:idx AND `lang`=:lang";
+		$prepare = $this->conn->prepare($update);
+		$prepare->execute(array(
+			":type"=>$type,
+			":title"=>$title,
+			":description"=>$description,
+			":textx"=>$textx,
+			":slug"=>$slug,
+			":redirect"=>$redirect,
+			":idx"=>$idx, 
+			":lang"=>$lang 
+		));	
+		if($prepare->rowCount()){
+			return 1;	
+		}
+		return 0;
 	}
 
 	private function changePagePositions($args)

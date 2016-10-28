@@ -36,6 +36,7 @@ h5{ font-family: 'arc_bold'; }
 .backdrop{ background-color: #2bbbad; }
 .pagination li.active{ background-color: #2bbbad; }
 .modal{ max-height: none !important; position: absolute !important; }
+.textarea{ margin: 10px 0 0 0; }
 footer.page-footer .active a{ text-decoration: underline; }
 footer.page-footer{ background-color: #f2f2f2; color: rgba(0, 0, 0, 0.87); }
 footer.page-footer a{ color: #2bbbad; }

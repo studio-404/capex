@@ -8,7 +8,7 @@ class websiteNavigation
 		$nav = "";
 		if(count($this->navigation)){
 			foreach ($this->navigation as $val) {
-				$slug = Config::WEBSITE.Config::PAGE_PREFIX."/".$val['type']."/".$val['lang']."/".$val['idx']."/".$val['slug']; 
+				$slug = ($val['redirect']!="false") ? $val['redirect'] : Config::WEBSITE.Config::PAGE_PREFIX."/".$val['type']."/".$val['lang']."/".$val['idx']."/".$val['slug']; 
 				$visibility = ($val['visibility']==1) ? "visibility_off" : "visibility";
 				$nav .= sprintf(
 					"
@@ -20,7 +20,7 @@ class websiteNavigation
 					<a href=\"javascript:void(0)\" onclick=\"changeVisibility('%s','%s')\">
 						<i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"ხილვადობის შეცვლა\">%s</i>
 					</a>
-					<a href=\"%s\">
+					<a href=\"javascript:void(0)\" onclick=\"editPage('%s','%s')\">
 						<i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"რედაქტირება\">mode_edit</i>
 					</a>
 					<a href=\"javascript:void(0)\" onclick=\"askRemovePage('%s','%s')\">
@@ -29,15 +29,16 @@ class websiteNavigation
 					</td>
 					</tr>
 					",
+					$val['idx'], 
 					$val['idx'],
-					$val['idx'],
-					$slug,				
+					$slug,	
 					$val['title'],
 					$val['type'],
 					$val['visibility'],
 					$val['idx'],
 					$visibility,
-					"?edit",
+					$val['idx'],
+					$val['lang'],
 					$val['position'],
 					$val['idx']
 				);
