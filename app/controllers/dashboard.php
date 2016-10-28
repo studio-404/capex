@@ -8,7 +8,8 @@ class dashboard extends Controller
 	{
 		if(!isset($_SESSION[Config::SESSION_PREFIX."username"]))
 		{
-			self::url("/manager/index");
+			require_once 'app/functions/redirect.php';
+			functions\redirect::url("/manager/index");
 		}
 
 		$page = new Database('page', array(
@@ -67,13 +68,5 @@ class dashboard extends Controller
 			"footerNav" => $this->managerNavigation->footer()
 		]);
 	}
-
-	private static function url($url=""){
-		if(empty($url)){
-			echo '<meta http-equiv="refresh" content="0"/>';
-		}else{
-			echo '<meta http-equiv="refresh" content="0; url='.$url.'"/>';
-		}
-		exit();
-	}
+	
 }

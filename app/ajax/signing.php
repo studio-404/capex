@@ -5,9 +5,10 @@ class signing
 	
 	public function index(){
 		require_once 'app/core/Config.php';
+		require_once 'app/functions/request.php';
 
-		$username = self::request("POST", "username");
-		$password = self::request("POST", "password");
+		$username = functions\request::index("POST","username");
+		$password = functions\request::index("POST","password");
 
 		if($username == "" || $password == ""){
 			$this->out = array(

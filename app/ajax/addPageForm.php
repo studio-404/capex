@@ -6,6 +6,7 @@ class addPageForm
 	public function index(){
 		require_once 'app/core/Config.php';
 		require_once 'app/functions/makeForm.php';
+		require_once 'app/functions/request.php';
 
 		$this->out = array(
 			"Error" => array(
@@ -15,7 +16,7 @@ class addPageForm
 			)
 		);
 
-		$call = self::request("POST", "call");
+		$call = functions\request::index("POST","call");
 
 		$form = functions\makeForm::open(array(
 			"action"=>"?",
@@ -72,16 +73,6 @@ class addPageForm
 		}
 
 		return $this->out;
-	}
-
-	public static function request($type, $item){
-		if($type=="POST" && isset($_POST[$item])){
-			return filter_input(INPUT_POST, $item);
-		}else if($type=="GET" && isset($_GET[$item])){
-			return filter_input(INPUT_GET, $item);
-		}else{
-			return '';
-		}
 	}
 
 }

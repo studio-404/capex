@@ -8,35 +8,38 @@ class websiteNavigation
 		$nav = "";
 		if(count($this->navigation)){
 			foreach ($this->navigation as $val) {
-				$slug = Config::WEBSITE.Config::PAGE_PREFIX."/".$val['lang']."/".$val['idx']."/".$val['slug']; 
+				$slug = Config::WEBSITE.Config::PAGE_PREFIX."/".$val['type']."/".$val['lang']."/".$val['idx']."/".$val['slug']; 
 				$visibility = ($val['visibility']==1) ? "visibility_off" : "visibility";
 				$nav .= sprintf(
 					"
-					<tr>
-					<td>%d</td>
+					<tr data-item=\"%d\" class=\"level-0\">
+					<td class=\"roboto-font\">%d</td>
 					<td><a href=\"%s\" target=\"_blank\">%s</a></td>
 					<td class=\"roboto-font\">%s</td>
 					<td>
-					<a href=\"%s\">
+					<a href=\"javascript:void(0)\" onclick=\"changeVisibility('%s','%s')\">
 						<i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"ხილვადობის შეცვლა\">%s</i>
 					</a>
 					<a href=\"%s\">
 						<i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"რედაქტირება\">mode_edit</i>
 					</a>
-					<a href=\"%s\">
+					<a href=\"javascript:void(0)\" onclick=\"askRemovePage('%s','%s')\">
 						<i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"წაშლა\">delete</i>
 					</a>
 					</td>
 					</tr>
 					",
 					$val['idx'],
+					$val['idx'],
 					$slug,				
 					$val['title'],
 					$val['type'],
-					"?visibility",
+					$val['visibility'],
+					$val['idx'],
 					$visibility,
 					"?edit",
-					"?delete"
+					$val['position'],
+					$val['idx']
 				);
 			}
 		}

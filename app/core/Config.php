@@ -11,7 +11,7 @@ class Config
 	const ADMIN_DASHBOARD = "http://capex.404.ge/dashboard/index";
 	const PUBLIC_FOLDER = "http://capex.404.ge/public/";
 	const AUTHER = "Getsadze Design";
-	const PAGE_PREFIX = "page/index";
+	const PAGE_PREFIX = "page";
 	const NAME = "Capex";
 	const DESC = "Capex Capital";
 	const KEYWORDS = "Capex";
