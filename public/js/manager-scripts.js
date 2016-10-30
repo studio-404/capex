@@ -370,6 +370,69 @@ var add_module = function(moduleSlug){
 	});
 };
 
+var editModules = function(idx, lang){
+	console.log(idx + " "+lang);
+	var ajaxFile = "/editModules";
+	var header = "<h4>რედაქტირება</h4><p class=\"modal-message-box\"></p>";
+	var content = "<p>გთხოვთ დაიცადოთ...</p>";
+	var footer = "<a href=\"javascript:void(0)\" id=\"modalButton\" class=\"waves-effect waves-green btn-flat\">რედაქტირება</a>";
+
+	$("#modal1 .modal-content").html(header + content);
+	$("#modal1 .modal-footer").html(footer);
+	$('#modal1').openModal();
+
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { idx: idx, lang:lang }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Error.Code==1){
+			var errorText = "<p>" + obj.Error.Text +"</p>";
+			$("#modal1 .modal-content").html(header + errorText);
+		}else{
+			var form = "<p>" + obj.form +"</p>";
+			$("#modal1 .modal-content").html(header + form);
+			$("#modalButton").attr({"onclick": obj.attr });
+			tiny(".tinymceTextArea");			
+		}
+	});
+};
+
+var formModuleEdit = function(idx, lang){
+	var ajaxFile = "/editFormModules";
+	var date = $("#date").val();
+	var title = $("#title").val();
+	var pageText = tinymce.get('pageText').getContent();
+	var link = $("#link").val();
+
+	$(".modal-message-box").html("გთხოვთ დაიცადოთ...");
+	if(
+		(typeof date === "undefined" || date=="") || 
+		(typeof title === "undefined" || title=="") || 
+		(typeof pageText === "undefined" || pageText=="") || 
+		(typeof link === "undefined" || link=="") 
+	){
+		$(".modal-message-box").html("ყველა ველი სავალდებულოა !");
+	}else{
+		$.ajax({
+			method: "POST",
+			url: Config.ajax + ajaxFile,
+			data: { idx:idx, lang: lang, date: date, title: title, pageText: pageText, link:link }
+		}).done(function( msg ) {
+			var obj = $.parseJSON(msg);
+			if(obj.Error.Code==1){
+				$(".modal-message-box").html(obj.Error.Text);
+			}else if(obj.Success.Code==1){
+				$(".modal-message-box").html(obj.Success.Text);
+				scrollTop();
+			}else{
+				$(".modal-message-box").html("E");
+			}
+		});
+	}
+};
+
 var formModuleAdd = function(moduleSlug){
 	var date = $("#date").val();
 	var title = $("#title").val();

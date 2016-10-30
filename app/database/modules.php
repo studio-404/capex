@@ -21,7 +21,7 @@ class modules
 		$from = (isset($_GET['pn']) && $_GET['pn']>0) ? (($_GET['pn']-1)*$itemPerPage) : 0;
 		$parsed_url = $args['parsed_url'];
 		if(isset($parsed_url[2])){
-			$select = "SELECT (SELECT COUNT(`id`) FROM `usefull` WHERE `type`=:type AND `lang`=:lang AND `status`!=:one) as counted, `idx`, `title`, `visibility` FROM `usefull` WHERE `type`=:type AND `lang`=:lang AND `status`!=:one LIMIT ".$from.",".$itemPerPage;
+			$select = "SELECT (SELECT COUNT(`id`) FROM `usefull` WHERE `type`=:type AND `lang`=:lang AND `status`!=:one) as counted, `idx`, `title`, `visibility`, `lang` FROM `usefull` WHERE `type`=:type AND `lang`=:lang AND `status`!=:one LIMIT ".$from.",".$itemPerPage;
 			$prepare = $this->conn->prepare($select); 
 			$prepare->execute(array(
 				":type"=>$parsed_url[2], 
@@ -33,6 +33,53 @@ class modules
 			}
 		}
 		return $fetch;
+	}
+
+	private function selectById($args)
+	{
+		$fetch = array();
+		$select = "SELECT * FROM `usefull` WHERE `idx`=:idx AND `lang`=:lang AND `status`!=:one";
+		$prepare = $this->conn->prepare($select); 
+		$prepare->execute(array(
+			":idx"=>$args['idx'], 
+			":lang"=>$args['lang'], 
+			":one"=>1
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);
+		}
+		return $fetch;
+	}
+
+	private function edit($args)
+	{
+		$idx = $args["idx"];
+		$lang = $args["lang"];
+		$date = strtotime($args["date"]);
+		$title = $args["title"];
+		$description = $args["pageText"];
+		$url = $args["link"];
+
+
+		$update = "UPDATE `usefull` SET 
+		`date`=:datex, 
+		`title`=:title, 
+		`description`=:description, 
+		`url`=:url 
+		WHERE `idx`=:idx AND `lang`=:lang";
+		$prepare = $this->conn->prepare($update);
+		$prepare->execute(array(
+			":datex"=>$date,
+			":title"=>$title,
+			":description"=>$description,
+			":url"=>$url,
+			":idx"=>$idx, 
+			":lang"=>$lang 
+		));	
+		if($prepare->rowCount()){
+			return 1;	
+		}
+		return 0;
 	}
 
 	private function updateVisibility($args)
