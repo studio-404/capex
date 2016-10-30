@@ -36,7 +36,7 @@ class page
 		$visibility = ($args['visibility']==0) ? 1 : 0;
 		$idx = (int)$args['idx'];
 
-		$update = "UPDATE `navigation` SET visibility=:visibility WHERE `idx`=:idx";
+		$update = "UPDATE `navigation` SET `visibility`=:visibility WHERE `idx`=:idx";
 		$prepare = $this->conn->prepare($update);
 		$prepare->execute(array(
 			":visibility"=>$visibility, 

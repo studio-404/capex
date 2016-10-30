@@ -38,7 +38,7 @@ class dashboard extends Controller
 		$this->managerNavigation = $this->model('managerNavigation');
 		$this->managerNavigation->navigation = array(
 			"dashboard/index"=>"გვერდები",
-			"dashboard/modules"=>"მოდულები",
+			"dashboard/modules/faq"=>"მოდულები",
 			"dashboard/statements"=>"განაცხადები",
 			"manager/index"=>"გასვლა"
 		);
@@ -61,12 +61,42 @@ class dashboard extends Controller
 
 	public function modules()
 	{
+		require_once 'app/functions/url.php';
+		require_once 'app/functions/string.php';
+		require_once 'app/functions/pagination.php';
+
+		$string = new functions\string(); 
+		$url = new functions\url();
+		$pagination = new functions\pagination();
+
+		// database
+		$getUrl = explode("/", $url->getUrl());
+		$itemPerPage = 20;
+		$modules = new Database('modules', array(
+			"method"=>"select",
+			"parsed_url"=>$getUrl,
+			"lang"=>"ge",
+			"itemPerPage"=>$itemPerPage
+		));
+		$getter = $modules->getter();
+
+		// models
+		$modelesView = $this->model('modelesView');
+		$modelesView->data = $getter;
+		$modelesView->string = $string;
+
 		$this->view('dashboard/modules', [
 			"header" => array(
 				"website" => Config::WEBSITE,
 				"public" => Config::PUBLIC_FOLDER
 			),
 			"nav" => $this->managerNavigation->index(),
+			"parsed_url"=>$getUrl,
+			"string"=>$string, 
+			"modules"=>$getter,
+			"itemPerPage"=>$itemPerPage,
+			"pagination"=>$pagination,
+			"theModels"=>$modelesView->index(), 
 			"footerNav" => $this->managerNavigation->footer()
 		]);
 	}

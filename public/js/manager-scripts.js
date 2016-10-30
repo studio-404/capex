@@ -171,6 +171,38 @@ var changeVisibility = function(vis, idx){
 	}
 }
 
+var changeModuleVisibility = function(vis, idx){
+	console.log(vis + " " + idx);
+	var ajaxFile = "/changeModuleVisibility";
+
+	var header = "<h4>შეტყობინება</h4><p class=\"modal-message-box\">გთხოვთ დაიცადოთ...</p>";
+	var footer = "<a href=\"javascript:void(0)\" id=\"modalButton\" class=\"waves-effect waves-green btn-flat modal-close\">დახურვა</a>";
+
+	$("#modal1 .modal-content").html(header);
+	$("#modal1 .modal-footer").html(footer);
+	$('#modal1').openModal();
+
+	if(typeof vis === "undefined" || typeof idx === "undefined"){
+		$(".modal-message-box").html("E2");
+	}else{
+		$.ajax({
+			method: "POST",
+			url: Config.ajax + ajaxFile,
+			data: { visibility: vis, idx: idx }
+		}).done(function( msg ) {
+			var obj = $.parseJSON(msg);
+			if(obj.Error.Code==1){
+				$(".modal-message-box").html(obj.Error.Text);
+			}else if(obj.Success.Code==1){
+				$(".modal-message-box").html(obj.Success.Text);
+				location.reload();
+			}else{
+				$(".modal-message-box").html("E3");
+			}
+		});
+	}
+};
+
 var askRemovePage = function(navType, pos, idx){
 	console.log(pos + " " + idx);
 	var header = "<h4>შეტყობინება</h4><p class=\"modal-message-box\">გნებავთ წაშალოთ მონაცემი ?</p>";
@@ -180,7 +212,18 @@ var askRemovePage = function(navType, pos, idx){
 	$("#modal1 .modal-content").html(header);
 	$("#modal1 .modal-footer").html(footer);
 	$('#modal1').openModal();
-}
+};
+
+var askRemoveModule = function(idx){
+	console.log(idx);
+	var header = "<h4>შეტყობინება</h4><p class=\"modal-message-box\">გნებავთ წაშალოთ მონაცემი ?</p>";
+	var footer = "<a href=\"javascript:void(0)\" onclick=\"removeModule('"+idx+"')\" class=\"waves-effect waves-green btn-flat\">დიახ</a>";
+	footer += "<a href=\"javascript:void(0)\" class=\"waves-effect waves-green btn-flat modal-close\">დახურვა</a>";
+
+	$("#modal1 .modal-content").html(header);
+	$("#modal1 .modal-footer").html(footer);
+	$('#modal1').openModal();
+};
 
 var removePage = function(navType, pos, idx){
 	console.log(pos + " " + idx);
@@ -204,7 +247,30 @@ var removePage = function(navType, pos, idx){
 			}
 		});
 	}
-}
+};
+
+var removeModule = function(idx){
+	var ajaxFile = "/removeModule";
+	if(typeof idx === "undefined"){
+		$(".modal-message-box").html("E4");
+	}else{
+		$.ajax({
+			method: "POST",
+			url: Config.ajax + ajaxFile,
+			data: { idx: idx }
+		}).done(function( msg ) {
+			var obj = $.parseJSON(msg);
+			if(obj.Error.Code==1){
+				$(".modal-message-box").html(obj.Error.Text);
+			}else if(obj.Success.Code==1){
+				$(".modal-message-box").html(obj.Success.Text);
+				location.reload();
+			}else{
+				$(".modal-message-box").html("E5");
+			}
+		});
+	}
+};
 
 var changePositionsOfPages = function(navType, selector){
 	var ajaxFile = "/changePagePositions";
@@ -270,6 +336,67 @@ var editPage = function(idx, lang){
 			
 		}
 	});
+};
+
+var add_module = function(moduleSlug){
+	console.log(moduleSlug);
+	var ajaxFile = "/addModuleForm";
+	var header = "<h4>დამატება</h4><p class=\"modal-message-box\"></p>";
+	var content = "<p>გთხოვთ დაიცადოთ...</p>";
+	var footer = "<a href=\"javascript:void(0)\" id=\"modalButton\" class=\"waves-effect waves-green btn-flat\">დამატება</a>";
+
+	$("#modal1 .modal-content").html(header + content);
+	$("#modal1 .modal-footer").html(footer);
+	$('#modal1').openModal();
+
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { moduleSlug: moduleSlug }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Error.Code==1){
+			var errorText = "<p>" + obj.Error.Text +"</p>";
+			$("#modal1 .modal-content").html(header + errorText);
+		}else{
+			var form = "<p>" + obj.form +"</p>";
+			$("#modal1 .modal-content").html(header + form);
+			$("#modalButton").attr({"onclick": obj.attr });
+			$('.datepicker').pickadate({
+				selectMonths: true, 
+			});
+			tiny(".tinymceTextArea");
+		}
+	});
+};
+
+var formModuleAdd = function(moduleSlug){
+	var date = $("#date").val();
+	var title = $("#title").val();
+	var pageText = tinymce.get('pageText').getContent();
+	var link = $("#link").val();
+
+	var ajaxFile = "/addModule";
+	if(typeof moduleSlug == "undefined" || typeof date == "undefined" || typeof title === "undefined" || typeof pageText === "undefined" || typeof link === "undefined"){
+		$(".modal-message-box").html("E4");
+	}else{
+		$.ajax({
+			method: "POST",
+			url: Config.ajax + ajaxFile,
+			data: { moduleSlug: moduleSlug, date: date, title: title, pageText: pageText, link:link }
+		}).done(function( msg ) {
+			var obj = $.parseJSON(msg);
+			if(obj.Error.Code==1){
+				$(".modal-message-box").html(obj.Error.Text);
+			}else if(obj.Success.Code==1){
+				$(".modal-message-box").html(obj.Success.Text);
+				location.reload();
+			}else{
+				$(".modal-message-box").html("E5");
+			}
+			scrollTop();
+		});
+	}
 };
 
 $(document).ready(function(){

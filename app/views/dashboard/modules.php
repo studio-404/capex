@@ -5,12 +5,23 @@
 	<title>Admin Panel</title>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="<?=$data["header"]["public"]?>css/materialize.css" type="text/css" rel="stylesheet" />
+	<link href="<?=$data["header"]["public"]?>css/jquery-ui.min.css" type="text/css" rel="stylesheet" />
 	<link href="<?=$data["header"]["public"]?>css/manager-style.css" type="text/css" rel="stylesheet" />
-	<script src="<?=$data["header"]["public"]?>js/jquery-3.1.1.min.js"></script>
-	<script src="<?=$data["header"]["public"]?>js/materialize.min.js"></script>
-	<script src="<?=$data["header"]["public"]?>js/manager-scripts.js"></script>
+	<script src="<?=$data["header"]["public"]?>js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/materialize.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/tinymce/tinymce.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/manager-scripts.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+<!-- MOdals START -->
+	<div id="modal1" class="modal">
+		<div class="modal-content">
+		</div>
+		<div class="modal-footer">
+		</div>
+	</div>
+<!-- MOdals END-->
 	<section class="mainContainer">
 
 		<nav>
@@ -20,44 +31,53 @@
 		</nav>
 
 		<section class="body">
-			<a class="waves-effect waves-light btn margin-bottom-20"><i class="material-icons left">note_add</i>დამატება</a>
+
+			<div class="row">
+				<div class="col s3">
+				<?php
+				$module_slug = (isset($data['parsed_url'][2])) ? $data['parsed_url'][2] : "faq";
+
+				$FAQ = ((isset($data['parsed_url'][2]) && $data['parsed_url'][2]=="faq") || !isset($data['parsed_url'][2])) ? 'active' : ''; 
+				$SLIDER = (isset($data['parsed_url'][2]) && $data['parsed_url'][2]=="slider") ? 'active' : ''; 
+				$SOCIAL = (isset($data['parsed_url'][2]) && $data['parsed_url'][2]=="social") ? 'active' : ''; 
+				$USEFULLLINKS = (isset($data['parsed_url'][2]) && $data['parsed_url'][2]=="usefullLinks") ? 'active' : ''; 
+				?>
+					<div class="collection moduleList">
+						<a href="/dashboard/modules/faq" class="collection-item <?=$FAQ?>">ხშირად დასმული კითხვები</a>
+						<a href="/dashboard/modules/slider" class="collection-item <?=$SLIDER?>">სლაიდერი</a>
+						<a href="/dashboard/modules/social" class="collection-item <?=$SOCIAL?>">სოც. ქსელები</a>
+						<a href="/dashboard/modules/usefullLinks" class="collection-item <?=$USEFULLLINKS?>">გამოსადეგი ბმულები</a>
+					</div>
+				</div>
+				<div class="col s9">
+					<a href="javascript:void(0)" onclick="add_module('<?=$module_slug?>')" class="waves-effect waves-light btn margin-bottom-20" ><i class="material-icons left">note_add</i>დამატება</a>
+
+					<table class="highlight">
+						<thead>
+							<tr>
+								<th data-field="id" width="50">ს.კ</th>
+								<th data-field="name" width="530">დასახელება</th>
+								<th data-field="action">მოქმედება</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<?=$data['theModels']?>							
+						</tbody>
+					</table>
+					<?php 
+					if(count($data['modules'])) : 
+							$total = $data['modules'][0]['counted']; 
+							$itemPerPage = $data['itemPerPage']; 
+							$pagination = $data['pagination'];
+							echo $pagination->index($total, $itemPerPage);
+					endif;
+					?>					
+				</div>
+			</div>
+
+
 			
-			<table class="highlight">
-				<thead>
-					<tr>
-						<th data-field="id">ს.კ</th>
-						<th data-field="name">დასახელება</th>
-						<th data-field="action">მოქმედება</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td><a href="">ხშირად დასმული კითხვები</a></td>
-						<td>
-							<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="გამოჩენა">visibility_off</i></a>
-
-							<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="რედაქტირება">mode_edit</i></a>
-
-
-							<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="წაშლა">delete</i></a>
-						</td>
-					</tr>
-					
-					
-				</tbody>
-			</table>
-
-			<ul class="pagination margin-top-40">
-				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-				<li class="active"><a href="#!">1</a></li>
-				<li class="waves-effect"><a href="#!">2</a></li>
-				<li class="waves-effect"><a href="#!">3</a></li>
-				<li class="waves-effect"><a href="#!">4</a></li>
-				<li class="waves-effect"><a href="#!">5</a></li>
-				<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-			</ul>
 			
 		</section>
 

@@ -14,6 +14,12 @@ class makeForm
 		return $out;
 	}
 
+	public static function datepicker($args)
+	{
+		$out = "<input type=\"date\" class=\"datepicker\" id=\"".$args['id']."\" value=\"".$args['value']."\" />";
+		return $out;	
+	}
+
 	public static function select($args)
 	{
 		$disabled = ($args["disabled"]=="true") ? "disabled" : "";
@@ -133,13 +139,17 @@ class makeForm
 		return $out;
 	}
 
-	//
-
-	public static function inputFileUpload($args){
-		$out = "<input type=\"file\" name=\"".$args['name']."\" id=\"".$args['id']."\" value=\"\"  style=\"margin: 0;padding: 0;width: 1px;height: 1px;position: absolute;opacity: 0;\" />";
-		$out .= "<input type=\"hidden\" name=\"".$args['hidden_name']."\" id=\"".$args['hidden_id']."\" value=\"\" />";
-		$out .= "<div class=\"".$args["dragClass"]."\" onclick=\"website.clickElement('#".$args['id']."')\" style=\"margin: 0 0 10px 0;padding: 50px 0;text-align: center;width: calc(100% - 2px);background-color: #f2f2f2;border: solid 1px #e57373;color:#e57373;float: left;clear: both;\">".$args["dragAndDrop"]."</div>";
-		return $out;
+	public static function fileUpload($args){
+    	$out = '<div class="file-field input-field">';
+    	$out .= '<div class="btn">';
+    	$out .= '<span>'.$args['label'].'</span>';
+    	$out .= '<input type="file">';
+    	$out .= '</div>';
+    	$out .= '<div class="file-path-wrapper">';
+    	$out .= '<input class="file-path validate" id="'.$args['id'].'" type="text" />';
+    	$out .= '</div>';
+    	$out .= '</div>';
+    	return $out;
 	}
 
 	public static function close(){

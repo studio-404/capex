@@ -2,18 +2,28 @@
 class managerNavigation
 {
 	public $navigation;
+	public $getUrl;
+
+	public function __construct()
+	{
+		require_once 'app/functions/url.php';
+		$url = new functions\url();
+		$this->getUrl = $url->getUrl();
+	}
 
 	public function index(){
 		$nav = sprintf("<ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">");
-		$getUrl = explode("/",$this->getUrl());
+		$getUrl = explode("/", $this->getUrl);
 		if(isset($getUrl[0]) && isset($getUrl[1])){
-			$slug = $getUrl[0]."/".$getUrl[1];	
+			$slug = $getUrl[0]."/".$getUrl[1];
 		}else{
 			$slug = "";
 		}
 		
 		foreach ($this->navigation as $key => $value) {
-			$active = ($key==$slug) ? "class='active'" : "";
+			$ex = explode("/", $key);
+			$kk = $ex[0]."/".$ex[1];
+			$active = ($kk==$slug) ? "class='active'" : "";
 			$nav .= sprintf(
 				"<li %s><a href=\"/%s\">%s</a></li>",
 				$active,
@@ -29,7 +39,7 @@ class managerNavigation
 	public function footer()
 	{
 		$nav = sprintf("<ul>");
-		$getUrl = explode("/",$this->getUrl());
+		$getUrl = explode("/", $this->getUrl);
 		if(isset($getUrl[0]) && isset($getUrl[1])){
 			$slug = $getUrl[0]."/".$getUrl[1];	
 		}else{
@@ -48,12 +58,5 @@ class managerNavigation
 		$nav .= sprintf("</ul>");
 
 		return ($nav);
-	}
-
-	private function getUrl(){
-		$request = parse_url($_SERVER['REQUEST_URI']);
-		$path = $request["path"];
-		$result = trim(str_replace(basename($_SERVER['SCRIPT_NAME']), '', $path), '/');
-		return $result;
 	}
 }
