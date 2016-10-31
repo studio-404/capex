@@ -1,19 +1,64 @@
 <?php
-class Home extends Controller{
+class Home extends Controller
+{
 	
+	public function __construct()
+	{
+
+	}
+
 	public function index($name = '')
 	{
-		/* Database Connection */
-		$Database = new Database('test');
-		$output = $Database->getter();
+		/* database */
+		$modules = new Database('modules', array(
+			"method"=>"selectAllFaq"
+		));
+		$contactData = new Database('modules', array(
+			"method"=>"selectContactData",
+			"lang"=>"ge"
+		));
+		$contactData = $contactData->getter();
+		$page = new Database('page', array(
+			"method"=>"selectAboutContent",
+			"idx"=>2,
+			"lang"=>"ge"
+		)); 
+		$cities = new Database("cities", array(
+			"method"=>"select"
+		));
+
+		/* models */
+		$auth = $this->model('auth');
+		$loan = $this->model('loan');
+		$loan->cities = $cities->getter(); 
 		
-		/* model */
-		$TestModel = $this->model('TestModel');
-		$TestModel->output = $output;
+		$question = $this->model('question');
+		$question->questionsArray = $modules->getter();
+
+		$about = $this->model('about');
+		$about->content = $page->getter();
+
+		$header = $this->model('header');
+		$homepage = $this->model('homepage');
+		$header->publicFolder = Config::PUBLIC_FOLDER;
+
+		$header->contactNumber = strip_tags($contactData['phone']);
+		$header->email = strip_tags($contactData['email']);
 
 		/* view */
 		$this->view('home/index', [
-			"name" => $TestModel->index()
+			"header"=>array(
+				"website"=>Config::WEBSITE,
+				"public"=>Config::PUBLIC_FOLDER
+			),
+			"authModel"=>$auth->index(), 
+			"loanModel"=>$loan->index(), 
+			"questionModel"=>$question->index(), 
+			"aboutModel"=>$about->index(), 
+			"headerModel"=>$header->index(), 
+			"homepageModel"=>$homepage->index(),
+			"contactNumber"=>$header->contactNumber, 
+			"email"=>$header->email 
 		]);
 	}
 

@@ -1,0 +1,755 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" class="HomePageBody">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<title>Capex</title>
+
+<script src="js/jquery-3.1.1.min.js"></script>
+
+<script src="js/jquery-ui.js"></script>
+
+<script src="js/jquery.ui.touch-punch.js"></script>
+
+<script src="js/materialize.js"></script>
+
+<script src="js/scripts.js"></script>
+
+
+
+<link href="http://www.twins.ho.ua/credit/css/jquery-ui.min.css" rel="stylesheet">
+
+<link href="css/materialize.css" rel="stylesheet">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+
+<link href="css/style.css" rel="stylesheet">
+
+<link href="css/custom_res.css" rel="stylesheet">
+
+</head>
+
+<body id="CapexBody">
+
+
+
+ 
+
+<div id="AuthorizationPopup" class="modal modal-trigger AuthorizationPopup">
+
+	<div class="modal-content">
+
+		<div class="modal-action modal-close"></div>
+
+		<h4>ავტორიზაცია</h4>
+
+		<div class="AutorizationForm">
+
+			<div class="row">
+
+				<div class="input-field col-sm-12">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">პირადი ნომერი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-12">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalPass" type="password" class="">
+
+		      			<label for="PersonalPass">პაროლი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-12">
+
+		      		<div class="form-group">
+
+		      			<div class="ButtonOrange waves-effect waves-light">შესვლა</div>
+
+		      		</div>
+
+		        </div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+
+
+<div id="ApplicationModal" class="modal ApplicationModal">
+
+	<div class="modal-content">
+
+		<div class="modal-action modal-close"></div> 
+
+		<div class="AutorizationForm">
+
+			<div class="row"> 
+
+	      		<div class="form-group col-sm-12 padding_0">
+
+	      			<div class="col-sm-4">
+
+	      				<label class="TitleLabel">სამომხმარებლო სესხის განაცხადი</label>
+
+	      			</div>
+
+	      			<div class="col-sm-4">
+
+	      				<label class="LoansCountDiv"><span>1250</span><strong>l</strong> <span>/ 6 <b>თვით</b></span></label>
+
+	      			</div>
+
+	      		</div>
+
+				<div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">სახელი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">გვარი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">პირადი ნომერი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">დაბადების თარიღი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">სქესი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">ელ-ფოსტა</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">ტელეფონი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		        	<div class="form-group">
+
+					  
+						    <select>
+
+						      <option value="1">თბილისი</option>
+
+						      <option value="2">ქუთაისი</option>
+
+						      <option value="3">ბათუმი</option>
+
+						    </select>
+
+						    <label>აირჩიეთ ქალაქი</label>
+
+					 
+
+				    </div>
+
+				</div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">ქუჩა</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">სახლი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">ბინა</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">საფოსტო კოდი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">ყოველთვიური შემოსავალი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">მიმდინარე სესხი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4" style="opacity:0">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber"></label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">პაროლი</label>
+
+		      		</div>
+
+		        </div>
+
+		        <div class="input-field col-sm-4">
+
+		      		<div class="form-group">
+
+		      			<input id="PersonalNumber" type="text" class="">
+
+		      			<label for="PersonalNumber">გაიმეორე პაროლი</label>
+
+		      		</div>
+
+		        </div>
+
+
+
+		        <div class="input-field col-sm-9">
+
+		      		<div class="form-group">
+
+		      			<div class="ApplicationFooterText">
+
+		      				<input type="checkbox" class="filled-in" id="checkbox1" checked="checked" />
+
+      						<label for="checkbox1">გავეცანი და ვეთანხმები <a href="#">ხელშეკრულების</a> პირობებს</label> 
+
+		      				<input type="checkbox" class="filled-in" id="checkbox2" />
+
+      						<label for="checkbox2">საკრედიტო ისტორიის გადამოწმება სს კრედიტინფო საქართველოს მონაცემთა ბაზაში</label>
+
+		      			</div>
+
+		      		</div>
+
+		        </div>
+
+
+
+		        <div class="input-field col-sm-3">
+
+		        	<div class="form-group">
+
+		        	<div class="ButtonOrange waves-effect waves-light">განაცხადის გაგზავნა</div>
+
+		        	</div>
+
+		        </div>
+
+
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<div id="QuestionModal" class="modal QuestionModal">
+
+	<div class="modal-content">
+
+		<div class="modal-action modal-close"></div> 
+
+		<div class="AutorizationForm">
+
+			<div class="row"> 
+
+	      		<div class="form-group col-sm-12 padding_0">
+
+	      			<div class="col-sm-12">
+
+	      				<label class="TitleLabel">ხშირად დასმული კითხვები</label>
+
+	      			</div>
+
+	      		</div>
+
+				<div class="col-sm-12 QuestionItem">
+
+					<strong>1. როგორია ვებ-გვერდზე განთავსებული ინფორმაციის გემოყენების წესები?</strong>					
+
+					<span>ცნობილი ფაქტია, რომ გვერდის წაკითხვად შიგთავსს შეუძლია მკითხველის ყურადღება მიიზიდოს და დიზაინის აღქმაში ხელი შეუშალოს. Lorem Ipsum-ის გამოყენებით ვღებულობთ იმაზე მეტ-ნაკლებად სწორი გადანაწილების ტექსტს, ვიდრე ერთიდაიგივე გამეორებადი სიტყვებია ხოლმე.</span>					
+
+				</div>
+
+				<div class="col-sm-12 QuestionItem">
+
+					<strong>2. როგორია ვებ-გვერდზე განთავსებული ინფორმაციის გემოყენების წესები?</strong>					
+
+					<span>ცნობილი ფაქტია, რომ გვერდის წაკითხვად შიგთავსს შეუძლია მკითხველის ყურადღება მიიზიდოს და დიზაინის აღქმაში ხელი შეუშალოს. Lorem Ipsum-ის გამოყენებით ვღებულობთ იმაზე მეტ-ნაკლებად სწორი გადანაწილების ტექსტს, ვიდრე ერთიდაიგივე გამეორებადი სიტყვებია ხოლმე.</span>					
+
+				</div>
+
+				<div class="col-sm-12 QuestionItem">
+
+					<strong>3. როგორია ვებ-გვერდზე განთავსებული ინფორმაციის გემოყენების წესები?</strong>					
+
+					<span>ცნობილი ფაქტია, რომ გვერდის წაკითხვად შიგთავსს შეუძლია მკითხველის ყურადღება მიიზიდოს და დიზაინის აღქმაში ხელი შეუშალოს. Lorem Ipsum-ის გამოყენებით ვღებულობთ იმაზე მეტ-ნაკლებად სწორი გადანაწილების ტექსტს, ვიდრე ერთიდაიგივე გამეორებადი სიტყვებია ხოლმე.</span>					
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div id="AboutUsPopup" class="modal QuestionModal">
+
+	<div class="modal-content">
+
+		<div class="modal-action modal-close"></div> 
+
+		<div class="AutorizationForm">
+
+			<div class="row"> 
+
+	      		<div class="form-group col-sm-12 padding_0">
+
+	      			<div class="col-sm-12">
+
+	      				<label class="TitleLabel">ჩვენ შესახებ</label>
+
+	      			</div>
+
+	      		</div>
+
+				<div class="col-sm-12 QuestionItem">
+
+					<strong>1. როგორია ვებ-გვერდზე განთავსებული ინფორმაციის გემოყენების წესები?</strong>					
+
+					<span>ცნობილი ფაქტია, რომ გვერდის წაკითხვად შიგთავსს შეუძლია მკითხველის ყურადღება მიიზიდოს და დიზაინის აღქმაში ხელი შეუშალოს. Lorem Ipsum-ის გამოყენებით ვღებულობთ იმაზე მეტ-ნაკლებად სწორი გადანაწილების ტექსტს, ვიდრე ერთიდაიგივე გამეორებადი სიტყვებია ხოლმე.</span>					
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header id="Header">
+
+		<div class="col-sm-4">
+
+			<div class="logo"><a class="ScrollAnimate" href="#CapexBody"><img src="img/logo.png"/></a></div>
+
+		</div>
+
+		<div class="col-sm-8 text-right">
+
+			<div class="HeaderDiv">
+
+				<div class="HeaderMenu">
+
+				    <div class="navigation">
+
+						<div class="nav_bar"><div class="CloseMenu"></div></div>    
+
+						<li><a class="OpenModalClick" href="#QuestionModal">კითხვა პასუხი</a></li>
+
+						<li><a class="OpenModalClick" href="#AboutUsPopup">ჩვენს შესახებ</a></li>
+
+						<li><a class="ScrollAnimate" href="#ContactPage">კონტაქტი</a></li>
+
+						<a class="AuthorizationButton waves-effect waves-orange" href="room.html">ავტორიზაცია</a>				         
+
+				    </div>
+
+				    <div class="nav_bg">
+
+				        <div class="nav_bar"> <span></span> <span></span> <span></span> </div>
+
+				    </div> 
+
+				</div>
+
+				<div class="HeaderTel">2 22 26 27</div>
+
+								
+
+			</div>
+
+		</div>
+
+</header>
+
+
+
+
+
+
+
+
+
+<section id="HomePage">
+
+	<div class="row">
+
+		<div class="col-sm-6 padding_0">
+
+			<div class="HomeLeftDiv height100">
+
+				<span>არ ვარ დარეგისტრირებული</span>
+
+				<div class="HomeBigFont">გჭირდება სწრაფი <br/>სესხი</div>
+
+				<span>მიიღე სესხი სახლიდან <br/> გაუსვლელად</span>
+
+				<div class="clear"></div>
+
+				<a class="ScrollAnimate HomeButton waves-effect waves-orange animated-button victoria-one" href="#ScrollingPage">ფულის მიღება</a>
+
+			</div>
+
+		</div>
+
+		<div class="col-sm-6 padding_0">
+
+			<div class="HomeRightDiv height100">
+
+				<span>არ ვარ დარეგისტრირებული</span>
+
+				<div class="HomeBigFont">გჭირდება სწრაფი <br/>სესხი</div>
+
+				<span>მიიღე სესხი სახლიდან <br/>გაუსვლელად</span>
+
+				<div class="clear"></div>
+
+				<a class="HomeButton waves-effect waves-teal OpenModalClick animated-button victoria-two" href="#AuthorizationPopup">ავტორიზაცია</a>
+
+			</div>
+
+		</div>
+
+	</div>	
+
+</section>
+
+ 
+
+
+
+<section id="ScrollingPage">
+
+	<div class="ScrollingHeaderDiv">
+
+		<div class="ScrollingHeader">
+
+			
+
+			<div class="position:relative">
+
+						
+
+
+
+				<div style="max-width:700px; margin:0 auto;">
+
+								 <div class="circle opacity"></div>	
+
+
+
+									<div class="container_range">
+
+										<div class="ScrollingTitle">რამდენის სესხება გსურთ?</div>
+
+										<div id="line1">
+
+											<div class="lineInner1"></div>
+
+										</div>
+
+										<div class="ScrollingTitle">რამდენის სესხება გსურთ?</div>
+
+										<div id="line2">
+
+											<div class="lineInner2"></div>
+
+										</div>
+
+
+
+										<div class="result">
+
+
+
+											<span class="money"><label>0</label>l</span>
+
+											<span class="month"><label>0</label> თვით</span>
+
+											<span class="procent">თვეში <label>0</label><strong>l</strong></span>
+
+										</div>
+
+
+
+									</div>
+
+						</div>
+
+
+
+				
+
+			</div>			
+
+		</div>
+
+	</div> 
+
+	<div class="container ScrollingButtonDiv">
+
+		<a class="ScrollIngButton waves-effect waves-teal OpenModalClick" href="#ApplicationModal">ფულის მიღება</a>
+
+	</div>	
+
+</section>
+
+
+
+ <section id="ContactPage" class="height100">
+
+	<div class="ContactHeaderDiv">
+
+		<div class="ContactHeader">
+
+			<div class="Title1">გაქვთ კითხვები? დაგვიკავშირდით</div>
+
+			<div class="ContactTel">032 2 23 25 78</div>
+
+			<div class="Title1">ან მოგვწერეთ</div>
+
+			<div class="ContactMail">support@capexcredit.ge</div>
+
+		</div>
+
+	</div>
+
+	<div class="container ContactMapDiv">
+
+		<div class="title">ჩვენი მისამართია</div>
+
+		<div id="map"></div>
+
+	</div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <script async defer
+
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt9-cvNNqWdw_li7Kn4-3XdFRxicO1S3w&callback=initMap">
+
+    </script>  
+
+
+
+
+
+
+
+</body>
+
+</html>    
+

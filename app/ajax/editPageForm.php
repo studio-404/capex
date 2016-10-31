@@ -70,6 +70,27 @@ class editPageForm
 				"value"=>$output['slug']
 			));
 
+			/*  ^^^^^^^^^^^^^^^ */
+			$form .= functions\makeForm::inputText(array(
+				"placeholder"=>"კლასი", 
+				"id"=>"cssClass", 
+				"name"=>"cssClass",
+				"value"=>$output['cssclass']
+			));
+
+			$parentModuleOptions = new Database('modules', array(
+				'method'=>'parentModuleOptions', 
+				'lang'=>'ge'
+			));
+
+			$form .= functions\makeForm::select(array(
+				"id"=>"attachModule",
+				"choose"=>"მიამაგრე მოდული",
+				"options"=>$parentModuleOptions->getter(),
+				"selected"=>$output['usefull_type'],
+				"disabled"=>"false"
+			));
+
 			$form .= functions\makeForm::inputText(array(
 				"placeholder"=>"გადამისამართება", 
 				"id"=>"redirect", 

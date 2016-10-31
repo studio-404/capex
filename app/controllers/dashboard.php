@@ -80,10 +80,19 @@ class dashboard extends Controller
 		));
 		$getter = $modules->getter();
 
+		$usefull_modules = new Database('modules', array(
+			"method"=>"selectParentUsefull",
+			"lang"=>"ge"
+		));
+		$use_mod = $usefull_modules->getter();
+
 		// models
 		$modelesView = $this->model('modelesView');
 		$modelesView->data = $getter;
 		$modelesView->string = $string;
+
+		$parentModel = $this->model('parentModel');
+		$parentModel->use_mod = $use_mod;
 
 		$this->view('dashboard/modules', [
 			"header" => array(
@@ -96,6 +105,7 @@ class dashboard extends Controller
 			"modules"=>$getter,
 			"itemPerPage"=>$itemPerPage,
 			"pagination"=>$pagination,
+			"parentModel"=>$parentModel->index(),
 			"theModels"=>$modelesView->index(), 
 			"footerNav" => $this->managerNavigation->footer()
 		]);

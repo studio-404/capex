@@ -36,18 +36,9 @@
 				<div class="col s3">
 				<?php
 				$module_slug = (isset($data['parsed_url'][2])) ? $data['parsed_url'][2] : "faq";
-
-				$FAQ = ((isset($data['parsed_url'][2]) && $data['parsed_url'][2]=="faq") || !isset($data['parsed_url'][2])) ? 'active' : ''; 
-				$SLIDER = (isset($data['parsed_url'][2]) && $data['parsed_url'][2]=="slider") ? 'active' : ''; 
-				$SOCIAL = (isset($data['parsed_url'][2]) && $data['parsed_url'][2]=="social") ? 'active' : ''; 
-				$USEFULLLINKS = (isset($data['parsed_url'][2]) && $data['parsed_url'][2]=="usefullLinks") ? 'active' : ''; 
+				echo $data['parentModel'];
 				?>
-					<div class="collection moduleList">
-						<a href="/dashboard/modules/faq" class="collection-item <?=$FAQ?>">ხშირად დასმული კითხვები</a>
-						<a href="/dashboard/modules/slider" class="collection-item <?=$SLIDER?>">სლაიდერი</a>
-						<a href="/dashboard/modules/social" class="collection-item <?=$SOCIAL?>">სოც. ქსელები</a>
-						<a href="/dashboard/modules/usefullLinks" class="collection-item <?=$USEFULLLINKS?>">გამოსადეგი ბმულები</a>
-					</div>
+					
 				</div>
 				<div class="col s9">
 					<a href="javascript:void(0)" onclick="add_module('<?=$module_slug?>')" class="waves-effect waves-light btn margin-bottom-20" ><i class="material-icons left">note_add</i>დამატება</a>

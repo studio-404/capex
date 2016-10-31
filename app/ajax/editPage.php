@@ -21,6 +21,8 @@ class editPage
 		$choosePageType = functions\request::index("POST","choosePageType");
 		$title = functions\request::index("POST","title");
 		$slug = functions\request::index("POST","slug");
+		$cssClass = functions\request::index("POST","cssClass");
+		$attachModule = functions\request::index("POST","attachModule");
 		$redirect = functions\request::index("POST","redirect");
 		$pageDescription = functions\request::index("POST","pageDescription");
 		$pageText = functions\request::index("POST","pageText");
@@ -43,6 +45,8 @@ class editPage
 					'choosePageType'=>$choosePageType, 
 					'title'=>$title, 
 					'slug'=>$slug, 
+					'cssClass'=>$cssClass, 
+					'attachModule'=>$attachModule, 
 					'redirect'=>$redirect, 
 					'pageDescription'=>$pageDescription, 
 					'pageText'=>$pageText

@@ -14,6 +14,70 @@ class modules
 		return $out;
 	}
 
+	private function selectParentUsefull($args)
+	{
+		$fetch = array();
+		$select = "SELECT * FROM `usefull_modules` WHERE `lang`=:lang AND `status`!=:one ORDER BY `id` ASC";
+		$prepare = $this->conn->prepare($select);
+		$prepare->execute(array(
+			":one"=>1,
+			":lang"=>$args['lang']
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
+		}
+		
+		return $fetch;
+	}
+
+	private function parentModuleOptions($args)
+	{
+		$options = array();
+		$fetch = $this->selectParentUsefull($args);
+		foreach ($fetch as $val) {
+			$options[$val['type']] = $val['title'];
+		}
+		$options["false"] = "- მიმაგრების მოხსნა";
+		return $options;
+	}
+
+	private function selectContactData($args)
+	{
+		$out['phone'] = "";
+		$out['email'] = "";
+		$select = "SELECT `description` FROM `usefull` WHERE `type`=:type AND `lang`=:lang AND `visibility`!=:one AND `status`!=:one ORDER BY `id` ASC";
+		$prepare = $this->conn->prepare($select);
+		$prepare->execute(array(
+			":type"=>"contact",
+			":one"=>1,
+			":lang"=>$args['lang']
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
+			$out['phone'] = $fetch[0]['description'];
+			$out['email'] = $fetch[1]['description'];
+		}
+		
+		return $out;
+	}
+
+	private function selectAllFaq($args)
+	{
+		$fetch = array();
+		$select = "SELECT `title`, `description` FROM `usefull` WHERE `type`=:type AND `visibility`!=:one AND `lang`=:lang AND `status`!=:one ORDER BY `date` DESC";
+		$prepare = $this->conn->prepare($select);
+		$prepare->execute(array(
+			":type"=>"faq", 
+			":one"=>1,
+			":lang"=>"ge"
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
+		}
+		
+		return $fetch;
+	}
+
 	private function select($args)
 	{
 		$fetch = array();

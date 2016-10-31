@@ -31,6 +31,22 @@ class page
 		return $fetch;
 	}
 
+	private function selectAboutContent($args)
+	{
+		$fetch = array();
+		$select = "SELECT `title`,`text` FROM `navigation` WHERE `idx`=:idx AND `lang`=:lang AND `status`!=:one";
+		$prepare = $this->conn->prepare($select);
+		$prepare->execute(array(
+			":idx"=>$args['idx'], 
+			":lang"=>$args['lang'], 
+			":one"=>1
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);
+		}
+		return $fetch;
+	}
+
 	private function updateVisibility($args)
 	{
 		$visibility = ($args['visibility']==0) ? 1 : 0;
@@ -74,6 +90,8 @@ class page
 		$type = $args["choosePageType"];
 		$title = $args["title"];
 		$slug = $args["slug"];
+		$cssclass = (isset($args["cssclass"])) ? $args["cssclass"] : "";
+		$usefull_type = (isset($args["usefull_type"])) ? $args["usefull_type"] : "false";
 		$redirect = $args["redirect"];
 		$description = $args["pageDescription"];
 		$textx = $args["pageText"];
@@ -114,6 +132,8 @@ class page
 			`description`=:description, 
 			`text`=:textx, 
 			`slug`=:slug, 
+			`usefull_type`=:usefull_type, 
+			`cssclass`=:cssclass, 
 			`redirect`=:redirect, 
 			`lang`=:lang, 
 			`position`=:position,
@@ -130,6 +150,8 @@ class page
 				":description"=>$description,
 				":textx"=>$textx,
 				":slug"=>$slug,
+				":usefull_type"=>$usefull_type,
+				":cssclass"=>$cssclass,
 				":redirect"=>$redirect,
 				":lang"=>$val['title'],
 				":position"=>$maxPosition,
@@ -149,6 +171,8 @@ class page
 		$type = $args["choosePageType"];
 		$title = $args["title"];
 		$slug = $args["slug"];
+		$cssclass = (isset($args["cssclass"])) ? $args["cssclass"] : "";
+		$usefull_type = (isset($args["attachModule"])) ? $args["attachModule"] : "false";
 		$redirect = $args["redirect"];
 		$description = $args["pageDescription"];
 		$textx = $args["pageText"];
@@ -159,6 +183,8 @@ class page
 		`description`=:description, 
 		`text`=:textx, 
 		`slug`=:slug, 
+		`usefull_type`=:usefull_type,
+		`cssclass`=:cssclass,
 		`redirect`=:redirect WHERE `idx`=:idx AND `lang`=:lang";
 		$prepare = $this->conn->prepare($update);
 		$prepare->execute(array(
@@ -167,6 +193,8 @@ class page
 			":description"=>$description,
 			":textx"=>$textx,
 			":slug"=>$slug,
+			":usefull_type"=>$usefull_type,
+			":cssclass"=>$cssclass,
 			":redirect"=>$redirect,
 			":idx"=>$idx, 
 			":lang"=>$lang 

@@ -51,6 +51,7 @@ var add_page = function(){
 			$("#modal1 .modal-content").html(header + form);
 			$("#choosePageType").material_select();
 			$("#chooseNavType").material_select();
+			$("#attachModule").material_select();
 			$("#modalButton").attr({"onclick": obj.attr });
 			tiny(".tinymceTextArea");
 		}
@@ -63,6 +64,8 @@ var formPageAdd = function(){
 	var choosePageType = $("#choosePageType").val();
 	var title = $("#title").val();
 	var slug = $("#slug").val();
+	var cssClass = $("#cssClass").val();
+	var attachModule = $("#attachModule").val();
 	var redirect = $("#redirect").val();
 	var pageDescription = tinymce.get('pageDescription').getContent();
 	var pageText = tinymce.get('pageText').getContent();
@@ -80,7 +83,7 @@ var formPageAdd = function(){
 		$.ajax({
 			method: "POST",
 			url: Config.ajax + ajaxFile,
-			data: { chooseNavType: chooseNavType, choosePageType: choosePageType, title: title, slug: slug, redirect:redirect, pageDescription: pageDescription, pageText: pageText }
+			data: { chooseNavType: chooseNavType, choosePageType: choosePageType, title: title, slug: slug, cssClass:cssClass, attachModule:attachModule, redirect:redirect, pageDescription: pageDescription, pageText: pageText }
 		}).done(function( msg ) {
 			var obj = $.parseJSON(msg);
 			if(obj.Error.Code==1){
@@ -107,6 +110,8 @@ var formPageEdit = function(idx, lang){
 	var choosePageType = $("#choosePageType").val();
 	var title = $("#title").val();
 	var slug = $("#slug").val();
+	var cssClass = $("#cssClass").val();
+	var attachModule = $("#attachModule").val();
 	var redirect = $("#redirect").val();
 	var pageDescription = tinymce.get('pageDescription').getContent();
 	var pageText = tinymce.get('pageText').getContent();
@@ -124,7 +129,7 @@ var formPageEdit = function(idx, lang){
 		$.ajax({
 			method: "POST",
 			url: Config.ajax + ajaxFile,
-			data: { idx:idx, lang: lang, chooseNavType: chooseNavType, choosePageType: choosePageType, title: title, slug: slug, redirect:redirect, pageDescription: pageDescription, pageText: pageText }
+			data: { idx:idx, lang: lang, chooseNavType: chooseNavType, choosePageType: choosePageType, title: title, slug: slug, cssClass:cssClass, attachModule:attachModule, redirect:redirect, pageDescription: pageDescription, pageText: pageText }
 		}).done(function( msg ) {
 			var obj = $.parseJSON(msg);
 			if(obj.Error.Code==1){
@@ -330,6 +335,7 @@ var editPage = function(idx, lang){
 			$("#modal1 .modal-content").html(header + form);
 			$("#choosePageType").material_select();
 			$("#chooseNavType").material_select();
+			$("#attachModule").material_select();
 			$("#modalButton").attr({"onclick": obj.attr });
 			tiny(".tinymceTextArea");
 			console.log("tiny 20");

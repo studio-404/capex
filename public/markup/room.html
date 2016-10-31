@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Capex</title>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/scripts.js"></script>
+<link href="css/materialize.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/animate.css" rel="stylesheet">
+<link href="css/custom_res.css" rel="stylesheet">
+</head>
+<body>
+
+
+<div id="AuthorizationPopup" class="modal AuthorizationPopup">
+	<div class="modal-content">
+		<div class="modal-action modal-close"></div>
+		<h4>ავტორიზაცია</h4>
+		<div class="AutorizationForm">
+			<div class="row">
+				<div class="input-field col-sm-12">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">პირადი ნომერი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-12">
+		      		<div class="form-group">
+		      			<input id="PersonalPass" type="password" class="">
+		      			<label for="PersonalPass">პაროლი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-12">
+		      		<div class="form-group">
+		      			<div class="ButtonOrange waves-effect waves-light">შესვლა</div>
+		      		</div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="ApplicationModal" class="modal ApplicationModal">
+	<div class="modal-content">
+		<div class="modal-action modal-close"></div> 
+		<div class="AutorizationForm">
+			<div class="row"> 
+	      		<div class="form-group col-sm-12 padding_0">
+	      			<div class="col-sm-4">
+	      				<label class="TitleLabel">სამომხმარებლო სესხის განაცხადი</label>
+	      			</div>
+	      			<div class="col-sm-4">
+	      				<label class="LoansCountDiv"><span>1250</span><strong>l</strong> <span>/ 6 <b>თვით</b></span></label>
+	      			</div>
+	      		</div>
+				<div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">სახელი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">გვარი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">პირადი ნომერი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">დაბადების თარიღი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">სქესი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">ელ-ფოსტა</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">ტელეფონი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col col-sm-4">
+		        	<div class="form-group">
+					    <div class="input-field col s12">
+						    <select>
+						      <option value="1">თბილისი</option>
+						      <option value="2">ქუთაისი</option>
+						      <option value="3">ბათუმი</option>
+						    </select>
+						    <label>აირჩიეთ ქალაქი</label>
+						</div>
+				    </div>
+				</div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">ქუჩა</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">სახლი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">ბინა</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">საფოსტო კოდი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">ყოველთვიური შემოსავალი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">მიმდინარე სესხი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4" style="opacity:0">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber"></label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">პაროლი</label>
+		      		</div>
+		        </div>
+		        <div class="input-field col-sm-4">
+		      		<div class="form-group">
+		      			<input id="PersonalNumber" type="text" class="">
+		      			<label for="PersonalNumber">გაიმეორე პაროლი</label>
+		      		</div>
+		        </div>
+
+		        <div class="input-field col-sm-9">
+		      		<div class="form-group">
+		      			<div class="ApplicationFooterText">
+		      				<input type="checkbox" class="filled-in" id="checkbox1" checked="checked" />
+      						<label for="checkbox1">გავეცანი და ვეთანხმები <a href="#">ხელშეკრულების</a> პირობებს</label> 
+		      				<input type="checkbox" class="filled-in" id="checkbox2" />
+      						<label for="checkbox2">საკრედიტო ისტორიის გადამოწმება სს კრედიტინფო საქართველოს მონაცემთა ბაზაში</label>
+		      			</div>
+		      		</div>
+		        </div>
+
+		        <div class="input-field col-sm-3">
+		        	<div class="form-group">
+		        	<div class="ButtonOrange waves-effect waves-light">განაცხადის გაგზავნა</div>
+		        	</div>
+		        </div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="QuestionModal" class="modal QuestionModal">
+	<div class="modal-content">
+		<div class="modal-action modal-close"></div> 
+		<div class="AutorizationForm">
+			<div class="row"> 
+	      		<div class="form-group col-sm-12 padding_0">
+	      			<div class="col-sm-12">
+	      				<label class="TitleLabel">ხშირად დასმული კითხვები</label>
+	      			</div>
+	      		</div>
+				<div class="col-sm-12 QuestionItem">
+					<strong>1. როგორია ვებ-გვერდზე განთავსებული ინფორმაციის გემოყენების წესები?</strong>					
+					<span>ცნობილი ფაქტია, რომ გვერდის წაკითხვად შიგთავსს შეუძლია მკითხველის ყურადღება მიიზიდოს და დიზაინის აღქმაში ხელი შეუშალოს. Lorem Ipsum-ის გამოყენებით ვღებულობთ იმაზე მეტ-ნაკლებად სწორი გადანაწილების ტექსტს, ვიდრე ერთიდაიგივე გამეორებადი სიტყვებია ხოლმე.</span>					
+				</div>
+				<div class="col-sm-12 QuestionItem">
+					<strong>2. როგორია ვებ-გვერდზე განთავსებული ინფორმაციის გემოყენების წესები?</strong>					
+					<span>ცნობილი ფაქტია, რომ გვერდის წაკითხვად შიგთავსს შეუძლია მკითხველის ყურადღება მიიზიდოს და დიზაინის აღქმაში ხელი შეუშალოს. Lorem Ipsum-ის გამოყენებით ვღებულობთ იმაზე მეტ-ნაკლებად სწორი გადანაწილების ტექსტს, ვიდრე ერთიდაიგივე გამეორებადი სიტყვებია ხოლმე.</span>					
+				</div>
+				<div class="col-sm-12 QuestionItem">
+					<strong>3. როგორია ვებ-გვერდზე განთავსებული ინფორმაციის გემოყენების წესები?</strong>					
+					<span>ცნობილი ფაქტია, რომ გვერდის წაკითხვად შიგთავსს შეუძლია მკითხველის ყურადღება მიიზიდოს და დიზაინის აღქმაში ხელი შეუშალოს. Lorem Ipsum-ის გამოყენებით ვღებულობთ იმაზე მეტ-ნაკლებად სწორი გადანაწილების ტექსტს, ვიდრე ერთიდაიგივე გამეორებადი სიტყვებია ხოლმე.</span>					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+ 
+
+
+<header id="Header">
+		<div class="col-sm-4">
+			<div class="logo"><a href="/"><img src="img/logo.png"/></a></div>
+		</div>
+		<div class="col-sm-8 text-right">
+			<div class="HeaderDiv">
+				<div class="HeaderMenu">
+				    <div class="navigation">					      
+						<li><a class="OpenModalClick" href="#QuestionModal">კითხვა პასუხი</a></li>
+						<li><a href="">ჩვენს შესახებ</a></li>
+						<li><a href="contact.html">კონტაქტი</a></li>	
+						<a class="AuthorizationButton OpenModalClick waves-effect waves-orange" href="#AuthorizationPopup">ავტორიზაცია</a>				         
+				    </div>
+				    <div class="nav_bg">
+				        <div class="nav_bar"> <span></span> <span></span> <span></span> </div>
+				    </div> 
+				</div>
+				<div class="HeaderTel">2 22 26 27</div>
+			</div>
+		</div>
+</header>
+
+
+
+<section id="ControlRoom">
+	<div class="container-fluid">
+		<div class="col-sm-4 animated bounceInLeft">
+			<div class="RoomSidebar">
+				<div class="item UserItem">ნიკოლოზ გეწაძე <span>62001041369</span></div>
+				<div class="item loansitem">სულ სესხი <span>62001041369</span></div>
+				<div class="item loansitem2">ყოველთვიური გადასახადი <span>62001041369</span></div>
+				<div class="item dateicon">ბოლო გადახდის თარიღი <span>62001041369</span></div>
+			</div>
+		</div>
+		<div class="col-sm-8  animated bounceInRight">
+			<div class="ControlRoomContent">
+				<table class="bordered CapexTable">
+			        <thead>
+			          <tr>
+			              <th>გადახდის თარიღი</th>
+			              <th>ძირითადი თანხა</th>
+			              <th>პროცენტი</th>
+			              <th>სრული თანხა</th>
+			          </tr>
+			        </thead>
+
+			        <tbody>
+			          <tr class="active">
+			            <td>01.04.2016</td>
+			            <td>1340 <span>ლარი</span><label>l</label></td>
+			            <td>380 <span>ლარი</span><label>l</label></td>
+			            <td>700.90 <span>ლარი</span><label>l</label></td>
+			          </tr>
+			          <tr  class="active">
+			            <td>01.04.2016</td>
+			            <td>1340 <span>ლარი</span><label>l</label></td>
+			            <td>380 <span>ლარი</span><label>l</label></td>
+			            <td>700.90 <span>ლარი</span><label>l</label></td>
+			          </tr>
+			          <tr>
+			            <td>01.04.2016</td>
+			            <td>1340 <span>ლარი</span><label>l</label></td>
+			            <td>380 <span>ლარი</span><label>l</label></td>
+			            <td>700.90 <span>ლარი</span><label>l</label></td>
+			          </tr>
+			          <tr>
+			            <td>01.04.2016</td>
+			            <td>1340 <span>ლარი</span><label>l</label></td>
+			            <td>380 <span>ლარი</span><label>l</label></td>
+			            <td>700.90 <span>ლარი</span><label>l</label></td>
+			          </tr>
+			          <tr>
+			            <td>01.04.2016</td>
+			            <td>1340 <span>ლარი</span><label>l</label></td>
+			            <td>380 <span>ლარი</span><label>l</label></td>
+			            <td>700.90 <span>ლარი</span><label>l</label></td>
+			          </tr>
+			          <tr>
+			            <td>01.04.2016</td>
+			            <td>1340 <span>ლარი</span><label>l</label></td>
+			            <td>380 <span>ლარი</span><label>l</label></td>
+			            <td>700.90 <span>ლარი</span><label>l</label></td>
+			          </tr>
+			          <tr>
+			            <td>01.04.2016</td>
+			            <td>1340 <span>ლარი</span><label>l</label></td>
+			            <td>380 <span>ლარი</span><label>l</label></td>
+			            <td>700.90 <span>ლარი</span><label>l</label></td>
+			          </tr>
+			          <tr>
+			            <td>01.04.2016</td>
+			            <td>1340 <span>ლარი</span><label>l</label></td>
+			            <td>380 <span>ლარი</span><label>l</label></td>
+			            <td>700.90 <span>ლარი</span><label>l</label></td>
+			          </tr>
+			          <tr>
+			            <td>01.04.2016</td>
+			            <td>1340 <span>ლარი</span><label>l</label></td>
+			            <td>380 <span>ლარი</span><label>l</label></td>
+			            <td>700.90 <span>ლარი</span><label>l</label></td>
+			          </tr>
+			        </tbody>
+			    </table>		
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+</body>
+</html>    
