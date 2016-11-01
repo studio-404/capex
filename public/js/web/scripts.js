@@ -241,6 +241,7 @@ $(window).resize(function() {
 var Config = {
   website:"http://capex.404.ge/",
   ajax:"http://capex.404.ge/ajax/index", 
+  profile:"http://capex.404.ge/profile/index", 
   pleaseWait:"მოთხოვნა იგზავნება..."
 };
 
@@ -267,6 +268,26 @@ var makeStatement = function(){
       }
   });
 }
+
+var signintry = function(user, pass){
+  var ajaxFile = "/callapi";
+  if(typeof user == "undefined" || typeof pass == "undefined"){
+    $(".modal-message-box").html("E4");
+  }else{
+    $.ajax({
+      method: "POST",
+      url: Config.ajax + ajaxFile,
+      data: { user: user, pass:pass }
+    }).done(function( msg ) {
+      var obj = $.parseJSON(msg);
+      if(obj.Name){
+        location.href = Config.profile;
+      }else{
+        $(".modal-message-box").html("მომხმარებლის სახელი ან პაროლი არასწორია !");
+      }
+    });
+  }
+};
 
 var b64EncodeUnicode = function(str) {
     return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {

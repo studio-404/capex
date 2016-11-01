@@ -10,7 +10,7 @@ class cities
 	{
 		$out = 0;
 		$this->conn = $conn;
-		if(method_exists("modules", $args['method']))
+		if(method_exists("cities", $args['method']))
 		{
 			$out = $this->$args['method']($args);
 		}
@@ -28,4 +28,19 @@ class cities
 		}
 		return $fetch;
 	}
+
+	private function selectById($args)
+	{
+		$fetch = array();
+		$select = "SELECT `names` FROM `cities` WHERE `id`=:id";
+		$prepare = $this->conn->prepare($select);
+		$prepare->execute(array(
+			":id"=>$args['id']
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);
+		}
+		return $fetch['names'];
+	}
+
 }

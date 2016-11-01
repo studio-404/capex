@@ -14,6 +14,36 @@ class statements
 		return $out;
 	}
 
+	private function removeStatement($args)
+	{
+		$update = "UPDATE `statements` SET `status`=:one WHERE `id`=:id";
+		$prepare = $this->conn->prepare($update);
+		$prepare->execute(array(
+			":id"=>$args['id'],
+			":one"=>1
+		)); 
+		if($prepare->rowCount())
+		{
+			return 1;
+		}
+		return 0;
+	}
+
+	private function selectByPersonalNumber($args)
+	{
+		$fetch = array();
+		$select = "SELECT * FROM `statements` WHERE `personal_number`=:personal_number AND `status`!=:one";
+		$prepare = $this->conn->prepare($select); 
+		$prepare->execute(array(
+			":personal_number"=>$args['pid'],
+			":one"=>1 
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
+		}
+		return $fetch;
+	}
+
 	private function select($args)
 	{
 		$fetch = array();

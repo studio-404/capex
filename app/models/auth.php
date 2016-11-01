@@ -13,21 +13,22 @@ class auth
 		$out .= "<div class=\"modal-content\">";
 		$out .= "<div class=\"modal-action modal-close\"></div>";
 		$out .= "<h4>ავტორიზაცია</h4>";
+		$out .= "<div class=\"modal-message-box\"></div>";
 		$out .= "<div class=\"AutorizationForm\">";
 		$out .= "<div class=\"row\">";
 		$out .= "<div class=\"input-field col-sm-12\">";
 		$out .= "<div class=\"form-group\">";
-		$out .= "<input id=\"PersonalNumber\" type=\"text\" class=\"\">";
+		$out .= "<input id=\"PersonalNumber\" name=\"PersonalNumber\" type=\"text\" class=\"\">";
 		$out .= "<label for=\"PersonalNumber\">პირადი ნომერი</label>";
 		$out .= "</div></div>";
 		$out .= "<div class=\"input-field col-sm-12\">";
 		$out .= "<div class=\"form-group\">";
-		$out .= "<input id=\"PersonalPass\" type=\"password\" class=\"\">";
+		$out .= "<input id=\"PersonalPass\" name=\"PersonalPass\" type=\"password\" class=\"\">";
 		$out .= "<label for=\"PersonalPass\">პაროლი</label>";
 		$out .= "</div></div>";
 		$out .= "<div class=\"input-field col-sm-12\">";
 		$out .= "<div class=\"form-group\">";
-		$out .= "<div class=\"ButtonOrange waves-effect waves-light\">შესვლა</div>";
+		$out .= "<div class=\"ButtonOrange waves-effect waves-light\" onclick=\"signintry($('#PersonalNumber').val(), $('#PersonalPass').val())\">შესვლა</div>";
 		$out .= "</div></div></div></div></div></div>";
 		return $out;
 	}

@@ -468,6 +468,66 @@ var formModuleAdd = function(moduleSlug){
 	}
 };
 
+ 
+var searchStatement = function(pid){
+	var ajaxFile = "/searchStatement";
+	var header = "<h4>განცხადება</h4><p class=\"modal-message-box\"></p>";
+	var content = "<p>გთხოვთ დაიცადოთ...</p>";
+	var footer = "<a href=\"javascript:void(0)\" class=\"waves-effect waves-green btn-flat modal-close\">დახურვა</a>";
+
+	$("#modal1 .modal-content").html(header + content);
+	$("#modal1 .modal-footer").html(footer);
+	$('#modal1').openModal();
+
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { pid: pid }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Error.Code==1){
+			var errorText = "<p>" + obj.Error.Text +"</p>";
+			$("#modal1 .modal-content").html(header + errorText);
+		}else{
+			var table = "<p>" + obj.table +"</p>";
+			$("#modal1 .modal-content").html(header + table);
+		}
+	});
+};
+
+var askRemoveStatement = function(id){
+	var header = "<h4>შეტყობინება</h4><p class=\"modal-message-box\">გნებავთ წაშალოთ მონაცემი ?</p>";
+	var footer = "<a href=\"javascript:void(0)\" onclick=\"removeStatement('"+id+"')\" class=\"waves-effect waves-green btn-flat\">დიახ</a>";
+	footer += "<a href=\"javascript:void(0)\" class=\"waves-effect waves-green btn-flat modal-close\">დახურვა</a>";
+
+	$("#modal1 .modal-content").html(header);
+	$("#modal1 .modal-footer").html(footer);
+	$('#modal1').openModal();	
+}; 
+
+var removeStatement = function(id){
+	var ajaxFile = "/removeStatement";
+	if(typeof id == "undefined"){
+		$(".modal-message-box").html("E4");
+	}else{
+		$.ajax({
+			method: "POST",
+			url: Config.ajax + ajaxFile,
+			data: { id: id }
+		}).done(function( msg ) {
+			var obj = $.parseJSON(msg);
+			if(obj.Error.Code==1){
+				$(".modal-message-box").html(obj.Error.Text);
+			}else if(obj.Success.Code==1){
+				$(".modal-message-box").html(obj.Success.Text);
+				location.reload();
+			}else{
+				$(".modal-message-box").html("E5");
+			}
+		});
+	}
+};
+
 $(document).ready(function(){
     $('.collapsible').collapsible({
       accordion : false 

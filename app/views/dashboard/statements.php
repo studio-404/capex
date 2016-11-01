@@ -5,12 +5,24 @@
 	<title>Admin Panel</title>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="<?=$data["header"]["public"]?>css/materialize.css" type="text/css" rel="stylesheet" />
+	<link href="<?=$data["header"]["public"]?>css/jquery-ui.min.css" type="text/css" rel="stylesheet" />
 	<link href="<?=$data["header"]["public"]?>css/manager-style.css" type="text/css" rel="stylesheet" />
-	<script src="<?=$data["header"]["public"]?>js/jquery-3.1.1.min.js"></script>
-	<script src="<?=$data["header"]["public"]?>js/materialize.min.js"></script>
-	<script src="<?=$data["header"]["public"]?>js/manager-scripts.js"></script>
+	<script src="<?=$data["header"]["public"]?>js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/materialize.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/tinymce/tinymce.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/manager-scripts.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+<!-- MOdals START -->
+	<div id="modal1" class="modal">
+		<div class="modal-content">
+		</div>
+		<div class="modal-footer">
+		</div>
+	</div>
+<!-- MOdals END-->
+
 	<section class="mainContainer">
 
 		<nav>
@@ -21,9 +33,9 @@
 
 		<section class="body">
 			<div class="input-field margin-bottom-20">
-				<input id="icon_prefix" type="text" class="validate">
-				<label for="icon_prefix">პირადი ნომერი</label>
-				<a class="waves-effect waves-light btn"><i class="material-icons left">search</i>ძებნა</a>
+				<input id="personalID" type="text" class="validate">
+				<label for="personalID">პირადი ნომერი</label>
+				<a class="waves-effect waves-light btn" onclick="searchStatement($('#personalID').val())"><i class="material-icons left">search</i>ძებნა</a>
 			</div>
 
 			<table class="highlight">

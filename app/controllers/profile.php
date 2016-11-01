@@ -1,11 +1,13 @@
-<?php
-class Home extends Controller
+<?php 
+class Profile extends Controller
 {
-	
 	public function __construct()
 	{
-		unset($_SESSION['capex_user']);
-		session_destroy();
+		if(!isset($_SESSION["capex_user"]))
+		{
+			require_once 'app/functions/redirect.php';
+			functions\redirect::url("/");
+		}
 	}
 
 	public function index($name = '')
@@ -47,7 +49,7 @@ class Home extends Controller
 		$header->email = strip_tags($contactData['email']);
 
 		/* view */
-		$this->view('home/index', [
+		$this->view('profile/index', [
 			"header"=>array(
 				"website"=>Config::WEBSITE,
 				"public"=>Config::PUBLIC_FOLDER
@@ -62,5 +64,4 @@ class Home extends Controller
 			"email"=>$header->email 
 		]);
 	}
-
 }
