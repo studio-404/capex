@@ -71,7 +71,7 @@ class dashboard extends Controller
 
 		// database
 		$getUrl = explode("/", $url->getUrl());
-		$itemPerPage = 20;
+		$itemPerPage = 10;
 		$modules = new Database('modules', array(
 			"method"=>"select",
 			"parsed_url"=>$getUrl,
@@ -113,11 +113,31 @@ class dashboard extends Controller
 
 	public function statements()
 	{
+		require_once 'app/functions/string.php';
+		require_once 'app/functions/pagination.php';
+
+		$pagination = new functions\pagination();
+
+		$itemPerPage = 10;
+		$statements = new Database('statements', array(
+			"method"=>"select",
+			"itemPerPage"=>$itemPerPage
+		));
+		$getter = $statements->getter();
+
+		// statements
+		$statementsView = $this->model('statementsView');
+		$statementsView->data = $getter;
+
 		$this->view('dashboard/statements', [
 			"header" => array(
 				"website" => Config::WEBSITE,
 				"public" => Config::PUBLIC_FOLDER
 			),
+			"theStatements" => $statementsView->index(), 
+			"itemPerPage"=>$itemPerPage,
+			"statements"=>$getter,
+			"pagination"=>$pagination,
 			"nav" => $this->managerNavigation->index(),
 			"footerNav" => $this->managerNavigation->footer()
 		]);

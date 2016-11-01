@@ -37,8 +37,7 @@
 				<?php
 				$module_slug = (isset($data['parsed_url'][2])) ? $data['parsed_url'][2] : "faq";
 				echo $data['parentModel'];
-				?>
-					
+				?>					
 				</div>
 				<div class="col s9">
 					<a href="javascript:void(0)" onclick="add_module('<?=$module_slug?>')" class="waves-effect waves-light btn margin-bottom-20" ><i class="material-icons left">note_add</i>დამატება</a>
@@ -53,7 +52,7 @@
 						</thead>
 
 						<tbody>
-							<?=$data['theModels']?>							
+							<?=$data['theModels']?>					
 						</tbody>
 					</table>
 					<?php 

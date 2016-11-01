@@ -11,6 +11,8 @@ class loan
 	{
 		$out = "<div id=\"ApplicationModal\" class=\"modal ApplicationModal\">";
 		$out .= "<form id=\"loanForm\" name=\"loanForm\">";
+		$out .= "<input type=\"hidden\" name=\"loanMoney\" id=\"loanMoney2\" value=\"0\" />";
+		$out .= "<input type=\"hidden\" name=\"loanMonth\" id=\"loanMonth2\" value=\"0\" />";
 		$out .= "<div class=\"modal-content\">";
 		$out .= "<div class=\"modal-action modal-close\"></div>";
 		$out .= "<div class=\"AutorizationForm\">";
@@ -20,10 +22,14 @@ class loan
 		$out .= "<label class=\"TitleLabel\">სამომხმარებლო სესხის განაცხადი</label>";
 		$out .= "</div>";
 		$out .= "<div class=\"col-sm-4\">";
-		$out .= "<label class=\"LoansCountDiv\"><span id=\"loanMoney\">1250</span><strong>l</strong> <span>/ <span id=\"loanMonth\">6</span> <b>თვით</b></span></label>";
+		$out .= "<label class=\"LoansCountDiv\"><span id=\"loanMoney\">0</span><strong>l</strong> <span>/ <span id=\"loanMonth\">0</span> <b>თვით</b></span></label>";
 		$out .= "</div></div>";
-		$out .= "<div class=\"input-field col-sm-4\">";
 
+		$out .= "<div class=\"col-sm-12\">";
+		$out .= "<div class=\"modal-message-box\"></div>";
+		$out .= "</div>";
+
+		$out .= "<div class=\"input-field col-sm-4\">";
 		$out .= "<div class=\"form-group\">";
 		$out .= "<input id=\"loan-name\" name=\"loan-name\" type=\"text\" class=\"\">";
 		$out .= "<label for=\"loan-name\">სახელი</label>";
@@ -135,7 +141,7 @@ class loan
 		$out .= "<div class=\"input-field col-sm-9\">";
 		$out .= "<div class=\"form-group\">";
 		$out .= "<div class=\"ApplicationFooterText\">";
-		$out .= "<input type=\"checkbox\" class=\"filled-in\" id=\"checkbox1\" name=\"checkbox1\" checked=\"checked\" />";
+		$out .= "<input type=\"checkbox\" class=\"filled-in\" id=\"checkbox1\" name=\"checkbox1\" />";
       	$out .= "<label for=\"checkbox1\">გავეცანი და ვეთანხმები <a href=\"#\">ხელშეკრულების</a> პირობებს</label> ";
 		$out .= "<input type=\"checkbox\" class=\"filled-in\" id=\"checkbox2\" name=\"checkbox2\" />";
       	$out .= "<label for=\"checkbox2\">საკრედიტო ისტორიის გადამოწმება სს კრედიტინფო საქართველოს მონაცემთა ბაზაში</label>";

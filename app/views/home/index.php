@@ -55,7 +55,7 @@
 	</div>	
 </section>
 
- <section id="ContactPage" class="height100">
+ <section id="ContactPage" class=""><!--height100-->
 	<div class="ContactHeaderDiv">
 		<div class="ContactHeader">
 			<div class="Title1">გაქვთ კითხვები? დაგვიკავშირდით</div>

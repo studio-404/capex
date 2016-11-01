@@ -38,41 +38,18 @@
 				</thead>
 
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td><a href="">27/10/2016 20:22:01</a></td>
-						<td><a href="">გიორგი გვაზავა</a></td>
-						<td><a href="">01027034324</a></td>
-						<td>
-							<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="სრულად ნახვა">pageview</i></a>
-
-							<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="წაშლა">delete</i></a>
-						</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td><a href="">27/10/2016 20:22:00</a></td>
-						<td><a href="">გიორგი გვაზავა</a></td>
-						<td><a href="">01027034324</a></td>
-						<td>
-							<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="სრულად ნახვა">pageview</i></a>
-
-							<a href=""><i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="წაშლა">delete</i></a>
-						</td>
-					</tr>
-					
+					<?=$data['theStatements']?>					
 				</tbody>
 			</table>
 
-			<ul class="pagination margin-top-40">
-				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-				<li class="active"><a href="#!">1</a></li>
-				<li class="waves-effect"><a href="#!">2</a></li>
-				<li class="waves-effect"><a href="#!">3</a></li>
-				<li class="waves-effect"><a href="#!">4</a></li>
-				<li class="waves-effect"><a href="#!">5</a></li>
-				<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-			</ul>
+			<?php 
+			if(count($data['statements'])) : 
+					$total = $data['statements'][0]['counted']; 
+					$itemPerPage = $data['itemPerPage']; 
+					$pagination = $data['pagination'];
+					echo $pagination->index($total, $itemPerPage);
+			endif;
+			?>
 			
 		</section>
 

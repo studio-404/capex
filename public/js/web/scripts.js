@@ -13,6 +13,7 @@ $( function() {
         $(".drop1").text( ui.value );
       $(".money label").text( ui.value );
       $("#loanMoney").text(ui.value);
+      $("#loanMoney2").val(ui.value);
       summa1(ui.value);
       }
     });
@@ -35,6 +36,7 @@ $( function() {
         $( ".drop2" ).text( ui.value );
       $( ".month label" ).text( ui.value );
       $("#loanMonth").text(ui.value);
+      $("#loanMonth2").val(ui.value);
       summa2(ui.value);
       }
     });
@@ -243,52 +245,34 @@ var Config = {
 };
 
 var makeStatement = function(){
-  
-  var d = [];
-  var i = 0;
-  $('#loanForm input').each(function(){
-      var type = $(this).attr("type"); 
-      var id = $(this).attr("id"); 
-      if(type=="checkbox"){
-        if($(this).is(':checked')){
-          var value = "true";
-        }else{
-          var value = "false";
-        }        
-      }else if(type=="text"){
-        var value = $(this).val(); 
-      }
-      d[i] = { "id":id, "type":type, "value":value };
-      i++;
-  });  
+  var form = $("#loanForm");
+  var serial = form.serialize();
 
-  $('#loanForm input select').each(function(){
-    var type2 = "select";
-    var id2 = $(this).attr("id"); 
-    var value2 = $(this).val(); 
-    d[i] = { "id":id2, "type":type2, "value":value2 };
-    i++;
-  });
-
-  var serialized = serialize(d);
   var ajaxFile = "/makeStatement";
   $.ajax({
       method: "POST",
       url: Config.ajax + ajaxFile,
-      data: { formData:serialized }
+      data: { formData:serial }
     }).done(function( msg ) {
       var obj = $.parseJSON(msg);
-      // if(obj.Error.Code==1){
-      //   $(".modal-message-box").html(obj.Error.Text);
-      // }else if(obj.Success.Code==1){
-      //   $(".modal-message-box").html(obj.Success.Text);
-      //   scrollTop();
-      // }else{
-      //   $(".modal-message-box").html("E");
-      // }
+      if(obj.Error.Code==1){
+        $(".modal-message-box").html(obj.Error.Text);
+      }else if(obj.Success.Code==1){
+        $(".modal-message-box").html(obj.Success.Text);
+        $("#loanForm input[type='text']").each(function(){
+          $(this).val('');
+        });
+      }else{
+        $(".modal-message-box").html("E");
+      }
   });
 }
 
+var b64EncodeUnicode = function(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+        return String.fromCharCode('0x' + p1);
+    }));
+};
 
 var serialize = function(mixed_value) {
   var val, key, okey,
