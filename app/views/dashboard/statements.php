@@ -15,7 +15,7 @@
 </head>
 <body>
 <!-- MOdals START -->
-	<div id="modal1" class="modal">
+	<div id="modal1" class="materialize modal">
 		<div class="modal-content">
 		</div>
 		<div class="modal-footer">
@@ -23,7 +23,7 @@
 	</div>
 <!-- MOdals END-->
 
-	<section class="mainContainer">
+	<section class="materialize mainContainer">
 
 		<nav>
 			<div class="nav-wrapper">

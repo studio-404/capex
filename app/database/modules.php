@@ -45,6 +45,8 @@ class modules
 	{
 		$out['phone'] = "";
 		$out['email'] = "";
+		$out['map'] = "";
+		$out['agreement'] = "";
 		$select = "SELECT `description` FROM `usefull` WHERE `type`=:type AND `lang`=:lang AND `visibility`!=:one AND `status`!=:one ORDER BY `id` ASC";
 		$prepare = $this->conn->prepare($select);
 		$prepare->execute(array(
@@ -56,6 +58,8 @@ class modules
 			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
 			$out['phone'] = $fetch[0]['description'];
 			$out['email'] = $fetch[1]['description'];
+			$out['map'] = $fetch[2]['description'];
+			$out['agreement'] = $fetch[3]['description'];
 		}
 		
 		return $out;
@@ -122,7 +126,7 @@ class modules
 		$date = strtotime($args["date"]);
 		$title = $args["title"];
 		$description = $args["pageText"];
-		$url = $args["link"];
+		$url = (!empty($args["link"])) ? $args["link"] : "";
 
 
 		$update = "UPDATE `usefull` SET 
@@ -170,7 +174,7 @@ class modules
 		$type = $args['moduleSlug'];
 		$title = $args['title'];
 		$pageText = $args['pageText'];
-		$link = $args['link'];
+		$link = (!empty($args["link"])) ? $args["link"] : "";
 
 		$select = "SELECT `title` FROM `languages`";
 		$prepare = $this->conn->prepare($select);

@@ -4,6 +4,8 @@ class header
 	public $publicFolder;
 	public $email;
 	public $contactNumber;
+	public $map;
+	public $agreement;
 
 	public function __construct()
 	{

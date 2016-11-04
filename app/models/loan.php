@@ -2,9 +2,27 @@
 class loan
 {
 	public $cities;
+	public $agreement;
 	public function __construct()
 	{
+		$contactData = new Database('modules', array(
+			"method"=>"selectContactData",
+			"lang"=>"ge"
+		));
+		$contactData = $contactData->getter();
+		$this->agreement = strip_tags($contactData['agreement'],'<a>');
 
+		try{
+			$dom = new DOMDocument();
+			@$dom->loadHTML(mb_convert_encoding($this->agreement, 'HTML-ENTITIES', 'UTF-8'));
+			$x = new DOMXPath($dom);
+
+			foreach($x->query("//a") as $node)
+			{   
+				$node->setAttribute("target","_blank");
+			}
+			$this->agreement = $dom->saveHtml();
+		}catch(Exception $e){}
 	}
 
 	public function index()
@@ -142,9 +160,9 @@ class loan
 		$out .= "<div class=\"form-group\">";
 		$out .= "<div class=\"ApplicationFooterText\">";
 		$out .= "<input type=\"checkbox\" class=\"filled-in\" id=\"checkbox1\" name=\"checkbox1\" />";
-      	$out .= "<label for=\"checkbox1\">გავეცანი და ვეთანხმები <a href=\"#\">ხელშეკრულების</a> პირობებს</label> ";
+      	$out .= "<label for=\"checkbox1\" style=\"display:inline-block\">გავეცანი და ვეთანხმები ".$this->agreement." პირობებს</label> ";
 		$out .= "<input type=\"checkbox\" class=\"filled-in\" id=\"checkbox2\" name=\"checkbox2\" />";
-      	$out .= "<label for=\"checkbox2\">საკრედიტო ისტორიის გადამოწმება სს კრედიტინფო საქართველოს მონაცემთა ბაზაში</label>";
+      	$out .= "<label for=\"checkbox2\" style=\"display:inline-block\">საკრედიტო ისტორიის გადამოწმება სს კრედიტინფო საქართველოს მონაცემთა ბაზაში</label>";
 		$out .= "</div></div></div>";
 
 		$out .= "<div class=\"input-field col-sm-3\">";

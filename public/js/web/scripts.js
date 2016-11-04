@@ -146,22 +146,6 @@ $('body').on("click", function (ev) {
 });
 
 
-
-function initMap() {
-        var uluru = {lat: 41.6983177, lng: 44.7562612};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
-          center: uluru,
-        });
-        var image = '../img/map.png';
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map,
-          icon: image
-        });
-      }
-
-
 $('.modal-trigger').leanModal({
     ready: function () {
         var modelImgW = $('.modal-content img').innerWidth();
@@ -266,13 +250,14 @@ var makeStatement = function(){
       }else{
         $(".modal-message-box").html("E");
       }
+      scrollTop();
   });
 }
 
 var signintry = function(user, pass){
   var ajaxFile = "/callapi";
-  if(typeof user == "undefined" || typeof pass == "undefined"){
-    $(".modal-message-box").html("E4");
+  if(typeof user == "undefined" || typeof pass == "undefined" || user=="" || pass==""){
+    $(".modal-message-box-auth").html("მომხმარებლის სახელი ან პაროლი არასწორია !");
   }else{
     $.ajax({
       method: "POST",
@@ -283,105 +268,13 @@ var signintry = function(user, pass){
       if(obj.Name){
         location.href = Config.profile;
       }else{
-        $(".modal-message-box").html("მომხმარებლის სახელი ან პაროლი არასწორია !");
+        $(".modal-message-box-auth").html("მომხმარებლის სახელი ან პაროლი არასწორია !");
       }
     });
   }
 };
 
-var b64EncodeUnicode = function(str) {
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-        return String.fromCharCode('0x' + p1);
-    }));
-};
-
-var serialize = function(mixed_value) {
-  var val, key, okey,
-  ktype = '',
-  vals = '',
-  count = 0,
-  _utf8Size = function(str) {
-    var size = 0,
-    i = 0,
-    l = str.length,
-    code = '';
-    for (i = 0; i < l; i++) {
-      code = str.charCodeAt(i);
-      if (code < 0x0080) {
-        size += 1;
-      } else if (code < 0x0800) {
-        size += 2;
-      } else {
-      size += 3;
-      }
-    }
-    return size;
-  };
-  _getType = function(inp) {
-    var match, key, cons, types, type = typeof inp;
-
-    if (type === 'object' && !inp) {
-      return 'null';
-    }
-    if (type === 'object') {
-      if (!inp.constructor) {
-        return 'object';
-      }
-      cons = inp.constructor.toString();
-      match = cons.match(/(\w+)\(/);
-      if (match) {
-        cons = match[1].toLowerCase();
-      }
-      types = ['boolean', 'number', 'string', 'array'];
-      for (key in types) {
-        if (cons == types[key]) {
-          type = types[key];
-          break;
-        }
-      }
-    }
-    return type;
-  };
-  type = _getType(mixed_value);
-
-  switch (type) {
-    case 'function':
-      val = '';
-      break;
-    case 'boolean':
-      val = 'b:' + (mixed_value ? '1' : '0');
-      break;
-    case 'number':
-      val = (Math.round(mixed_value) == mixed_value ? 'i' : 'd') + ':' + mixed_value;
-      break;
-    case 'string':
-      val = 's:' + _utf8Size(mixed_value) + ':"' + mixed_value + '"';
-      break;
-    case 'array':
-      case 'object':
-        val = 'a';
-
-        for (key in mixed_value) {
-          if (mixed_value.hasOwnProperty(key)) {
-            ktype = _getType(mixed_value[key]);
-            if (ktype === 'function') {
-              continue;
-            }
-            okey = (key.match(/^[0-9]+$/) ? parseInt(key, 10) : key);
-            vals += this.serialize(okey) + this.serialize(mixed_value[key]);
-            count++;
-          }
-        }
-        val += ':' + count + ':{' + vals + '}';
-        break;
-    case 'undefined':
-      default:
-        val = 'N';
-        break;
-  }
-
-  if (type !== 'object' && type !== 'array') {
-    val += ';';
-  }
-  return val;
+var scrollTop = function(){
+  var body = $("html, body");
+  body.stop().animate({scrollTop:0}, '500', 'swing', function() { });
 };

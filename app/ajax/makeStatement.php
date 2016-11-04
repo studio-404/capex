@@ -37,20 +37,6 @@ class makeStatement
 					"Details"=>""
 				)
 			);
-		}else if(!isset($params['checkbox1']) || !isset($params['checkbox2']) || $params['checkbox1']!="on" || $params['checkbox2']!="on")
-		{
-			$this->out = array(
-				"Error" => array(
-					"Code"=>1, 
-					"Text"=>"გთხოვთ დაეთანხმოთ წესებს და ისტორიის გადამოწმებას სს კრედიტინფო საქართველოს მონაცემთა ბაზაში !",
-					"Details"=>"!"
-				), 
-				"Success" => array(
-					"Code"=>0,
-					"Text"=>"",
-					"Details"=>""
-				)
-			);
 		}else if(
 			(!isset($params['loan-name']) || $params['loan-name']=="") || 
 			(!isset($params['loan-surname']) || $params['loan-surname']=="") || 
@@ -74,6 +60,20 @@ class makeStatement
 				"Error" => array(
 					"Code"=>1, 
 					"Text"=>"ყველა ველი სავალდებულოა !",
+					"Details"=>"!"
+				), 
+				"Success" => array(
+					"Code"=>0,
+					"Text"=>"",
+					"Details"=>""
+				)
+			);
+		}else if(!isset($params['checkbox1']) || !isset($params['checkbox2']) || $params['checkbox1']!="on" || $params['checkbox2']!="on")
+		{
+			$this->out = array(
+				"Error" => array(
+					"Code"=>1, 
+					"Text"=>"გთხოვთ დაეთანხმოთ წესებს და ისტორიის გადამოწმებას სს კრედიტინფო საქართველოს მონაცემთა ბაზაში !",
 					"Details"=>"!"
 				), 
 				"Success" => array(

@@ -13,7 +13,7 @@ class auth
 		$out .= "<div class=\"modal-content\">";
 		$out .= "<div class=\"modal-action modal-close\"></div>";
 		$out .= "<h4>ავტორიზაცია</h4>";
-		$out .= "<div class=\"modal-message-box\"></div>";
+		$out .= "<div class=\"modal-message-box-auth\"></div>";
 		$out .= "<div class=\"AutorizationForm\">";
 		$out .= "<div class=\"row\">";
 		$out .= "<div class=\"input-field col-sm-12\">";

@@ -23,7 +23,7 @@ class editFormModules
 		$link = functions\request::index("POST","link");
 		
 
-		if($idx == "" || $lang=="" || $date=="" || $title=="" || $pageText=="" || $link=="")
+		if($idx == "" || $lang=="" || $date=="" || $title=="" || $pageText=="")
 		{
 			$this->out = array(
 				"Error" => array(

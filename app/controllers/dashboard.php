@@ -38,8 +38,9 @@ class dashboard extends Controller
 		$this->managerNavigation = $this->model('managerNavigation');
 		$this->managerNavigation->navigation = array(
 			"dashboard/index"=>"გვერდები",
-			"dashboard/modules/faq"=>"მოდულები",
+			"dashboard/modules/faq"=>"მოდულები", 
 			"dashboard/statements"=>"განაცხადები",
+			"dashboard/filemanager"=>"ფაილ მენეჯერი", 
 			"manager/index"=>"გასვლა"
 		);
 	}
@@ -138,6 +139,21 @@ class dashboard extends Controller
 			"itemPerPage"=>$itemPerPage,
 			"statements"=>$getter,
 			"pagination"=>$pagination,
+			"nav" => $this->managerNavigation->index(),
+			"footerNav" => $this->managerNavigation->footer()
+		]);
+	}
+
+	public  function filemanager()
+	{
+		require_once 'app/functions/string.php';
+		require_once 'app/functions/pagination.php';
+
+		$this->view('dashboard/filemanager', [
+			"header" => array(
+				"website" => Config::WEBSITE,
+				"public" => Config::PUBLIC_FOLDER
+			),
 			"nav" => $this->managerNavigation->index(),
 			"footerNav" => $this->managerNavigation->footer()
 		]);

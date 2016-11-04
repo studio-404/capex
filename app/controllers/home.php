@@ -5,7 +5,6 @@ class Home extends Controller
 	public function __construct()
 	{
 		unset($_SESSION['capex_user']);
-		session_destroy();
 	}
 
 	public function index($name = '')
@@ -43,8 +42,9 @@ class Home extends Controller
 		$homepage = $this->model('homepage');
 		$header->publicFolder = Config::PUBLIC_FOLDER;
 
-		$header->contactNumber = strip_tags($contactData['phone']);
-		$header->email = strip_tags($contactData['email']);
+		$header->contactNumber = (isset($contactData['phone'])) ? strip_tags($contactData['phone']) : "";
+		$header->email = (isset($contactData['email'])) ? strip_tags($contactData['email']) : "";
+		$header->map = (isset($contactData['map'])) ? strip_tags($contactData['map']) : "";
 
 		/* view */
 		$this->view('home/index', [
@@ -59,7 +59,8 @@ class Home extends Controller
 			"headerModel"=>$header->index(), 
 			"homepageModel"=>$homepage->index(),
 			"contactNumber"=>$header->contactNumber, 
-			"email"=>$header->email 
+			"email"=>$header->email, 
+			"map"=>$header->map
 		]);
 	}
 

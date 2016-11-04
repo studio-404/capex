@@ -410,14 +410,13 @@ var formModuleEdit = function(idx, lang){
 	var date = $("#date").val();
 	var title = $("#title").val();
 	var pageText = tinymce.get('pageText').getContent();
-	var link = $("#link").val();
+	var link = (typeof $("#link").val() === "undefined" || $("#link").val()=="") ? $("#link").val() : "empty";
 
 	$(".modal-message-box").html("გთხოვთ დაიცადოთ...");
 	if(
 		(typeof date === "undefined" || date=="") || 
 		(typeof title === "undefined" || title=="") || 
-		(typeof pageText === "undefined" || pageText=="") || 
-		(typeof link === "undefined" || link=="") 
+		(typeof pageText === "undefined" || pageText=="")
 	){
 		$(".modal-message-box").html("ყველა ველი სავალდებულოა !");
 	}else{
@@ -443,10 +442,10 @@ var formModuleAdd = function(moduleSlug){
 	var date = $("#date").val();
 	var title = $("#title").val();
 	var pageText = tinymce.get('pageText').getContent();
-	var link = $("#link").val();
+	var link = (typeof $("#link").val() === "undefined" || $("#link").val()=="") ? $("#link").val() : "empty";
 
 	var ajaxFile = "/addModule";
-	if(typeof moduleSlug == "undefined" || typeof date == "undefined" || typeof title === "undefined" || typeof pageText === "undefined" || typeof link === "undefined"){
+	if(typeof moduleSlug == "undefined" || typeof date == "undefined" || typeof title === "undefined" || typeof pageText === "undefined"){
 		$(".modal-message-box").html("E4");
 	}else{
 		$.ajax({
@@ -566,8 +565,25 @@ var tiny = function(selector){
 	    image_advtab: true, 
 	    extended_valid_elements : "iframe[src|width|height|name|align]", 
 	    relative_urls : 0, 
-		remove_script_host : 0
+		remove_script_host : 0, 
+		body_class: 'myTineMce', 
+		file_browser_callback : elFinderBrowser
 	});
+};
+
+var elFinderBrowser = function(field_name, url, type, win) {
+  tinymce.activeEditor.windowManager.open({
+    file: Config.website+'public/elfinder/elfinder.html',// use an absolute path!
+    title: 'elFinder 2.0',
+    width: 900,  
+    height: 450,
+    resizable: 'yes'
+  }, {
+    setUrl: function (url) {
+      win.document.getElementById(field_name).value = url;
+    }
+  });
+  return false;
 };
 
 var serialize = function(mixed_value) {

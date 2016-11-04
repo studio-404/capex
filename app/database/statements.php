@@ -50,7 +50,7 @@ class statements
 		$itemPerPage = $args['itemPerPage'];
 		$from = (isset($_GET['pn']) && $_GET['pn']>0) ? (($_GET['pn']-1)*$itemPerPage) : 0;
 		
-		$select = "SELECT (SELECT COUNT(`id`) FROM `statements` WHERE `status`!=:one) as counted, `id`, `date`, `name`, `surname`, `personal_number` FROM `statements` WHERE `status`!=:one LIMIT ".$from.",".$itemPerPage;
+		$select = "SELECT (SELECT COUNT(`id`) FROM `statements` WHERE `status`!=:one) as counted, `id`, `date`, `name`, `surname`, `personal_number` FROM `statements` WHERE `status`!=:one ORDER BY `date` DESC LIMIT ".$from.",".$itemPerPage;
 		$prepare = $this->conn->prepare($select); 
 		$prepare->execute(array(
 			":one"=>1

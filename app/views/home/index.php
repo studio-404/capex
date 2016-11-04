@@ -71,6 +71,21 @@
 </section>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt9-cvNNqWdw_li7Kn4-3XdFRxicO1S3w&callback=initMap"></script>  
+<script type="text/javascript">
+function initMap() {
+    var uluru = {<?=$data['map']?>};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      center: uluru,
+    });
+    var image = Config.website + 'public/img/map.png';
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+      icon: image
+    });
+}
+</script>
 
 </body>
 </html>    

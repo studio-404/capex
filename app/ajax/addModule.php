@@ -22,7 +22,7 @@ class addModule
 		$link = functions\request::index("POST","link");
 
 
-		if($moduleSlug=="" || $date=="" || $title=="" || $pageText=="" || $link=="")
+		if($moduleSlug=="" || $date=="" || $title=="" || $pageText=="")
 		{
 			$this->out = array(
 				"Error" => array(
