@@ -136,9 +136,20 @@ Responsive Menu
 */
 $(document).ready(function(){
     $('.nav_bar').click(function(){
-      $('.navigation').toggleClass('visible');
-      $('body').toggleClass('BodyOpacity');
+        $('.navigation').toggleClass('visible');
+        $('body').toggleClass('BodyOpacity');
     });
+	$('.MenuCloseClick').click(function(){
+        $('.navigation').removeClass('visible');
+        $('body').removeClass('BodyOpacity');
+    });
+	$(".MenuCloseClick2").click(function() {
+		$('.navigation').removeClass('visible');
+        $('body').removeClass('BodyOpacity');
+		$('html, body').animate({
+			scrollTop: $("body").offset().top
+		}, 1000);
+	});
 });
 
 $('body').on("click", function (ev) {

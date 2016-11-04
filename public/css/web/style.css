@@ -1305,7 +1305,7 @@ a.animated-button.victoria-two:after {
 
 .container_range .circle {
 	display: inline-block;
-	width: 7px;
+	width: 8px;
 	height: 8px;
 	background-color: #fff;
 	border-radius: 100%;
@@ -1326,7 +1326,7 @@ a.animated-button.victoria-two:after {
 .container_range .placeholder,
 .container_range #line1 .drop1,
 .container_range #line2 .drop2 {
-	width: 50px;
+	width: 44px;
 	height: 58px;
 	display: none;
 	background: url(../../img/place.png) no-repeat;
@@ -1344,7 +1344,7 @@ a.animated-button.victoria-two:after {
     top: auto;
     border: none;
     outline: none;
-    margin-left: -1.90em;
+    margin-left: -1.70em;
     background-size:100% 100%;
 }
 .container_range .circle.active .placeholder {
@@ -1408,7 +1408,7 @@ a.animated-button.victoria-two:after {
 
 	border:solid #d7b719 2px;
 
-	padding:5px 30px;
+	padding:5px 10px;
 
 	border-radius:5px;
 

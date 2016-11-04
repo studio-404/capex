@@ -30,9 +30,9 @@ class header
 		$out .= "<div class=\"CloseMenu\"></div>";
 		$out .= "</div>";
 		
-		$out .= "<li><a class=\"OpenModalClick\" href=\"#QuestionModal\">კითხვა პასუხი</a></li>";
-		$out .= "<li><a class=\"OpenModalClick\" href=\"#AboutUsPopup\">ჩვენს შესახებ</a></li>";
-		$out .= "<li><a class=\"ScrollAnimate\" href=\"http://capex.404.ge/#ContactPage\">კონტაქტი</a></li>";
+		$out .= "<li><a class=\"MenuCloseClick2 OpenModalClick\" href=\"#QuestionModal\">კითხვა პასუხი</a></li>";
+		$out .= "<li><a class=\"MenuCloseClick2 OpenModalClick\" href=\"#AboutUsPopup\">ჩვენს შესახებ</a></li>";
+		$out .= "<li><a class=\"MenuCloseClick ScrollAnimate\" href=\"http://capex.404.ge/#ContactPage\">კონტაქტი</a></li>";
 
 		if(!isset($_SESSION['capex_user'])){
 			$out .= "<a class=\"AuthorizationButton OpenModalClick waves-effect waves-orange\" href=\"#AuthorizationPopup\">ავტორიზაცია</a>";

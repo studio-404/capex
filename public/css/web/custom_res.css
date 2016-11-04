@@ -70,7 +70,7 @@
     .CloseMenu {
         width: 30px;
         height: 30px;
-        background: url('../img/x.png') no-repeat;
+        background: url('../../img/x.png') no-repeat;
         background-size: 100% 100%;
         position: absolute;
         z-index: 999;
@@ -101,6 +101,10 @@
         background-position:bottom;
     }
 
+	#ContactPage .ContactHeaderDiv {
+		background-size: auto 100%; 
+		background-position: center;
+	}
 
 
 }
@@ -129,6 +133,22 @@
     line-height:100px;
 
     }
+	.money label {
+		width:100px;
+		text-align:right;
+	} 
+	.month label {
+		width: 42px;
+		position: relative;
+		display: inline-block;
+		left: 5px;
+		text-align:right;
+	}
+	.procent div {
+		display:inline-block;
+		width: 150px;	
+		text-align:left;
+	}
        
 }
 

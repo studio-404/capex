@@ -14,6 +14,7 @@
 <link href="http://www.twins.ho.ua/credit/css/jquery-ui.min.css" rel="stylesheet" />
 <link href="<?=$data["header"]["public"]?>css/web/materialize.css" rel="stylesheet" />
 <link href="<?=$data["header"]["public"]?>css/web/bootstrap.css" rel="stylesheet" />
+<link href="<?=$data["header"]["public"]?>css/web/animate.css" rel="stylesheet" />
 <link href="<?=$data["header"]["public"]?>css/web/style.css" rel="stylesheet" />
 <link href="<?=$data["header"]["public"]?>css/web/custom_res.css" rel="stylesheet" />
 </head>
@@ -43,7 +44,7 @@
 						<div class="result">
 							<span class="money"><label>0</label>l</span>
 							<span class="month"><label>0</label> თვით</span>
-							<span class="procent">თვეში <label>0</label><strong>l</strong></span>
+							<span class="procent">თვეში <div><label>0</label><strong>l</strong></div></span>
 						</div>
 					</div>
 				</div>
