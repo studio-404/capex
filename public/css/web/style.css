@@ -1332,7 +1332,7 @@ a.animated-button.victoria-two:after {
 	background: url(../../img/place.png) no-repeat;
 	background-size: contain;
 	position: absolute;
-	left: -1.55em;
+	left: -1.30em;
 	bottom: 15px;
 	text-align: center;
 	padding-top: 1.10em;
@@ -1495,4 +1495,9 @@ a.animated-button.victoria-two:after {
     top: -9px;
     right: 0;
     background: #fafafa;
+}
+
+.select-wrapper input.select-dropdown {height:40px;}
+.dropdown-content {
+	max-height:200px !important;
 }

@@ -40,8 +40,26 @@ class statements
 		));
 		if($prepare->rowCount()){
 			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
+			if($fetch[0]["read"]==0){
+				$this->updateRead($fetch[0]["id"]);
+			}
 		}
 		return $fetch;
+	}
+
+	private function updateRead($id)
+	{
+		$update = "UPDATE `statements` SET `read`=:one WHERE `id`=:id";
+		$prepare = $this->conn->prepare($update);
+		$prepare->execute(array(
+			":id"=>$id, 
+			":one"=>1
+		)); 
+		if($prepare->rowCount())
+		{
+			return 1;
+		}
+		return 0;
 	}
 
 	private function select($args)
@@ -50,7 +68,7 @@ class statements
 		$itemPerPage = $args['itemPerPage'];
 		$from = (isset($_GET['pn']) && $_GET['pn']>0) ? (($_GET['pn']-1)*$itemPerPage) : 0;
 		
-		$select = "SELECT (SELECT COUNT(`id`) FROM `statements` WHERE `status`!=:one) as counted, `id`, `date`, `name`, `surname`, `personal_number` FROM `statements` WHERE `status`!=:one ORDER BY `date` DESC LIMIT ".$from.",".$itemPerPage;
+		$select = "SELECT (SELECT COUNT(`id`) FROM `statements` WHERE `status`!=:one) as counted, `id`, `date`, `name`, `surname`, `personal_number`, `read` FROM `statements` WHERE `status`!=:one ORDER BY `date` DESC LIMIT ".$from.",".$itemPerPage;
 		$prepare = $this->conn->prepare($select); 
 		$prepare->execute(array(
 			":one"=>1

@@ -3,15 +3,21 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Admin Panel</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="<?=$data["header"]["public"]?>css/materialize.css" type="text/css" rel="stylesheet" />
+	<link href="<?=$data["header"]["public"]?>css/jquery-ui.min.css" type="text/css" rel="stylesheet" />
 	<link href="<?=$data["header"]["public"]?>css/manager-style.css" type="text/css" rel="stylesheet" />
-	<script src="<?=$data["header"]["public"]?>js/jquery-3.1.1.min.js"></script>
-	<script src="<?=$data["header"]["public"]?>js/materialize.min.js"></script>
-	<script src="<?=$data["header"]["public"]?>js/manager-scripts.js"></script>
+	<script src="<?=$data["header"]["public"]?>js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/materialize.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/tinymce/tinymce.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=$data["header"]["public"]?>js/manager-scripts.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+
+
 <!-- Administrator <?=$data["name"]?> -->
-<section class="sign-in-box">
+<section class="materialize sign-in-box">
 	<div class="row">
 		<form class="col s12">
 			
