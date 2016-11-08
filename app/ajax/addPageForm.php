@@ -114,6 +114,28 @@ class addPageForm
 			"value"=>""
 		));
 
+		$form .= "<div class=\"row\" id=\"photoUploaderBox\" style=\"margin:0 -10px\">";
+		
+		$form .= "<div class=\"col s4 imageItem\" id=\"img1\">
+			<div class=\"card\">
+	    
+	    		<div class=\"card-image waves-effect waves-block waves-light\">
+	    			<input type=\"hidden\" name=\"managerFiles[]\" class=\"managerFiles\" value=\"\" />
+	      			<img class=\"activator\" src=\"/public/img/noimage.png\" />
+	    		</div>
+
+	    		<div class=\"card-content\">
+                	<p>
+                		<a href=\"javascript:void(0)\" onclick=\"openFileManager('photoUploaderBox', 'img1')\" class=\"large material-icons\">mode_edit</a>
+                		<a href=\"javascript:void(0)\" onclick=\"removePhotoItem('img1')\" class=\"large material-icons\">delete</a>
+                	</p>
+              	</div>
+
+    		</div>
+  		</div>";				
+
+  		$form .= "</div>";
+
 		$form .= functions\makeForm::close();
 
 		if($call == "true"){

@@ -8,6 +8,7 @@ class Config
 	const PUBLIC_FOLDER_NAME = "public";
 	const CHARSET = "utf-8";
 	const WEBSITE = "http://capex.404.ge/";
+	const WEBSITE_ = "http://capex.404.ge";
 	const ADMIN_DASHBOARD = "http://capex.404.ge/dashboard/index";
 	const PUBLIC_FOLDER = "http://capex.404.ge/public/";
 	const AUTHER = "Getsadze Design";

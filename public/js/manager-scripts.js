@@ -53,6 +53,10 @@ var add_page = function(){
 			$("#chooseNavType").material_select();
 			$("#attachModule").material_select();
 			$("#modalButton").attr({"onclick": obj.attr });
+			$("#photoUploaderBox").sortable({
+		    	items: ".imageItem",
+				update: function( event, ui ) {  }
+			});
 			tiny(".tinymceTextArea");
 		}
 	});
@@ -69,6 +73,17 @@ var formPageAdd = function(){
 	var redirect = $("#redirect").val();
 	var pageDescription = tinymce.get('pageDescription').getContent();
 	var pageText = tinymce.get('pageText').getContent();
+
+	var photos = new Array();
+	if($(".imageItem").length){
+		$(".imageItem").each(function(){
+			if($(".card .card-image .managerFiles", this).val()!=""){
+				photos.push($(".card .card-image .managerFiles", this).val());
+			}
+		});
+	}
+	var serialPhotos = serialize(photos);
+
 	$(".modal-message-box").html("გთხოვთ დაიცადოთ...");
 	if(
 		(typeof chooseNavType === "undefined" || chooseNavType=="") || 
@@ -83,7 +98,7 @@ var formPageAdd = function(){
 		$.ajax({
 			method: "POST",
 			url: Config.ajax + ajaxFile,
-			data: { chooseNavType: chooseNavType, choosePageType: choosePageType, title: title, slug: slug, cssClass:cssClass, attachModule:attachModule, redirect:redirect, pageDescription: pageDescription, pageText: pageText }
+			data: { chooseNavType: chooseNavType, choosePageType: choosePageType, title: title, slug: slug, cssClass:cssClass, attachModule:attachModule, redirect:redirect, pageDescription: pageDescription, pageText: pageText, serialPhotos: serialPhotos }
 		}).done(function( msg ) {
 			var obj = $.parseJSON(msg);
 			if(obj.Error.Code==1){
@@ -115,6 +130,17 @@ var formPageEdit = function(idx, lang){
 	var redirect = $("#redirect").val();
 	var pageDescription = tinymce.get('pageDescription').getContent();
 	var pageText = tinymce.get('pageText').getContent();
+
+	var photos = new Array();
+	if($(".imageItem").length){
+		$(".imageItem").each(function(){
+			if($(".card .card-image .managerFiles", this).val()!=""){
+				photos.push($(".card .card-image .managerFiles", this).val());
+			}
+		});
+	}
+	var serialPhotos = serialize(photos);
+
 	$(".modal-message-box").html("გთხოვთ დაიცადოთ...");
 	if(
 		(typeof chooseNavType === "undefined" || chooseNavType=="") || 
@@ -129,7 +155,7 @@ var formPageEdit = function(idx, lang){
 		$.ajax({
 			method: "POST",
 			url: Config.ajax + ajaxFile,
-			data: { idx:idx, lang: lang, chooseNavType: chooseNavType, choosePageType: choosePageType, title: title, slug: slug, cssClass:cssClass, attachModule:attachModule, redirect:redirect, pageDescription: pageDescription, pageText: pageText }
+			data: { idx:idx, lang: lang, chooseNavType: chooseNavType, choosePageType: choosePageType, title: title, slug: slug, cssClass:cssClass, attachModule:attachModule, redirect:redirect, pageDescription: pageDescription, pageText: pageText, serialPhotos:serialPhotos }
 		}).done(function( msg ) {
 			var obj = $.parseJSON(msg);
 			if(obj.Error.Code==1){
@@ -337,9 +363,11 @@ var editPage = function(idx, lang){
 			$("#chooseNavType").material_select();
 			$("#attachModule").material_select();
 			$("#modalButton").attr({"onclick": obj.attr });
-			tiny(".tinymceTextArea");
-			console.log("tiny 20");
-			
+			$("#photoUploaderBox").sortable({
+		    	items: ".imageItem",
+				update: function( event, ui ) {  }
+			});
+			tiny(".tinymceTextArea");			
 		}
 	});
 };
@@ -526,6 +554,127 @@ var removeStatement = function(id){
 		});
 	}
 };
+
+var openFileManager = function(photosBox, id){
+	var overlay = document.createElement("div");
+	overlay.id = "overlay"+id;
+	
+	var boxHeader = document.createElement("p");
+	boxHeader.id = "boxHeader"+id;
+
+	var closeBox = document.createElement("p");
+	closeBox.id = "closeBox"+id;
+
+	boxHeader.append(closeBox);
+
+	var t = document.createTextNode("აირჩიეთ ფაილი");
+	boxHeader.appendChild(t);
+
+	var box = document.createElement("div");
+	box.id = "box"+id;
+
+	var fileManager = document.createElement("div");
+	fileManager.id = "fileManager"+id;
+
+	box.append(boxHeader);
+	box.append(fileManager);
+
+
+	$("body").append(overlay).append(box);
+	$("body").css("overflow-y","hidden"); 
+
+	$("#overlay"+id).css({
+		"background-color":"#000000",
+		"opacity":"0.5",
+		"position":"fixed",
+		"z-index":"1100",
+		"top":"0px",
+		"left":"0px",
+		"width":"100%",
+		"height":"100%"
+	});
+
+	$("#box"+id).css({
+		"background-color":"#ffffff",
+		"position":"fixed",
+		"z-index":"1200",
+		"top":"50px",
+		"left":"calc(50% - 500px)",
+		"width":"1000px",
+		"height":"450px"
+	});
+
+	$("#boxHeader"+id).css({
+		"width":"calc(100% - 20px)",
+		"height":"20px",
+		"font-size":"18px",
+		"line-height":"20px", 
+		"margin":"10px",
+		"float":"left",
+		"position":"relative"
+	});
+
+	$("#closeBox"+id).css({
+		"width":"15px", 
+		"height":"15px", 
+		"position":"absolute", 
+		"right":"0px", 
+		"top":"4px", 
+		"background-image":"url('/public/img/cancel.png')",
+		"background-size":"15px 15px",
+		"background-repeat":"no-repeat", 
+		"background-position":"center center",
+		"cursor":"pointer" 
+	});
+	$("#closeBox"+id).attr("onclick", "closeFileManager('"+id+"')");
+
+	$("#fileManager"+id).elfinder({
+		url : '/public/elfinder/php/connector.minimal.php', 
+		docked: false,
+        dialog: { width: 400, modal: true },
+        closeOnEditorCallback: true, 
+		getFileCallback: function(url) {
+            $("#"+id+" .card .card-image .activator").attr("src",Config.website+"image/loadimage?f="+Config.website+"public/"+url.path+"&w=215&h=173");
+            $("#"+id+" .card .card-image .managerFiles").val("/public/"+url.path);
+            photoUploaderBox(photosBox);
+            closeFileManager(id); 
+        }
+	});
+	$("#fileManager"+id).css({
+		"width":"calc(100% - 20px)",
+		"margin":"0px 10px",
+		"float":"left"
+	});
+};
+
+var closeFileManager = function(id){
+	$("#box"+id).remove();
+    $("#overlay"+id).remove();
+};
+
+var photoUploaderBox = function(photosBox){
+	console.log(photosBox+" in");
+	var count = $("#"+photosBox+" .imageItem").length + 1;
+	var out = "<div class=\"col s4 imageItem noImageSelected\" id=\"img"+count+"\">";
+	out += "<div class=\"card\">";
+	out += "<div class=\"card-image waves-effect waves-block waves-light\">";
+	out += "<input type=\"hidden\" name=\"managerFiles[]\" class=\"managerFiles\" value=\"\" />";
+	out += "<img class=\"activator\" src=\"/public/img/noimage.png\" />";
+	out += "</div>";
+	out += "<div class=\"card-content\">";
+	out += "<p>";
+	out += "<a href=\"javascript:void(0)\" onclick=\"openFileManager('photoUploaderBox', 'img"+count+"')\" class=\"large material-icons\">mode_edit</a>";
+	out += "<a href=\"javascript:void(0)\" onclick=\"removePhotoItem('img"+count+"')\" class=\"large material-icons\">delete</a>";
+	out += "</p>";
+	out += "</div>";
+	out += "</div>";
+	out += "</div>";
+	$("#" + photosBox).append(out);
+};
+
+var removePhotoItem = function(imageBoxId){
+	$("#"+imageBoxId).fadeOut().remove();
+}
 
 $(document).ready(function(){
     $('.collapsible').collapsible({

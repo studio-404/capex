@@ -160,6 +160,21 @@ class page
 			));	
 		}
 
+		if(count($args["serialPhotos"])){
+			foreach ($args["serialPhotos"] as $pic) {
+				if(!empty($pic)):
+				$photo = 'INSERT INTO `photos` SET `parent`=:parent, `path`=:pathx, `type`=:type, `status`=:zero';
+				$photoPerpare = $this->conn->prepare($photo);
+				$photoPerpare->execute(array(
+					":parent"=>$maxId, 
+					":pathx"=>$pic, 
+					":type"=>$type, 
+					":zero"=>0
+				));
+				endif;
+			}
+		}
+
 		return 1;
 	}
 
@@ -199,10 +214,30 @@ class page
 			":idx"=>$idx, 
 			":lang"=>$lang 
 		));	
-		if($prepare->rowCount()){
-			return 1;	
+		
+		$photos = new Database('photos', array(
+			'method'=>'deleteByParent', 
+			'idx'=>$idx, 
+			'type'=>$type 
+		));
+
+		if(count($args["serialPhotos"])){
+
+			foreach($args["serialPhotos"] as $pic) {
+				if(!empty($pic)):
+				$photo = 'INSERT INTO `photos` SET `parent`=:parent, `path`=:pathx, `type`=:type, `status`=:zero';
+				$photoPerpare = $this->conn->prepare($photo);
+				$photoPerpare->execute(array(
+					":parent"=>$idx, 
+					":pathx"=>$pic, 
+					":type"=>$type, 
+					":zero"=>0
+				));
+				endif;
+			}
 		}
-		return 0;
+
+		return 1;
 	}
 
 	private function changePagePositions($args)

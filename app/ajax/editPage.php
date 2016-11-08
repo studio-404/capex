@@ -26,6 +26,7 @@ class editPage
 		$redirect = functions\request::index("POST","redirect");
 		$pageDescription = functions\request::index("POST","pageDescription");
 		$pageText = functions\request::index("POST","pageText");
+		$serialPhotos = unserialize(functions\request::index("POST","serialPhotos"));
 
 		if($idx == "" || $lang=="" || $chooseNavType=="" || $choosePageType=="" || $title=="" || $slug=="" || $pageDescription=="" || $pageText=="")
 		{
@@ -49,7 +50,8 @@ class editPage
 					'attachModule'=>$attachModule, 
 					'redirect'=>$redirect, 
 					'pageDescription'=>$pageDescription, 
-					'pageText'=>$pageText
+					'pageText'=>$pageText, 
+					'serialPhotos'=>$serialPhotos
 			));
 			$output = $Database->getter();
 			if($output){
