@@ -8,13 +8,60 @@ class callapi
 		require_once 'app/core/Config.php';
 		require_once 'app/functions/request.php';
 
-		$userid = functions\request::index("POST","userid");
-		$_SESSION['capex_user'] = $userid;
+		$user = functions\request::index("POST","user");
+		$pass = functions\request::index("POST","pass");
 
-		$json = file_get_contents(Config::WEBSITE."gio.json");
-		$jj = json_decode($json, true);
+		if(empty($user) || empty($pass)){
+			$this->out = array(
+				"Error" => array(
+					"Code"=>1, 
+					"Text"=>"ყველა ველი სავალდებულოა",
+					"Details"=>""
+				),
+				"Success"=>array(
+					"Code"=>0, 
+					"Text"=>"ოპერაცია შესრულდა წარმატებით !",
+					"Details"=>""
+				)
+			);
+		}else{
+			$Database = new Database('statements', array(
+					'method'=>'checkUser', 
+					'user'=>$user, 
+					'pass'=>$pass 
+			));
+			$output = $Database->getter();
+			if($output)
+			{
+				$_SESSION['capex_user'] = $user;
+				$this->out = array(
+					"Error" => array(
+						"Code"=>0, 
+						"Text"=>"",
+						"Details"=>""
+					),
+					"Success"=>array(
+						"Code"=>1, 
+						"Text"=>"ოპერაცია შესრულდა წარმატებით !",
+						"Details"=>""
+					)
+				);
+			}else{
+				$this->out = array(
+					"Error" => array(
+						"Code"=>1, 
+						"Text"=>"მომხმარებლის სახელი ან პაროლი არასწორია !",
+						"Details"=>""
+					),
+					"Success"=>array(
+						"Code"=>0, 
+						"Text"=>"",
+						"Details"=>""
+					)
+				);
+			}
+		}
 
-		$this->out = $jj;
 
 		return $this->out;
 	}

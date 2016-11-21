@@ -29,17 +29,27 @@ class Profile extends Controller
 		$cities = new Database("cities", array(
 			"method"=>"select"
 		));
+		$statements = new Database('statements', array(
+			'method'=>'selectByPersonalNumber',
+			'pid'=>$_SESSION['capex_user'], 
+			'noUpdateRead'=>"true"
+		));
+		$getStatements = $statements->getter();
 
 		/* models */
-		$auth = $this->model('auth');
-		$loan = $this->model('loan');
-		$loan->cities = $cities->getter(); 
+		
+
+		$loane = $this->model('loane');
+		$loane->cities = $cities->getter(); 
+		$loane->data = $getStatements;
 		
 		$question = $this->model('question');
 		$question->questionsArray = $modules->getter();
 
 		$about = $this->model('about');
 		$about->content = $page->getter();
+
+		$updatePassword = $this->model('updatePassword');		
 
 		$header = $this->model('header');
 		$homepage = $this->model('homepage');
@@ -54,14 +64,15 @@ class Profile extends Controller
 				"website"=>Config::WEBSITE,
 				"public"=>Config::PUBLIC_FOLDER
 			),
-			"authModel"=>$auth->index(), 
-			"loanModel"=>$loan->index(), 
+			"loaneModel"=>$loane->index(), 
 			"questionModel"=>$question->index(), 
 			"aboutModel"=>$about->index(), 
 			"headerModel"=>$header->index(), 
 			"homepageModel"=>$homepage->index(),
 			"contactNumber"=>$header->contactNumber, 
-			"email"=>$header->email 
+			"email"=>$header->email, 
+			"getStatements"=>$getStatements,
+			"updatePassword"=>$updatePassword->index()
 		]);
 	}
 }

@@ -150,6 +150,18 @@ $(document).ready(function(){
 			scrollTop: $("body").offset().top
 		}, 1000);
 	});
+  $('#PersonalNumber').bind('keyup', function(e) {
+    console.log(e.keyCode);
+    if ( e.keyCode === 13 ) { 
+      $("#siButton").click();
+    }
+  });
+  $('#PersonalPass').bind('keyup', function(e) {
+    console.log(e.keyCode);
+    if ( e.keyCode === 13 ) { 
+      $("#siButton").click();
+    }
+  });
 });
 
 $('body').on("click", function (ev) {
@@ -267,6 +279,7 @@ var makeStatement = function(){
 
 var signintry = function(user, pass){
   var ajaxFile = "/callapi";
+  $(".modal-message-box-auth").html("გთხოვთ დაელოდოთ...");
   if(typeof user == "undefined" || typeof pass == "undefined" || user=="" || pass==""){
     $(".modal-message-box-auth").html("მომხმარებლის სახელი ან პაროლი არასწორია !");
   }else{
@@ -276,10 +289,10 @@ var signintry = function(user, pass){
       data: { user: user, pass:pass }
     }).done(function( msg ) {
       var obj = $.parseJSON(msg);
-      if(obj.Name){
+      if(obj.Success.Code == 1){
         location.href = Config.profile;
       }else{
-        $(".modal-message-box-auth").html("მომხმარებლის სახელი ან პაროლი არასწორია !");
+        $(".modal-message-box-auth").html(obj.Error.Text);
       }
     });
   }
@@ -289,3 +302,60 @@ var scrollTop = function(){
   var body = $("html, body");
   body.stop().animate({scrollTop:0}, '500', 'swing', function() { });
 };
+
+var gotox = function(l){
+   window.open(l,'_blank');
+}
+
+
+var recoverPassword = function(){
+  $('.modal-close').click(); 
+  $("#recover").modal("open");
+};
+
+var updateProfile = function(){
+  var form = $("#editloanForm");
+  var serial = form.serialize();
+
+  var ajaxFile = "/editStatement";
+  $.ajax({
+      method: "POST",
+      url: Config.ajax + ajaxFile,
+      data: { formData:serial }
+    }).done(function( msg ) {
+      var obj = $.parseJSON(msg);
+      if(obj.Error.Code==1){
+        $(".modal-message-box").html(obj.Error.Text);
+      }else if(obj.Success.Code==1){
+        $(".modal-message-box").html(obj.Success.Text);
+      }else{
+        $(".modal-message-box").html("E");
+      }
+      scrollTop();
+  });
+};
+
+var upPassword = function(){
+  var form = $("#password-update");
+  var serial = form.serialize();
+
+  var ajaxFile = "/updatePassword";
+  $.ajax({
+      method: "POST",
+      url: Config.ajax + ajaxFile,
+      data: { formData:serial }
+    }).done(function( msg ) {
+      var obj = $.parseJSON(msg);
+      if(obj.Error.Code==1){
+        $(".modal-message-box-password").html(obj.Error.Text);
+      }else if(obj.Success.Code==1){
+        $(".modal-message-box-password").html(obj.Success.Text);
+        $("#password-update input[type='password']").each(function(){
+          $(this).val('');
+        });
+      }else{
+        $(".modal-message-box-password").html("E");
+      }
+      scrollTop();
+  });
+}

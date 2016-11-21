@@ -26,9 +26,17 @@ class auth
 		$out .= "<input id=\"PersonalPass\" name=\"PersonalPass\" type=\"password\" class=\"\">";
 		$out .= "<label for=\"PersonalPass\">პაროლი</label>";
 		$out .= "</div></div>";
+
 		$out .= "<div class=\"input-field col-sm-12\">";
 		$out .= "<div class=\"form-group\">";
-		$out .= "<div class=\"ButtonOrange waves-effect waves-light\" onclick=\"signintry($('#PersonalNumber').val(), $('#PersonalPass').val())\">შესვლა</div>";
+		$out .= "<div class=\"ButtonOrange waves-effect waves-light\" id=\"siButton\" onclick=\"signintry($('#PersonalNumber').val(), $('#PersonalPass').val())\">შესვლა</div>";
+
+		$out .= "<div class=\"input-field col-sm-12\">";
+		$out .= "<div style=\"margin:0 -10px\">";
+		$out .= "<a href=\"#recover\" class=\"OpenModalClick\" onclick=\"recoverPassword()\" style=\"color:#133056\">პაროლის აღდგენა</a>";
+		$out .= "</div>";
+		$out .= "</div>";
+
 		$out .= "</div></div></div></div></div></div>";
 		return $out;
 	}

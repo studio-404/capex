@@ -135,7 +135,8 @@ html,body {
 	background-position:10px;
 	padding-left:35px;
 	font-size:16px;
-	margin-right:20px;
+	margin-right:40px;
+	position: relative;
 }
 .AuthorizationButton,
 a.AuthorizationButton {
@@ -165,7 +166,7 @@ a.AuthorizationButton {
 	font-family:arc_bold;
 	color:#6c7375;
 	font-size:16px;
-	margin-right:35px;
+	margin-right:20px;
     letter-spacing: 0.5px;
 }
 .HeaderMenu li a.active,
@@ -438,14 +439,23 @@ label.TitleLabel{
 }
 
 #ControlRoom .RoomSidebar .item span {
-
 	display:block;
-
 	font-family:myriad;
-
 	font-size:14px; 
-
 }
+
+#ControlRoom .RoomSidebar .item a{
+	display: block;
+	font-family:myriad;
+	font-size:14px; 
+	color: white;
+	text-decoration: underline;
+	position: absolute;
+    z-index: 1000;
+    left: 40px;
+    top: 30px;
+}
+
 
 #ControlRoom .RoomSidebar .item.UserItem {
 
@@ -475,6 +485,17 @@ label.TitleLabel{
 
 }
 
+#ControlRoom .RoomSidebar .item.editicon {
+
+	background:url('../../img/editicon.png') no-repeat left;
+
+}
+
+#ControlRoom .RoomSidebar .item.passicon {
+
+	background:url('../../img/passicon.png') no-repeat left;
+
+}
 
 
 .ControlRoomContent {
@@ -808,21 +829,15 @@ label.TitleLabel{
 .modal-content {position:relative;}
 
 .modal-close {
-
 	position:absolute;
-
 	width:25px;
-
 	height:25px;
-
 	right:10px;
-
 	top:10px;
-
 	background:url('../../img/x.png');
-
 	background-size:100% 100%;
-
+	display: block;
+	z-index: 1000;
 }
 
 
@@ -1382,7 +1397,20 @@ a.animated-button.victoria-two:after {
 }
 
 
-
+.fb-icon{
+	margin: 0;
+	padding: 0;
+	width: 7px;
+	height: 15px;
+	background-image: url('../../img/fb-icon.png');
+	background-repeat: no-repeat;
+	background-size: 7px 15px;
+	background-position: center center;
+	position: absolute;
+	top: 41px;
+	right: -30px;
+	cursor: pointer;
+}
 
 @media only screen and (max-width: 600px) {
 	.container_range .circle {
@@ -1500,4 +1528,33 @@ a.animated-button.victoria-two:after {
 .select-wrapper input.select-dropdown {height:40px;}
 .dropdown-content {
 	max-height:200px !important;
+}
+
+.workingHour{
+	font-family: "NotoRegular" !important;
+	font-size: 14px !important; 
+	letter-spacing: 0 !important;
+	font-weight: bold;
+	color: #ffca30 !important; 
+	margin-right: 5px;
+	position: relative;
+	padding-left: 30px;
+}
+.workingHour:hover{
+	border: none !important;
+	cursor: default;
+}
+.workingHour:after{
+	content: '';
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: -5px;
+	left: 0;
+	background-image: url('../../img/clock.png');
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+}
+.workingHour strong{
+	font-family: "nasalization" !important;
 }

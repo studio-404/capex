@@ -18,7 +18,8 @@
 <link href="<?=$data["header"]["public"]?>css/web/custom_res.css" rel="stylesheet" />
 </head>
 <body id="CapexBody">
-<?=$data['authModel']?>
+<?=$data['updatePassword']?>
+<?=$data['loaneModel']?>
 <?=$data['questionModel']?>
 <?=$data['aboutModel']?>
 <?=$data['headerModel']?>
@@ -28,11 +29,14 @@
 	<div class="container-fluid">
 		<div class="col-sm-4 animated bounceInLeft">
 			<div class="RoomSidebar">
-				<div class="item UserItem">ნიკოლოზ გეწაძე <span>62001041369</span></div>
-				<div class="item loansitem">სულ სესხი <span>62001041369</span></div>
-				<div class="item loansitem2">ყოველთვიური გადასახადი <span>62001041369</span></div>
-				<div class="item dateicon">ბოლო გადახდის თარიღი <span>62001041369</span></div>
+				<div class="item UserItem"><?=$data['getStatements'][0]["name"]." ".$data['getStatements'][0]["surname"]?>  <span><?=$data['getStatements'][0]["personal_number"]?></span></div>
+				<div class="item loansitem">სულ სესხი <span>N/A</span></div>
+				<div class="item loansitem2">ყოველთვიური გადასახადი <span>N/A</span></div>
+				<div class="item dateicon">ბოლო გადახდის თარიღი <span>N/A</span></div>
+				<div class="item editicon">პროფილის რედაქტირება <a href="#ApplicationModal" class="OpenModalClick">რედაქტირება</a></div>
+				<div class="item passicon">პაროლის განახლება <a href="#updatePasswordBox" class="OpenModalClick">განახლება</a></div>
 			</div>
+			
 		</div>
 		<div class="col-sm-8  animated bounceInRight">
 			<div class="ControlRoomContent">

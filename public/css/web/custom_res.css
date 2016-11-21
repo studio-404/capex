@@ -105,7 +105,9 @@
 		background-size: auto 100%; 
 		background-position: center;
 	}
-
+    .workingHour{
+        display: none !important;
+    }
 
 }
 

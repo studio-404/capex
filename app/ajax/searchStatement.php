@@ -88,27 +88,10 @@ class searchStatement
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
-					'სქესი: ',
-					$val['gender']
+					'ფაქტობრივი მისამართი: ',
+					$val['faddress']
 				);
 
-				$table .= sprintf("
-					<tr>
-					<td><strong>%s</strong></td>
-					<td>%s</td>
-					</tr>",
-					'ელ-ფოსტა: ',
-					$val['email']
-				);
-
-				$table .= sprintf("
-					<tr>
-					<td><strong>%s</strong></td>
-					<td>%s</td>
-					</tr>",
-					'ტელეფონი: ',
-					$val['phone']
-				);
 
 				$cities = new Database('cities', array(
 					'method'=>'selectById', 
@@ -130,8 +113,8 @@ class searchStatement
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
-					'ქუჩა:',
-					$val['street']
+					'მობილურის ნომერი:',
+					$val['mobile']
 				);
 
 				$table .= sprintf("
@@ -139,8 +122,8 @@ class searchStatement
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
-					'სახლი:',
-					$val['house']
+					'ელ-ფოსტა:',
+					$val['email']
 				);
 
 				$table .= sprintf("
@@ -148,19 +131,10 @@ class searchStatement
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
-					'ბინა:',
-					$val['room']
+					'სამსახურის დასახელება:',
+					$val['jobTitle']
 				);
 
-				$table .= sprintf("
-					<tr>
-					<td><strong>%s</strong></td>
-					<td>%s</td>
-					</tr>",
-					'საფოსტო კოდი:',
-					$val['postal_code']
-				);
-				
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
@@ -169,15 +143,43 @@ class searchStatement
 					'ყოველთვიური შემოსავალი:',
 					$val['monthly_income']
 				);
+				
+				$table .= sprintf("
+					<tr>
+					<td><strong>%s</strong></td>
+					<td>%s</td>
+					</tr>",
+					'საქმიანობა პოზიცია:',
+					$val['position']
+				);
 
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
-					'მიმდინარე სესხი:',
-					$val['loans']
+					'სამსახურის ტელეფონის ნომერი:',
+					$val['jobphone']
 				);
+
+				$table .= sprintf("
+					<tr>
+					<td><strong>%s</strong></td>
+					<td>%s</td>
+					</tr>",
+					'საკონტაქტო პირი:',
+					$val['contactPerson']
+				);
+
+				$table .= sprintf("
+					<tr>
+					<td><strong>%s</strong></td>
+					<td>%s</td>
+					</tr>",
+					'საკონტაქტო პირის ტელეფონი:',
+					$val['contactPersonNumber']
+				);
+				
 
 				$table .= sprintf("
 					<tr>

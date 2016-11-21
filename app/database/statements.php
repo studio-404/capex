@@ -14,6 +14,22 @@ class statements
 		return $out;
 	}
 
+	private function checkUser($args)
+	{
+		$fetch = array();
+		$select = "SELECT * FROM `statements` WHERE `personal_number`=:personal_number AND `password`=:password AND `status`!=:one";
+		$prepare = $this->conn->prepare($select); 
+		$prepare->execute(array(
+			":personal_number"=>$args['user'],
+			":password"=>$args['pass'],
+			":one"=>1 
+		));
+		if($prepare->rowCount()){
+			return true;
+		}
+		return false;
+	}
+
 	private function removeStatement($args)
 	{
 		$update = "UPDATE `statements` SET `status`=:one WHERE `id`=:id";
@@ -40,7 +56,7 @@ class statements
 		));
 		if($prepare->rowCount()){
 			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
-			if($fetch[0]["read"]==0){
+			if($fetch[0]["read"]==0 && !isset($args['noUpdateRead'])){
 				$this->updateRead($fetch[0]["id"]);
 			}
 		}
@@ -85,6 +101,7 @@ class statements
 		$server = new functions\server();
 		$ip = $server->ip();
 		$out = 0;
+		
 		try{
 			$insert = "INSERT INTO `statements` SET 
 			`date`=:datex, 
@@ -93,21 +110,20 @@ class statements
 			`surname`=:surname, 
 			`personal_number`=:personal_number, 
 			`dob`=:dob, 
-			`gender`=:gender, 
-			`email`=:email, 
-			`phone`=:phone, 
+			`faddress`=:faddress, 
 			`city`=:city, 
-			`street`=:street, 
-			`house`=:house, 
-			`room`=:room, 
-			`postal_code`=:postal_code, 
-			`monthly_income`=:monthly_income, 
-			`loans`=:loans, 
+			`mobile`=:mobile, 
+			`email`=:email, 
+			`jobTitle`=:jobTitle, 
+			`monthly_income`=:income, 
+			`position`=:position, 
+			`jobphone`=:jobphone, 
+			`contactPerson`=:contactPerson, 
+			`contactPersonNumber`=:contactPersonNumber, 
 			`demended_loan`=:demended_loan, 
 			`demended_month`=:demended_month, 
 			`password`=:password, 
 			`agree`=:one, 
-			`check_me`=:one, 
 			`read`=:zero, 
 			`status`=:zero 
 			";
@@ -119,21 +135,110 @@ class statements
 				":surname"=>$args['surname'],
 				":personal_number"=>$args['pid'],
 				":dob"=>$args['dob'],
-				":gender"=>$args['gender'],
-				":email"=>$args['email'],
-				":phone"=>$args['phone'],
+				":faddress"=>$args['faddress'],
 				":city"=>$args['city'],
-				":street"=>$args['street'],
-				":house"=>$args['home'],
-				":room"=>$args['flat'],
-				":postal_code"=>$args['postal'],
-				":monthly_income"=>$args['income'],
-				":loans"=>$args['otherloan'],
+				":mobile"=>$args['mobile'],
+				":email"=>$args['email'],
+				":jobTitle"=>$args['jobTitle'],
+				":income"=>$args['income'],
+				":position"=>$args['position'],
+				":jobphone"=>$args['jobphone'],
+				":contactPerson"=>$args['contactPerson'],
+				":contactPersonNumber"=>$args['contactPersonNumber'],
 				":demended_loan"=>$args['loanMoney'],
 				":demended_month"=>$args['loanMonth'],
 				":password"=>$args['password'],
 				":one"=>1,
 				":zero"=>0
+			));	
+			if($prepare->rowCount()){
+				$out = 1;	
+			}			
+		}catch(Exception $e){ $out = 0;	}
+		return $out;
+	}
+
+	private function edit($args)
+	{
+		$out = 0;		
+		try{
+			$update = "UPDATE `statements` SET 
+			`update_date`=:update_date, 
+			`name`=:name, 
+			`surname`=:surname, 
+			`dob`=:dob, 
+			`faddress`=:faddress, 
+			`city`=:city, 
+			`mobile`=:mobile, 
+			`email`=:email, 
+			`jobTitle`=:jobTitle, 
+			`monthly_income`=:income, 
+			`position`=:position, 
+			`jobphone`=:jobphone, 
+			`contactPerson`=:contactPerson, 
+			`contactPersonNumber`=:contactPersonNumber 
+			WHERE 
+			`personal_number`=:personal_number AND
+			`status`!=:one 
+			";
+			$prepare = $this->conn->prepare($update);
+			$prepare->execute(array(
+				":update_date"=>time(),
+				":name"=>$args['name'],
+				":surname"=>$args['surname'],
+				":personal_number"=>$args['pid'],
+				":dob"=>$args['dob'],
+				":faddress"=>$args['faddress'],
+				":city"=>$args['city'],
+				":mobile"=>$args['mobile'],
+				":email"=>$args['email'],
+				":jobTitle"=>$args['jobTitle'],
+				":income"=>$args['income'],
+				":position"=>$args['position'],
+				":jobphone"=>$args['jobphone'],
+				":contactPerson"=>$args['contactPerson'],
+				":contactPersonNumber"=>$args['contactPersonNumber'],
+				":one"=>1
+			));	
+			if($prepare->rowCount()){
+				$out = 1;	
+			}			
+		}catch(Exception $e){ $out = 0;	}
+		return $out;
+	}
+
+	private function checkOldPassword($args)
+	{
+		$select = "SELECT `id` FROM `statements` WHERE `personal_number`=:personal_number AND `password`=:password AND `status`!=:one";
+		$prepare = $this->conn->prepare($select); 
+		$prepare->execute(array(
+			":personal_number"=>$args['user'],
+			":password"=>$args['old'],
+			":one"=>1 
+		));
+		if($prepare->rowCount()){
+			return true;
+		}
+		return false;
+	}
+
+	private function updateUserPassword($args)
+	{
+		$out = 0;		
+		try{
+			$update = "UPDATE `statements` SET 
+			`update_date`=:update_date, 
+			`password`=:password			
+			WHERE 
+			`personal_number`=:personal_number AND
+			`status`!=:one 
+			";
+			$prepare = $this->conn->prepare($update);
+			$prepare->execute(array(
+				":update_date"=>time(),
+				":password"=>$args["newpassword"],
+				":personal_number"=>$args["user"],
+				":one"=>1
 			));	
 			if($prepare->rowCount()){
 				$out = 1;	

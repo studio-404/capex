@@ -20,6 +20,7 @@
 </head>
 <body id="CapexBody">
 <?=$data['authModel']?>
+<?=$data['recoverModel']?>
 <?=$data['loanModel']?>
 <?=$data['questionModel']?>
 <?=$data['aboutModel']?>

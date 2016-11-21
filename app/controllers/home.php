@@ -29,6 +29,7 @@ class Home extends Controller
 
 		/* models */
 		$auth = $this->model('auth');
+		$recover = $this->model('recover');
 		$loan = $this->model('loan');
 		$loan->cities = $cities->getter(); 
 		
@@ -53,6 +54,7 @@ class Home extends Controller
 				"public"=>Config::PUBLIC_FOLDER
 			),
 			"authModel"=>$auth->index(), 
+			"recoverModel"=>$recover->index(), 
 			"loanModel"=>$loan->index(), 
 			"questionModel"=>$question->index(), 
 			"aboutModel"=>$about->index(), 

@@ -5,6 +5,7 @@ class makeStatement
 	
 	public function index(){
 		require_once 'app/functions/request.php';
+		require_once 'app/functions/password.php';
 
 		$this->out = array(
 			"Error" => array(
@@ -42,16 +43,14 @@ class makeStatement
 			(!isset($params['loan-surname']) || $params['loan-surname']=="") || 
 			(!isset($params['loan-pid']) || $params['loan-pid']=="") || 
 			(!isset($params['loan-dob']) || $params['loan-dob']=="") || 
-			(!isset($params['loan-gender']) || $params['loan-gender']=="") || 
-			(!isset($params['loan-email']) || $params['loan-email']=="") || 
-			(!isset($params['loan-phone']) || $params['loan-phone']=="") || 
+			(!isset($params['loan-faddress']) || $params['loan-faddress']=="") || 
 			(!isset($params['loan-city']) || $params['loan-city']=="") || 
-			(!isset($params['loan-street']) || $params['loan-street']=="") || 
-			(!isset($params['loan-home']) || $params['loan-home']=="") || 
-			(!isset($params['loan-flat']) || $params['loan-flat']=="") || 
-			(!isset($params['loan-postal']) || $params['loan-postal']=="") || 
+			(!isset($params['loan-mobile']) || $params['loan-mobile']=="") || 
+			(!isset($params['loan-email']) || $params['loan-email']=="") || 
+			(!isset($params['loan-jobTitle']) || $params['loan-jobTitle']=="") || 
 			(!isset($params['loan-income']) || $params['loan-income']=="") || 
-			(!isset($params['loan-otherloan']) || $params['loan-otherloan']=="") || 
+			(!isset($params['loan-contactPerson']) || $params['loan-contactPerson']=="") || 
+			(!isset($params['loan-contactPersonNumber']) || $params['loan-contactPersonNumber']=="") || 
 			(!isset($params['loan-password']) || $params['loan-password']=="") || 
 			(!isset($params['loan-repassword']) || $params['loan-repassword']=="") 
 		)
@@ -59,7 +58,7 @@ class makeStatement
 			$this->out = array(
 				"Error" => array(
 					"Code"=>1, 
-					"Text"=>"ყველა ველი სავალდებულოა !",
+					"Text"=>"გთხოვთ შეავსოთ * ( ფიფქით ) აღნიშნული სავალდებულო ველები !",
 					"Details"=>"!"
 				), 
 				"Success" => array(
@@ -68,7 +67,7 @@ class makeStatement
 					"Details"=>""
 				)
 			);
-		}else if(!isset($params['checkbox1']) || !isset($params['checkbox2']) || $params['checkbox1']!="on" || $params['checkbox2']!="on")
+		}else if( !isset($params['checkbox1']) || $params['checkbox1'] != "on")
 		{
 			$this->out = array(
 				"Error" => array(
@@ -99,50 +98,64 @@ class makeStatement
 		}
 		else
 		{
-			$Database = new Database('statements', array(
+			$pwd = functions\password::index($params['loan-password']);
+			if($pwd){
+				$Database = new Database('statements', array(
 					'method'=>'insert', 
 					'name'=>$params['loan-name'], 
 					'surname'=>$params['loan-surname'], 
 					'pid'=>$params['loan-pid'], 
 					'dob'=>$params['loan-dob'], 
-					'gender'=>$params['loan-gender'], 
-					'email'=>$params['loan-email'], 
-					'phone'=>$params['loan-phone'], 
+					'faddress'=>$params['loan-faddress'], 
 					'city'=>$params['loan-city'], 
-					'street'=>$params['loan-street'], 
-					'home'=>$params['loan-home'], 
-					'flat'=>$params['loan-flat'], 
-					'postal'=>$params['loan-postal'], 
+					'mobile'=>$params['loan-mobile'], 
+					'email'=>$params['loan-email'], 
+					'jobTitle'=>$params['loan-jobTitle'], 
 					'income'=>$params['loan-income'], 
-					'otherloan'=>$params['loan-otherloan'], 
+					'position'=>$params['loan-position'], 
+					'jobphone'=>$params['loan-jobphone'], 
+					'contactPerson'=>$params['loan-contactPerson'], 
+					'contactPersonNumber'=>$params['loan-contactPersonNumber'], 
 					'password'=>$params['loan-password'], 
 					'loanMoney'=>$params['loanMoney'], 
 					'loanMonth'=>$params['loanMonth'] 
-			));
-			$output = $Database->getter();
+				));
+				$output = $Database->getter();
 
-			if($output){
-				$this->out = array(
-					"Error" => array(
-						"Code"=>0, 
-						"Text"=>"",
-						"Details"=>""
-					),
-					"Success"=>array(
-						"Code"=>1, 
-						"Text"=>"ოპერაცია შესრულდა წარმატებით !",
-						"Details"=>""
-					)
-				);
+				if($output){
+					$this->out = array(
+						"Error" => array(
+							"Code"=>0, 
+							"Text"=>"",
+							"Details"=>""
+						),
+						"Success"=>array(
+							"Code"=>1, 
+							"Text"=>"ოპერაცია შესრულდა წარმატებით, პასუხს მიიღებთ SMS შეტყობინებით 15 წუთის განმავლობაში !",
+							"Details"=>""
+						)
+					);
+				}else{
+					$this->out = array(
+						"Error" => array(
+							"Code"=>1, 
+							"Text"=>"ოპერაციის შესრულებისას მოხდა შეცდომა !",
+							"Details"=>""
+						)
+					);	
+				}
 			}else{
 				$this->out = array(
 					"Error" => array(
 						"Code"=>1, 
-						"Text"=>"ოპერაციის შესრულებისას დაფიქსირდა შეცდომა !",
-						"Details"=>""
+						"Text"=>"პაროლი უნდა შედგებოდეს მინიმუმ 8 სიმბოლოსგან, იგი უნდა შეიცავდეს 1 დიდ და 1 პატარა ასოს, აგრეთვე მინიმუმ 1 ციფრს !",
+						"Details"=>$pwd
 					)
-				);
-			}	
+				);	
+			}
+			
+
+			
 		}
 
 
