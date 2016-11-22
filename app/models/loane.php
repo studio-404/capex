@@ -12,8 +12,6 @@ class loane
 	{
 		$out = "<div id=\"ApplicationModal\" class=\"modal ApplicationModal\">";
 		$out .= "<form id=\"editloanForm\" name=\"editloanForm\">";
-		$out .= "<input type=\"hidden\" name=\"loanMoney\" id=\"loanMoney2\" value=\"0\" />";
-		$out .= "<input type=\"hidden\" name=\"loanMonth\" id=\"loanMonth2\" value=\"0\" />";
 		$out .= "<div class=\"modal-content\">";
 		$out .= "<div class=\"modal-action modal-close\"></div>";
 		$out .= "<div class=\"AutorizationForm\">";

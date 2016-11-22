@@ -57,6 +57,7 @@ class Profile extends Controller
 
 		$header->contactNumber = strip_tags($contactData['phone']);
 		$header->email = strip_tags($contactData['email']);
+		$header->map = (isset($contactData['map'])) ? strip_tags($contactData['map']) : "";
 
 		/* view */
 		$this->view('profile/index', [
@@ -72,7 +73,8 @@ class Profile extends Controller
 			"contactNumber"=>$header->contactNumber, 
 			"email"=>$header->email, 
 			"getStatements"=>$getStatements,
-			"updatePassword"=>$updatePassword->index()
+			"updatePassword"=>$updatePassword->index(),
+			"map"=>$header->map
 		]);
 	}
 }

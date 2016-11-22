@@ -29,8 +29,8 @@ class loan
 	{
 		$out = "<div id=\"ApplicationModal\" class=\"modal ApplicationModal\">";
 		$out .= "<form id=\"loanForm\" name=\"loanForm\">";
-		$out .= "<input type=\"hidden\" name=\"loanMoney\" id=\"loanMoney2\" value=\"0\" />";
-		$out .= "<input type=\"hidden\" name=\"loanMonth\" id=\"loanMonth2\" value=\"0\" />";
+		$out .= "<input type=\"hidden\" name=\"loanMoney\" id=\"loanMoney2\" value=\"300\" />";
+		$out .= "<input type=\"hidden\" name=\"loanMonth\" id=\"loanMonth2\" value=\"3\" />";
 		$out .= "<div class=\"modal-content\">";
 		$out .= "<div class=\"modal-action modal-close\"></div>";
 		$out .= "<div class=\"AutorizationForm\">";
@@ -40,7 +40,7 @@ class loan
 		$out .= "<label class=\"TitleLabel\">სამომხმარებლო სესხის განაცხადი</label>";
 		$out .= "</div>";
 		$out .= "<div class=\"col-sm-4\">";
-		$out .= "<label class=\"LoansCountDiv\"><span id=\"loanMoney\">0</span><strong>l</strong> <span>/ <span id=\"loanMonth\">0</span> <b>თვით</b></span></label>";
+		$out .= "<label class=\"LoansCountDiv\"><span id=\"loanMoney\">300</span><strong>l</strong> <span>/ <span id=\"loanMonth\">3</span> <b>თვით</b></span></label>";
 		$out .= "</div></div>";
 
 		$out .= "<div class=\"col-sm-12\">";
@@ -82,7 +82,8 @@ class loan
 		$out .= "<select id=\"loan-city\" name=\"loan-city\">";
 		
 		foreach ($this->cities as $val) {
-			$out .= "<option value=\"".$val['id']."\">".$val['names']."</option>";
+			$default = ($val['id']==1) ? "selected='selected'" : "";
+			$out .= "<option value=\"".$val['id']."\" ".$default.">".$val['names']."</option>";
 		}	
 
 		$out .= "</select>";

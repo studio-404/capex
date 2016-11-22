@@ -555,6 +555,77 @@ var removeStatement = function(id){
 	}
 };
 
+var loanStatus = function(){
+	var ajaxFile = "/updateLoanStatus";
+	var loanStatus = $('#loan-status').prop('checked');
+	var spid = $("#loan-spid").val(); 
+	
+	if(loanStatus){
+		$('#loan-status').prop('checked', true);
+		var onoff = "on";
+	}else{
+		$('#loan-status').prop('checked', false);
+		var onoff = "off";
+	}
+	$("#loan-status").attr("disabled","disabled"); 
+
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { loanStatus:onoff, spid:spid }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Error.Code==1){
+			alert(obj.Error.Text);
+		}else if(obj.Success.Code==1){
+			$("#loan-status").removeAttr("disabled");
+		}else{
+			alert("E5");
+		}
+	});
+
+	console.log($("#loan-status").val() + " " +spid);
+};
+
+$(document).on("change", "#loan-status", function(){
+	loanStatus();
+});
+
+/*---------------*/
+var loanStatus2 = function(){
+	var ajaxFile = "/updateLoanStatus";
+	var loanStatus2 = $('#loan-status2').prop('checked');
+	var spid2 = $("#loan-spid2").val(); 
+	if(loanStatus2){
+		$('#loan-status2').prop('checked', true);
+		var onoff = "on";
+	}else{
+		$('#loan-status2').prop('checked', false);
+		var onoff = "off";
+	}
+	$("#loan-status2").attr("disabled","disabled"); 
+
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { loanStatus2:onoff, spid2:spid2 }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Error.Code==1){
+			alert(obj.Error.Text);
+		}else if(obj.Success.Code==1){
+			$("#loan-status2").removeAttr("disabled");
+		}else{
+			alert("E5");
+		}
+	});
+};
+
+$(document).on("change", "#loan-status2", function(){
+	loanStatus2();
+});
+
+
 var openFileManager = function(photosBox, id){
 	var overlay = document.createElement("div");
 	overlay.id = "overlay"+id;
@@ -675,6 +746,7 @@ var photoUploaderBox = function(photosBox){
 var removePhotoItem = function(imageBoxId){
 	$("#"+imageBoxId).fadeOut().remove();
 }
+
 
 $(document).ready(function(){
     $('.collapsible').collapsible({

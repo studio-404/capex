@@ -33,7 +33,7 @@ class header
 		$out .= "<li><a class=\"MenuCloseClick2\" href=\"javascript:void(0)\">მთავარი</a></li>";
 		$out .= "<li><a class=\"MenuCloseClick2 OpenModalClick\" href=\"#QuestionModal\">კითხვა პასუხი</a></li>";
 		$out .= "<li><a class=\"MenuCloseClick2 OpenModalClick\" href=\"#AboutUsPopup\">ჩვენს შესახებ</a></li>";
-		$out .= "<li><a class=\"MenuCloseClick ScrollAnimate\" href=\"http://capex.404.ge/#ContactPage\">კონტაქტი</a></li>";
+		$out .= "<li id=\"contactLink\"><a class=\"MenuCloseClick ScrollAnimate\" href=\"#ContactPage\">კონტაქტი</a></li>";
 
 		$out .= "<li><a class=\"MenuCloseClick2 workingHour tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"სამუშაო საათები\" href=\"javascript:void(0)\">ორშ-პარ <strong>10:00 - 18:00</strong></a></li>";
 

@@ -26,6 +26,41 @@ class statements
 		));
 		if($prepare->rowCount()){
 			return true;
+		}else{
+			$select2 = "SELECT * FROM `statements` WHERE `personal_number`=:personal_number AND `recover`=:recover AND `status`!=:one";
+			$prepare2 = $this->conn->prepare($select2); 
+			$prepare2->execute(array(
+				":personal_number"=>$args['user'],
+				":recover"=>$args['pass'],
+				":one"=>1 
+			));
+			if($prepare2->rowCount()){
+				$update = "UPDATE `statements` SET `recover`=:empty, `password`=:newpassword WHERE `personal_number`=:personal_number AND `status`!=:one";
+				$prepare3 = $this->conn->prepare($update); 
+				$prepare3->execute(array(
+					":empty"=>"", 
+					":newpassword"=>$args['pass'], 
+					":personal_number"=>$args['user'], 
+					":one"=>1  
+				));
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private function checkAfterRegister($args)
+	{
+		$select = "SELECT `id` FROM `statements` WHERE (`personal_number`=:personal_number OR `email`=:email) AND `status`!=:one";
+		$prepare = $this->conn->prepare($select); 
+		$prepare->execute(array(
+		":personal_number"=>$args['pid'],
+		":email"=>$args['email'],
+		":one"=>1 
+		));
+		if($prepare->rowCount())
+		{
+			return true;
 		}
 		return false;
 	}
@@ -244,6 +279,80 @@ class statements
 				$out = 1;	
 			}			
 		}catch(Exception $e){ $out = 0;	}
+		return $out;
+	}
+
+	private function chnageRecover($args)
+	{
+		$out = 0;		
+		try{
+			$update = "UPDATE `statements` SET 
+			`recover`=:recover			
+			WHERE 
+			`email`=:email AND
+			`status`!=:one 
+			";
+			$prepare = $this->conn->prepare($update);
+			$prepare->execute(array(
+				":recover"=>$args["recover"],
+				":email"=>$args["email"],
+				":one"=>1
+			));	
+			if($prepare->rowCount()){
+				$out = 1;	
+			}			
+		}catch(Exception $e){ $out = 0;	}
+		return $out;
+	}
+
+	private function updateLoanStatus($args)
+	{ 
+		$out = 0;
+		if(!empty($args["status"]) && !empty($args["pid"]))
+		{		
+			try{
+				$status = ($args["status"]=="on") ? 2 : 1;
+
+				$update = "UPDATE `statements` SET 
+				`loan_status`=:loan_status			
+				WHERE 
+				`personal_number`=:personal_number AND
+				`status`!=:one 
+				";
+				$prepare = $this->conn->prepare($update);
+				$prepare->execute(array(
+					":loan_status"=>$status,
+					":personal_number"=>$args["pid"],
+					":one"=>1
+				));	
+				if($prepare->rowCount()){
+					$out = 1;	
+				}			
+			}catch(Exception $e){ $out = 0;	}
+		}
+
+		if(!empty($args["status2"]) && !empty($args["pid2"]))
+		{		
+			try{
+				$status = ($args["status2"]=="on") ? 2 : 1;
+
+				$update = "UPDATE `statements` SET 
+				`loan_finished`=:loan_finished			
+				WHERE 
+				`personal_number`=:personal_number AND
+				`status`!=:one 
+				";
+				$prepare = $this->conn->prepare($update);
+				$prepare->execute(array(
+					":loan_finished"=>$status,
+					":personal_number"=>$args["pid2"],
+					":one"=>1
+				));	
+				if($prepare->rowCount()){
+					$out = 1;	
+				}			
+			}catch(Exception $e){ $out = 0;	}
+		}
 		return $out;
 	}
 }

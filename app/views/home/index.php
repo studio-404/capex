@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Capex</title>
+<title>Capital Express
+</title>
 <script src="<?=$data["header"]["public"]?>js/web/jquery-3.1.1.min.js"></script>
 <script src="<?=$data["header"]["public"]?>js/web/jquery-ui.js"></script>
 <script src="<?=$data["header"]["public"]?>js/web/jquery.ui.touch-punch.js"></script>
@@ -43,9 +44,9 @@
 							<div class="lineInner2"></div>
 						</div>
 						<div class="result">
-							<span class="money"><label>0</label>l</span>
-							<span class="month"><label>0</label> თვით</span>
-							<span class="procent">თვეში <div><label>0</label><strong>l</strong></div></span>
+							<span class="money"><label>300</label>l</span>
+							<span class="month"><label>3</label> თვით</span>
+							<span class="procent">თვეში <div><label>9</label><strong>l</strong></div></span>
 						</div>
 					</div>
 				</div>

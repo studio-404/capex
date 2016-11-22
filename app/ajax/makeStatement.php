@@ -6,6 +6,7 @@ class makeStatement
 	public function index(){
 		require_once 'app/functions/request.php';
 		require_once 'app/functions/password.php';
+		require_once 'app/functions/checkUserExists.php';
 
 		$this->out = array(
 			"Error" => array(
@@ -20,6 +21,7 @@ class makeStatement
 			)
 		);
 		$formData = functions\request::index("POST","formData");
+		$checkUserExists = new functions\checkUserExists();
 		
 		$params = array();
 		parse_str($formData, $params);
@@ -59,6 +61,19 @@ class makeStatement
 				"Error" => array(
 					"Code"=>1, 
 					"Text"=>"გთხოვთ შეავსოთ * ( ფიფქით ) აღნიშნული სავალდებულო ველები !",
+					"Details"=>"!"
+				), 
+				"Success" => array(
+					"Code"=>0,
+					"Text"=>"",
+					"Details"=>""
+				)
+			);
+		}else if($checkUserExists->index($params['loan-pid'], $params['loan-email'])){
+			$this->out = array(
+				"Error" => array(
+					"Code"=>1, 
+					"Text"=>"მომხმარებლის პირადი ნომერი ან ელ-ფოსტა უკვე გამოყენებულია !",
 					"Details"=>"!"
 				), 
 				"Success" => array(

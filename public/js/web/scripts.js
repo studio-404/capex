@@ -1,8 +1,8 @@
 $( function() {
     $( "#line1" ).slider1({
       animate: "normal",
-      value:0,
-      min: 0,
+      value: 300,
+      min: 300,
       max: 2000,
       step: 50,
       range: "min",
@@ -24,8 +24,8 @@ $( function() {
 $( function() {
     $( "#line2" ).slider1({
       animate: "normal",
-      value:0,
-      min: 0,
+      value:3,
+      min: 3,
       max: 24,
       step: 1,
       range: "min",
@@ -51,7 +51,7 @@ $( function() {
     $(".procent label").text($( "#line1" ).slider1( "value" ) * a / 100);
   };
 
-  function Credit(elem, drop, col, step) {
+  function Credit(elem, drop, col, step, starts) {
   var elem = elem;
   var drop = drop;
   var col = col;
@@ -66,7 +66,7 @@ $( function() {
     // this.resize();
   }
   this.createCircle = function(){
-    var price = 0;
+    var price = starts;
     var procent = 0;
     var stepProcent = 100 / (col - 1);
     for (var i = col - 1; i >= 0; i--) {
@@ -93,8 +93,8 @@ $( function() {
 }
 
 setTimeout(function(){
-  line1 = new Credit("#line1", "#drop1", 41, 50);
-  line2 = new Credit("#line2", "#drop2", 25, 1);
+  line1 = new Credit("#line1", "#drop1", 35, 50, 300);
+  line2 = new Credit("#line2", "#drop2", 22, 1, 3);
 }, 200)
 
 
@@ -310,7 +310,7 @@ var gotox = function(l){
 
 var recoverPassword = function(){
   $('.modal-close').click(); 
-  $("#recover").modal("open");
+  // $("#recover").modal("open");
 };
 
 var updateProfile = function(){
@@ -358,4 +358,49 @@ var upPassword = function(){
       }
       scrollTop();
   });
-}
+}; 
+
+var reButton = function(){
+  var email = $("#recover-email").val();
+  var secure = $("#secure").val();
+  var ajaxFile = "/recoverEmail";
+  $.ajax({
+      method: "POST",
+      url: Config.ajax + ajaxFile,
+      data: { email:email, secure:secure }
+    }).done(function( msg ) {
+      var obj = $.parseJSON(msg);
+      if(obj.Error.Code==1){
+        $(".modal-message-box-recover").html(obj.Error.Text);
+      }else if(obj.Success.Code==1){
+        $(".modal-message-box-recover").html(obj.Success.Text);
+        $("#recover-email").val('');
+      }else{
+        $(".modal-message-box-recover").html("E");
+      }
+      scrollTop();
+  });
+};
+
+var reGetMoney = function(){
+  var money = $("#loanMoney2").val();
+  var month = $("#loanMonth2").val();
+  
+  var ajaxFile = "/reget";
+  $.ajax({
+      method: "POST",
+      url: Config.ajax + ajaxFile,
+      data: { money:money, month:month }
+    }).done(function( msg ) {
+      var obj = $.parseJSON(msg);
+      if(obj.Error.Code==1){
+        $(".modal-message-box-recover").html(obj.Error.Text);
+      }else if(obj.Success.Code==1){
+        $(".modal-message-box-recover").html(obj.Success.Text);
+        $("#recover-email").val('');
+      }else{
+        $(".modal-message-box-recover").html("E");
+      }
+      scrollTop();
+  });
+};

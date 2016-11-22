@@ -199,6 +199,7 @@ class searchStatement
 					$val['demended_month']
 				);
 
+				//$val['password']
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
@@ -206,6 +207,48 @@ class searchStatement
 					</tr>",
 					'პაროლი:',
 					$val['password']
+				);
+
+				$status = ($val["loan_status"]==2) ? "checked='checked'" : "";
+				
+				$aprooved = "
+				<div class=\"switch\">
+				<label>
+				მიმ. განხილვა
+				<input type=\"hidden\" id=\"loan-spid\" name=\"loan-spid\" value=\"".$pid."\" />
+				<input type=\"checkbox\" id=\"loan-status\" name=\"loan-status\" value=\"on\" ".$status." />
+				<span class=\"lever\"></span>
+				დამტკიცება
+				</label>
+				</div>";
+
+				$table .= sprintf("
+					<tr>
+					<td><strong>%s</strong></td>
+					<td>%s</td>
+					</tr>",
+					'სესხის დამტკიცება:',
+					$aprooved
+				);
+
+				$status2 = ($val["loan_finished"]==2) ? "checked='checked'" : "";
+				$aprooved2 = "
+				<div class=\"switch\">
+				<label>
+				მიმდინარე
+				<input type=\"hidden\" id=\"loan-spid2\" name=\"loan-spid2\" value=\"".$pid."\" />
+				<input type=\"checkbox\" id=\"loan-status2\" name=\"loan-status2\" value=\"on\" ".$status2." />
+				<span class=\"lever\"></span>
+				დასრულდა
+				</label>
+				</div>";
+				$table .= sprintf("
+					<tr>
+					<td><strong>%s</strong></td>
+					<td>%s</td>
+					</tr>",
+					'სესხის სტატუსი:',
+					$aprooved2
 				);
 				
 			}
