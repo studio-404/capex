@@ -108,10 +108,17 @@ html,body {
 }
 
 
-.fp-tableCell {vertical-align: top; display: inline-block;}
-#fullpage {margin-top:100px;}
-.section {padding:0;}
+.fp-section.fp-table, .fp-slide.fp-table {
+	padding:0 !important;
+	
+}
 
+.fp-tableCell {vertical-align:top !important; display:inline-block;}
+
+#fullpage {margin-top:0 !important; padding-top:100px !important}
+
+.section {padding:0;}
+section {background-size:100% 100% !important;}
 /* HEADER */
 #Header {
 	height:100px;
@@ -601,7 +608,7 @@ label.TitleLabel{
 /* CONTACT PAGE */
 
 #ScrollingPage {
-
+margin-top:-10px !important
 	
 
 }
@@ -621,26 +628,19 @@ label.TitleLabel{
 	padding-bottom:60px;
 
 }
-
+ 
 #ScrollingPage .ScrollingHeader {
+	height: 595px;
+	vertical-align: middle;
+	width: 100%;
+	text-align: center;
+	position: relative;
+	z-index: 2;
+	color: #fff;
+	padding-top: 137px;
+	margin-top:-10px !important
 
-	height:545px;
-
-	display:table-cell; 
-
-	vertical-align:middle;
-
-	width:100%;
-
-	text-align:center;	
-
-	position:relative;
-
-	z-index:2;
-
-	color:#fff;
-
-}
+} 
 
 #ScrollingPage .ScrollingHeaderDiv:after {
 
@@ -715,7 +715,7 @@ label.TitleLabel{
 	cursor:pointer;
 
 	text-decoration:none;
-
+	
 }
 
 
@@ -1557,4 +1557,10 @@ a.animated-button.victoria-two:after {
 }
 .workingHour strong{
 	font-family: "nasalization" !important;
+}
+
+
+ .fp-slide,
+.fp-tableCell{
+    height: auto !important;
 }

@@ -108,10 +108,22 @@
     .workingHour{
         display: none !important;
     }
-
+	
+	
+	#HomePage {
+		margin-top:0 !important
+	}
+	.ScrollingButtonDiv {
+		margin-top:-11px;
+	}
+	.result {margin-top: -4px;}
 }
 
-
+@media (max-height:680px) { 
+	.ScrollingButtonDiv .ScrollIngButton {
+		margin-top: -54px;
+	}
+}
 
 
 @media (min-width:992px) { 
@@ -150,6 +162,11 @@
 		display:inline-block;
 		width: 150px;	
 		text-align:left;
+	}
+	
+	.procent {
+		position: relative;
+		left: 23px;
 	}
        
 }

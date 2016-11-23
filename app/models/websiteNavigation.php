@@ -9,6 +9,7 @@ class websiteNavigation
 		if(count($this->navigation)){
 			foreach ($this->navigation as $val) {
 				$slug = ($val['redirect']!="false") ? $val['redirect'] : Config::WEBSITE.Config::PAGE_PREFIX."/".$val['type']."/".$val['lang']."/".$val['idx']."/".$val['slug']; 
+				
 				$visibility = ($val['visibility']==1) ? "visibility_off" : "visibility";
 
 				$usefull_url = ($val['usefull_type'] == "false") ? "javascript:void(0)" : "/dashboard/modules/".$val['usefull_type'];
