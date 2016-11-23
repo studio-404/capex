@@ -250,6 +250,10 @@ class searchStatement
 					'სესხის სტატუსი:',
 					$aprooved2
 				);
+
+				
+
+				//
 				
 			}
 		}else{

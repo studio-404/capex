@@ -394,10 +394,9 @@ var reGetMoney = function(){
     }).done(function( msg ) {
       var obj = $.parseJSON(msg);
       if(obj.Error.Code==1){
-        $(".modal-message-box-recover").html(obj.Error.Text);
+        alert(obj.Error.Text);
       }else if(obj.Success.Code==1){
-        $(".modal-message-box-recover").html(obj.Success.Text);
-        $("#recover-email").val('');
+        location.reload();
       }else{
         $(".modal-message-box-recover").html("E");
       }

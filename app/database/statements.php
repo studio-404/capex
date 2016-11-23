@@ -98,6 +98,28 @@ class statements
 		return $fetch;
 	}
 
+	private function regetMoney($args)
+	{
+		$out = 0;
+		$update = "UPDATE `statements` SET `date`=:timex, `update_date`=:timex, `demended_loan`=:moneyx, `demended_month`=:monthx, `read`=:zero, `loan_status`=:zero, `loan_finished`=:zero WHERE `personal_number`=:personal_number"; 
+		try{
+			$prepare = $this->conn->prepare($update); 
+			$prepare->execute(array(
+				":timex"=>time(), 
+				":moneyx"=>$args['money'],
+				":monthx"=>$args['month'],
+				":zero"=>0,
+				":personal_number"=>$args['personal_number']
+			));
+			if($prepare->rowCount()){
+				$out = 1;
+			}
+		}catch(Exception $e){
+			echo $e;
+		}
+		return $out;
+	}
+
 	private function updateRead($id)
 	{
 		$update = "UPDATE `statements` SET `read`=:one WHERE `id`=:id";
@@ -278,6 +300,23 @@ class statements
 			if($prepare->rowCount()){
 				$out = 1;	
 			}			
+		}catch(Exception $e){ $out = 0;	}
+		return $out;
+	}
+
+	private function history($args)
+	{
+		$out = 0;
+		$copy = "INSERT INTO history (`date`, `update_date`, `ip`, `name`, `surname`, `personal_number`, `dob`, `faddress`, `city`, `mobile`, `email`, `jobTitle`, `monthly_income`, `position`, `jobphone`, `contactPerson`, `contactPersonNumber`, `demended_loan`, `demended_month`, `password`, `recover`, `agree`, `read`, `loan_status`, `loan_finished`, `status`)
+			SELECT `date`, `update_date`, `ip`, `name`, `surname`, `personal_number`, `dob`, `faddress`, `city`, `mobile`, `email`, `jobTitle`, `monthly_income`, `position`, `jobphone`, `contactPerson`, `contactPersonNumber`, `demended_loan`, `demended_month`, `password`, `recover`, `agree`, `read`, `loan_status`, `loan_finished`, `status` FROM statements WHERE `personal_number`=:personal_number;";
+		try{
+			$prepare = $this->conn->prepare($copy);
+			$prepare->execute(array(
+				":personal_number"=>$args["personal_number"]
+			));	
+			if($prepare->rowCount()){
+				$out = 1;	
+			}
 		}catch(Exception $e){ $out = 0;	}
 		return $out;
 	}
