@@ -399,6 +399,10 @@ var add_module = function(moduleSlug){
 			$('.datepicker').pickadate({
 				selectMonths: true, 
 			});
+			$("#photoUploaderBox").sortable({
+		    	items: ".imageItem",
+				update: function( event, ui ) {  }
+			});
 			tiny(".tinymceTextArea");
 		}
 	});
@@ -428,6 +432,10 @@ var editModules = function(idx, lang){
 			var form = "<p>" + obj.form +"</p>";
 			$("#modal1 .modal-content").html(header + form);
 			$("#modalButton").attr({"onclick": obj.attr });
+			$("#photoUploaderBox").sortable({
+		    	items: ".imageItem",
+				update: function( event, ui ) {  }
+			});
 			tiny(".tinymceTextArea");			
 		}
 	});
@@ -440,6 +448,16 @@ var formModuleEdit = function(idx, lang){
 	var pageText = tinymce.get('pageText').getContent();
 	var link = (typeof $("#link").val() === "undefined" || $("#link").val()=="") ? $("#link").val() : "empty";
 
+	var photos = new Array();
+	if($(".imageItem").length){
+		$(".imageItem").each(function(){
+			if($(".card .card-image .managerFiles", this).val()!=""){
+				photos.push($(".card .card-image .managerFiles", this).val());
+			}
+		});
+	}
+	var serialPhotos = serialize(photos);
+
 	$(".modal-message-box").html("გთხოვთ დაიცადოთ...");
 	if(
 		(typeof date === "undefined" || date=="") || 
@@ -451,7 +469,7 @@ var formModuleEdit = function(idx, lang){
 		$.ajax({
 			method: "POST",
 			url: Config.ajax + ajaxFile,
-			data: { idx:idx, lang: lang, date: date, title: title, pageText: pageText, link:link }
+			data: { idx:idx, lang: lang, date: date, title: title, pageText: pageText, link:link, serialPhotos:serialPhotos }
 		}).done(function( msg ) {
 			var obj = $.parseJSON(msg);
 			if(obj.Error.Code==1){
@@ -472,6 +490,16 @@ var formModuleAdd = function(moduleSlug){
 	var pageText = tinymce.get('pageText').getContent();
 	var link = (typeof $("#link").val() === "undefined" || $("#link").val()=="") ? $("#link").val() : "empty";
 
+	var photos = new Array();
+	if($(".imageItem").length){
+		$(".imageItem").each(function(){
+			if($(".card .card-image .managerFiles", this).val()!=""){
+				photos.push($(".card .card-image .managerFiles", this).val());
+			}
+		});
+	}
+	var serialPhotos = serialize(photos);
+
 	var ajaxFile = "/addModule";
 	if(typeof moduleSlug == "undefined" || typeof date == "undefined" || typeof title === "undefined" || typeof pageText === "undefined"){
 		$(".modal-message-box").html("E4");
@@ -479,7 +507,7 @@ var formModuleAdd = function(moduleSlug){
 		$.ajax({
 			method: "POST",
 			url: Config.ajax + ajaxFile,
-			data: { moduleSlug: moduleSlug, date: date, title: title, pageText: pageText, link:link }
+			data: { moduleSlug: moduleSlug, date: date, title: title, pageText: pageText, link:link, serialPhotos:serialPhotos }
 		}).done(function( msg ) {
 			var obj = $.parseJSON(msg);
 			if(obj.Error.Code==1){
@@ -901,4 +929,113 @@ var serialize = function(mixed_value) {
 var scrollTop = function(){
 	var body = $("html, body");
 	body.stop().animate({scrollTop:0}, '500', 'swing', function() { });
+};
+
+
+var updateCol = function(col, val, pid){
+	//alert(col + " " + val + " " + pid); 
+	var div = "editable_"+col;
+
+	 
+	var form = '<form action="" method="post" style="padding-right: 10px">'; 
+	form += '<div class="input-field">';
+	form += '<input type="text" class="updatable" value="" onblur="updateMe(\''+col+'\', \''+pid+'\', \''+val+'\')" />';
+	form += '</div>';
+	form += '</form>';
+
+
+	$("."+div).removeAttr("onclick");
+	$("."+div).html(form);
+	$(".updatable").focus();
+	$(".updatable").val(val);
+
+};
+
+var updateColSelect = function(col, val, pid, cityId){
+	var div = "editable_"+col;
+	var form = "<form action=\"\" method=\"post\">";
+	form += "<select class=\"materialize_form_select\" id=\"updatable\" onchange=\"updateMeSelect('"+col+"','"+pid+"')\">";
+	form += "</select>";
+
+	var ajaxFile = "/citiesOption";
+	var options = "";
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { selected:cityId }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Success.Code==1){
+			console.log(obj.Success.html);
+			$("."+div).removeAttr("onclick");
+			$("."+div).html(form);
+			$("#updatable").html(obj.Success.html);
+
+			$(".materialize_form_select").material_select();
+		}
+	});	
+	
+};
+
+var updateMe = function(col, pid, oldValue){
+	var div = "editable_"+col;
+	var val = $(".updatable").val(); // new value
+
+	$("."+div).html(Config.pleaseWait);
+
+	/* SEND AJAX REQUEST TO UPDATE DB */
+	if(oldValue==val){
+		$("."+div).attr("onclick", "updateCol('"+col+"', '"+val+"', '"+pid+"')").html(val);	
+	}else{
+	var ajaxFile = "/updateColume";
+		$.ajax({
+			method: "POST",
+			url: Config.ajax + ajaxFile,
+			data: { col:col, pid:pid, value:val }
+		}).done(function( msg ) {
+			var obj = $.parseJSON(msg);
+			if(obj.Success.Code==1){
+				$("."+div).attr("onclick", "updateCol('"+col+"', '"+val+"', '"+pid+"')").html(val);	
+			}else{
+				$("."+div).attr("onclick", "updateCol('"+col+"', '"+val+"', '"+pid+"')").html(obj.Error.Text);	
+			}
+		});	
+	}
+};
+
+var updateMeSelect = function(col, pid){
+	var div = "editable_"+col;
+	var val = $("#updatable").val(); // new value
+	$("."+div).html(Config.pleaseWait);
+
+	var ajaxFile = "/citiesName";
+
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { id:val }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Success.Code==1){
+			var cityname = obj.Success.cityname;
+			$("."+div).attr("onclick", "updateColSelect('"+col+"', '"+cityname+"', '"+pid+"', '"+val+"')").html(cityname);
+		}
+	});	
+
+	/* SEND AJAX REQUEST TO UPDATE DB */
+	var ajaxFile2 = "/updateColume";
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile2,
+		data: { col:col, pid:pid, value:val }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Success.Code==1){
+			
+		}else{
+			alert("error");
+		}
+	});	
+
+	
 };

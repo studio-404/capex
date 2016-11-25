@@ -6,6 +6,7 @@ class header
 	public $contactNumber;
 	public $map;
 	public $agreement;
+	public $facebook;
 
 	public function __construct()
 	{
@@ -49,7 +50,7 @@ class header
 		$out .= "<div class=\"nav_bg\">";
 		$out .= "<div class=\"nav_bar\"> <span></span> <span></span> <span></span> </div>";
 		$out .= "</div></div>";
-		$out .= "<div class=\"HeaderTel\">".$this->contactNumber."<span class=\"fb-icon\" onclick=\"gotox('https://facebook.com')\"></span></div>";
+		$out .= "<div class=\"HeaderTel\">".$this->contactNumber."<span class=\"fb-icon\" onclick=\"gotox('".$this->facebook."')\"></span></div>";
 		$out .= "</div></div>";
 		$out .= "</header>";
 

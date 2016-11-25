@@ -2,6 +2,15 @@
 class searchStatement
 {
 	public $out; 
+
+	public function __construct()
+	{
+		require_once 'app/core/Config.php';
+		if(!isset($_SESSION[Config::SESSION_PREFIX."username"]))
+		{
+			exit();
+		}
+	}
 	
 	public function index(){
 		require_once 'app/core/Config.php';
@@ -58,12 +67,12 @@ class searchStatement
 					'პირადი ნომერი: ',
 					$val['personal_number']
 				);
-				$table .= sprintf("
-					<tr>
-					<td><strong>%s</strong></td>
-					<td>%s</td>
-					</tr>",
-					'სახელი: ',
+
+				$editable_ = sprintf(
+					"<div class=\"editable_name\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"name",
+					$val['name'],  
+					$pid,
 					$val['name']
 				);
 				$table .= sprintf("
@@ -71,7 +80,15 @@ class searchStatement
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
-					'გვარი: ',
+					'სახელი: ',
+					$editable_
+				);
+
+				$editable_ = sprintf(
+					"<div class=\"editable_surname\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"surname",
+					$val['surname'],  
+					$pid,
 					$val['surname']
 				);
 				$table .= sprintf("
@@ -79,17 +96,40 @@ class searchStatement
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
-					'დაბადების თარიღი: ',
-					$val['dob']
+					'გვარი: ',
+					$editable_
 				);
 
+				$editable_ = sprintf(
+					"<div class=\"editable_dob\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"dob",
+					$val['dob'],  
+					$pid,
+					$val['dob']
+				);
+				$table .= sprintf("
+					<tr>
+					<td><strong>%s</strong></td>
+					<td>%s</td>
+					</tr>",
+					'დაბადების თარიღი: ',
+					$editable_
+				);
+
+				$editable_ = sprintf(
+					"<div class=\"editable_faddress\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"faddress",
+					$val['faddress'],  
+					$pid,
+					$val['faddress']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'ფაქტობრივი მისამართი: ',
-					$val['faddress']
+					$editable_
 				);
 
 
@@ -99,114 +139,202 @@ class searchStatement
 				));
 				$city_name = $cities->getter();
 
+				$editable_ = sprintf(
+					"<div class=\"editable_city\" onclick=\"updateColSelect('%s','%s','%s','%s')\">%s</div>",
+					"city",
+					$city_name,  
+					$pid,
+					$val['city'], 
+					$city_name
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'ქალაქი:',
-					$city_name
+					$editable_
 				);
 
+
+				$editable_ = sprintf(
+					"<div class=\"editable_mobile\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"mobile",
+					$val['mobile'],  
+					$pid,
+					$val['mobile']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'მობილურის ნომერი:',
-					$val['mobile']
+					$editable_
 				);
 
+
+				$editable_ = sprintf(
+					"<div class=\"editable_email\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"email",
+					$val['email'],  
+					$pid,
+					$val['email']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'ელ-ფოსტა:',
-					$val['email']
+					$editable_
 				);
 
+
+				$editable_ = sprintf(
+					"<div class=\"editable_jobTitle\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"jobTitle",
+					$val['jobTitle'],  
+					$pid,
+					$val['jobTitle']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'სამსახურის დასახელება:',
-					$val['jobTitle']
+					$editable_
 				);
 
+				$editable_ = sprintf(
+					"<div class=\"editable_monthly_income\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"monthly_income",
+					$val['monthly_income'],  
+					$pid,
+					$val['monthly_income']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'ყოველთვიური შემოსავალი:',
-					$val['monthly_income']
+					$editable_
 				);
 				
+
+				$editable_ = sprintf(
+					"<div class=\"editable_position\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"position",
+					$val['position'],  
+					$pid,
+					$val['position']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'საქმიანობა პოზიცია:',
-					$val['position']
+					$editable_
 				);
 
+
+				$editable_ = sprintf(
+					"<div class=\"editable_jobphone\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"jobphone",
+					$val['jobphone'],  
+					$pid,
+					$val['jobphone']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'სამსახურის ტელეფონის ნომერი:',
-					$val['jobphone']
+					$editable_
 				);
 
+				$editable_ = sprintf(
+					"<div class=\"editable_contactPerson\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"contactPerson",
+					$val['contactPerson'],  
+					$pid,
+					$val['contactPerson']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'საკონტაქტო პირი:',
-					$val['contactPerson']
+					$editable_
 				);
 
+				$editable_ = sprintf(
+					"<div class=\"editable_contactPersonNumber\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"contactPersonNumber",
+					$val['contactPersonNumber'],  
+					$pid,
+					$val['contactPersonNumber']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'საკონტაქტო პირის ტელეფონი:',
-					$val['contactPersonNumber']
+					$editable_
 				);
 				
-
+				$editable_ = sprintf(
+					"<div class=\"editable_demended_loan\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"demended_loan",
+					$val['demended_loan'],  
+					$pid,
+					$val['demended_loan']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'მოთხოვნილი სესხი:',
-					$val['demended_loan']
+					$editable_
 				);
 
+				$editable_ = sprintf(
+					"<div class=\"editable_demended_month\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"demended_month",
+					$val['demended_month'],  
+					$pid,
+					$val['demended_month']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'მოთხოვნილი თვე:',
-					$val['demended_month']
+					$editable_
 				);
 
-				//$val['password']
+				$editable_ = sprintf(
+					"<div class=\"editable_password\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"password",
+					$val['password'],  
+					$pid,
+					$val['password']
+				);
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
 					<td>%s</td>
 					</tr>",
 					'პაროლი:',
-					$val['password']
+					$editable_
 				);
 
 				$status = ($val["loan_status"]==2) ? "checked='checked'" : "";

@@ -158,22 +158,25 @@ class page
 				":visibility"=>$visibility,
 				":status"=>$status
 			));	
-		}
 
-		if(count($args["serialPhotos"])){
-			foreach ($args["serialPhotos"] as $pic) {
-				if(!empty($pic)):
-				$photo = 'INSERT INTO `photos` SET `parent`=:parent, `path`=:pathx, `type`=:type, `status`=:zero';
-				$photoPerpare = $this->conn->prepare($photo);
-				$photoPerpare->execute(array(
-					":parent"=>$maxId, 
-					":pathx"=>$pic, 
-					":type"=>$type, 
-					":zero"=>0
-				));
-				endif;
+			if(count($args["serialPhotos"])){
+				foreach ($args["serialPhotos"] as $pic) {
+					if(!empty($pic)):
+					$photo = 'INSERT INTO `photos` SET `parent`=:parent, `path`=:pathx, `type`=:type, `lang`=:lang, `status`=:zero';
+					$photoPerpare = $this->conn->prepare($photo);
+					$photoPerpare->execute(array(
+						":parent"=>$maxId, 
+						":pathx"=>$pic, 
+						":type"=>$type, 
+						":lang"=>$val['title'], 
+						":zero"=>0
+					));
+					endif;
+				}
 			}
 		}
+
+		
 
 		return 1;
 	}
@@ -225,12 +228,13 @@ class page
 
 			foreach($args["serialPhotos"] as $pic) {
 				if(!empty($pic)):
-				$photo = 'INSERT INTO `photos` SET `parent`=:parent, `path`=:pathx, `type`=:type, `status`=:zero';
+				$photo = 'INSERT INTO `photos` SET `parent`=:parent, `path`=:pathx, `type`=:type, `lang`=:lang, `status`=:zero';
 				$photoPerpare = $this->conn->prepare($photo);
 				$photoPerpare->execute(array(
 					":parent"=>$idx, 
 					":pathx"=>$pic, 
 					":type"=>$type, 
+					":lang"=>$lang, 
 					":zero"=>0
 				));
 				endif;

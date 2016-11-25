@@ -3,6 +3,15 @@ class addModule
 {
 	public $out; 
 	
+	public function __construct()
+	{
+		require_once 'app/core/Config.php';
+		if(!isset($_SESSION[Config::SESSION_PREFIX."username"]))
+		{
+			exit();
+		}
+	}
+	
 	public function index(){
 		require_once 'app/core/Config.php';
 		require_once 'app/functions/request.php';
@@ -20,6 +29,7 @@ class addModule
 		$title = functions\request::index("POST","title");
 		$pageText = functions\request::index("POST","pageText");
 		$link = functions\request::index("POST","link");
+		$serialPhotos = unserialize(functions\request::index("POST","serialPhotos"));
 
 
 		if($moduleSlug=="" || $date=="" || $title=="" || $pageText=="")
@@ -38,7 +48,8 @@ class addModule
 					'date'=>$date, 
 					'title'=>$title, 
 					'pageText'=>$pageText, 
-					'link'=>$link 
+					'link'=>$link, 
+					'serialPhotos'=>$serialPhotos
 			));
 			$output = $Database->getter();
 			if($output){

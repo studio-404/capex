@@ -80,6 +80,26 @@ class statements
 		return 0;
 	}
 
+	private function updatecolumne($args)
+	{
+		try{
+			$update = "UPDATE `statements` SET `".$args['col']."`=:updateColumeName WHERE `personal_number`=:personal_number";
+			$prepare = $this->conn->prepare($update);
+			$prepare->execute(array(
+				":updateColumeName"=>$args['value'],
+				":personal_number"=>$args['personal_number']
+			)); 
+			
+			if($prepare->rowCount())
+			{
+				return 1;
+			}
+		}catch(Exception $e){
+			echo $e;
+		}
+		return 0;
+	}
+
 	private function selectByPersonalNumber($args)
 	{
 		$fetch = array();
@@ -142,6 +162,23 @@ class statements
 		$from = (isset($_GET['pn']) && $_GET['pn']>0) ? (($_GET['pn']-1)*$itemPerPage) : 0;
 		
 		$select = "SELECT (SELECT COUNT(`id`) FROM `statements` WHERE `status`!=:one) as counted, `id`, `date`, `name`, `surname`, `personal_number`, `read` FROM `statements` WHERE `status`!=:one ORDER BY `date` DESC LIMIT ".$from.",".$itemPerPage;
+		$prepare = $this->conn->prepare($select); 
+		$prepare->execute(array(
+			":one"=>1
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
+		}
+		return $fetch;
+	}
+
+	private function service($args)
+	{
+		$fetch = array();
+		$itemPerPage = $args['itemPerPage'];
+		$from = (isset($_GET['pn']) && $_GET['pn']>0) ? (($_GET['pn']-1)*$itemPerPage) : 0;
+		
+		$select = "SELECT (SELECT COUNT(`id`) FROM `statements` WHERE `status`!=:one) as counted, `id`, `date` as insert_date,`personal_number`, `name`, `surname`, `dob` as date_of_birth, `faddress` as address, (SELECT `cities`.`names` FROM `cities` WHERE `cities`.`id`=`statements`.`city`) as city, `mobile`, `email`, `jobTitle` as job, `position` as job_position, `jobphone` as job_phone, `monthly_income` as salary, `contactPerson` as contact_person, `contactPersonNumber` as contact_person_number, `demended_loan`, `demended_month` FROM `statements` WHERE `status`!=:one ORDER BY `date` DESC LIMIT ".$from.",".$itemPerPage;
 		$prepare = $this->conn->prepare($select); 
 		$prepare->execute(array(
 			":one"=>1

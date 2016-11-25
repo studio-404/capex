@@ -2,6 +2,15 @@
 class addPage
 {
 	public $out; 
+
+	public function __construct()
+	{
+		require_once 'app/core/Config.php';
+		if(!isset($_SESSION[Config::SESSION_PREFIX."username"]))
+		{
+			exit();
+		}
+	}
 	
 	public function index(){
 		require_once 'app/core/Config.php';

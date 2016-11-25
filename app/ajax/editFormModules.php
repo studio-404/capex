@@ -2,6 +2,15 @@
 class editFormModules
 {
 	public $out; 
+
+	public function __construct()
+	{
+		require_once 'app/core/Config.php';
+		if(!isset($_SESSION[Config::SESSION_PREFIX."username"]))
+		{
+			exit();
+		}
+	}
 	
 	public function index(){
 		require_once 'app/core/Config.php';
@@ -21,8 +30,9 @@ class editFormModules
 		$title = functions\request::index("POST","title");
 		$pageText = functions\request::index("POST","pageText");
 		$link = functions\request::index("POST","link");
+		$serialPhotos = unserialize(functions\request::index("POST","serialPhotos"));
 		
-
+		
 		if($idx == "" || $lang=="" || $date=="" || $title=="" || $pageText=="")
 		{
 			$this->out = array(
@@ -40,9 +50,11 @@ class editFormModules
 					'date'=>$date, 
 					'title'=>$title, 
 					'pageText'=>$pageText, 
-					'link'=>$link 
+					'link'=>$link, 
+					'serialPhotos'=>$serialPhotos
 			));
 			$output = $Database->getter();
+
 			if($output){
 				$this->out = array(
 					"Error" => array(

@@ -1,8 +1,17 @@
 <?php 
-class reget
+class updateColume
 {
 	public $out; 
-	
+
+	public function __construct()
+	{
+		require_once 'app/core/Config.php';
+		if(!isset($_SESSION[Config::SESSION_PREFIX."username"]))
+		{
+			exit();
+		}
+	}
+
 	public function index(){
 		require_once 'app/core/Config.php';
 		require_once 'app/functions/request.php';
@@ -19,27 +28,23 @@ class reget
 				"Details"=>""
 			)
 		);
-		$personal_number = $_SESSION["capex_user"];
-		$money = functions\request::index("POST","money");
-		$month = functions\request::index("POST","month");
+		$col = functions\request::index("POST","col");
+		$pid = functions\request::index("POST","pid");
+		$value = functions\request::index("POST","value");
 
 		/**
 		**	DO JOB
 		*/
-		$history = new Database("statements", array(
-			"method"=>"history", 
-			"personal_number"=>$personal_number
-		));
-		if($history->getter())
+		if($col != "" && $pid != "")
 		{
-			$regetMoney = new Database("statements", array(
-				"method"=>"regetMoney", 
-				"money"=>$money,
-				"month"=>$month,
-				"personal_number"=>$personal_number
+			$updatecolumne = new Database("statements", array(
+				"method"=>"updatecolumne", 
+				"col"=>$col,
+				"personal_number"=>$pid,
+				"value"=>$value
 			));
 
-			if($regetMoney->getter())
+			if($updatecolumne->getter())
 			{
 				$this->out = array(
 					"Error" => array(
@@ -54,12 +59,9 @@ class reget
 					)
 				);
 			}
-
 			
 		}
 
-
-		
 		return $this->out;
 	}
 }

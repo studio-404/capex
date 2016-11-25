@@ -41,3 +41,4 @@ footer.page-footer .active a{ text-decoration: underline; }
 footer.page-footer{ background-color: #f2f2f2; color: rgba(0, 0, 0, 0.87); }
 footer.page-footer a{ color: #2bbbad; }
 .card-content p a{ color: #2bbbad;  padding:0 20px 0 0; }
+div[class^='editable_']{ width: calc(100% - 10px); min-height: 20px; padding-right: 10px; cursor: pointer; }

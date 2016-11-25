@@ -47,6 +47,7 @@ class modules
 		$out['email'] = "";
 		$out['map'] = "";
 		$out['agreement'] = "";
+		$out['facebook'] = "";
 		$select = "SELECT `description` FROM `usefull` WHERE `type`=:type AND `lang`=:lang AND `visibility`!=:one AND `status`!=:one ORDER BY `id` ASC";
 		$prepare = $this->conn->prepare($select);
 		$prepare->execute(array(
@@ -60,6 +61,7 @@ class modules
 			$out['email'] = $fetch[1]['description'];
 			$out['map'] = $fetch[2]['description'];
 			$out['agreement'] = $fetch[3]['description'];
+			$out['facebook'] = $fetch[4]['description'];
 		}
 		
 		return $out;
@@ -127,7 +129,7 @@ class modules
 		$title = $args["title"];
 		$description = $args["pageText"];
 		$url = (!empty($args["link"])) ? $args["link"] : "";
-
+		$type = $this->getTypeByIdx($args["idx"]);
 
 		$update = "UPDATE `usefull` SET 
 		`date`=:datex, 
@@ -144,8 +146,45 @@ class modules
 			":idx"=>$idx, 
 			":lang"=>$lang 
 		));	
-		if($prepare->rowCount()){
-			return 1;	
+
+		$photos = new Database('photos', array(
+			'method'=>'deleteByParent', 
+			'idx'=>$idx, 
+			'type'=>$type 
+		));
+
+		if(count($args["serialPhotos"])){
+
+			foreach($args["serialPhotos"] as $pic) {
+				if(!empty($pic)):
+				$photo = 'INSERT INTO `photos` SET `parent`=:parent, `path`=:pathx, `type`=:type, `lang`=:lang, `status`=:zero';
+				$photoPerpare = $this->conn->prepare($photo);
+				$photoPerpare->execute(array(
+					":parent"=>$idx, 
+					":pathx"=>$pic, 
+					":type"=>$type, 
+					":lang"=>$lang, 
+					":zero"=>0
+				));
+				endif;
+			}
+		}
+
+		return 1;
+	}
+
+	private function getTypeByIdx($idx)
+	{
+		$sql = "SELECT `type` FROM `usefull` WHERE `idx`=:idx AND `status`!=:one";
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":idx"=>$idx, 
+			":one"=>1 
+		));
+		if($prepare->rowCount())
+		{
+			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);
+			return $fetch['type'];
 		}
 		return 0;
 	}
@@ -199,6 +238,22 @@ class modules
 				":url"=>$link,
 				":lang"=>$val['title']
 			)); 
+
+			if(count($args["serialPhotos"])){
+				foreach ($args["serialPhotos"] as $pic) {
+					if(!empty($pic)):
+					$photo = 'INSERT INTO `photos` SET `parent`=:parent, `path`=:pathx, `type`=:type, `lang`=:lang, `status`=:zero';
+					$photoPerpare = $this->conn->prepare($photo);
+					$photoPerpare->execute(array(
+						":parent"=>$maxId, 
+						":pathx"=>$pic, 
+						":type"=>$type, 
+						":lang"=>$val['title'], 
+						":zero"=>0
+					));
+					endif;
+				}
+			}
 		}
 		return 1;
 	}

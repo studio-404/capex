@@ -46,6 +46,7 @@ class Home extends Controller
 		$header->contactNumber = (isset($contactData['phone'])) ? strip_tags($contactData['phone']) : "";
 		$header->email = (isset($contactData['email'])) ? strip_tags($contactData['email']) : "";
 		$header->map = (isset($contactData['map'])) ? strip_tags($contactData['map']) : "";
+		$header->facebook = (isset($contactData['facebook'])) ? strip_tags($contactData['facebook']) : "";
 
 		/* view */
 		$this->view('home/index', [
@@ -62,7 +63,7 @@ class Home extends Controller
 			"homepageModel"=>$homepage->index(),
 			"contactNumber"=>$header->contactNumber, 
 			"email"=>$header->email, 
-			"map"=>$header->map
+			"map"=>$header->map 
 		]);
 	}
 

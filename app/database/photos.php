@@ -16,10 +16,12 @@ class photos
 
 	private function selectByParent($args)
 	{
-		$sql = "SELECT * FROM `photos` WHERE `parent`=:parent AND `status`!=:one ORDER BY `id` ASC";
+		$sql = "SELECT * FROM `photos` WHERE `parent`=:parent AND `lang`=:lang AND `type`=:type AND `status`!=:one ORDER BY `id` ASC";
 		$prepare = $this->conn->prepare($sql);
 		$prepare->execute(array(
 			":parent"=>$args["idx"], 
+			":lang"=>$args["lang"], 
+			":type"=>$args["type"], 
 			":one"=>1
 		));
 		if($prepare->rowCount()){

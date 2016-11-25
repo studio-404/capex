@@ -2,6 +2,15 @@
 class editPageForm
 {
 	public $out; 
+
+	public function __construct()
+	{
+		require_once 'app/core/Config.php';
+		if(!isset($_SESSION[Config::SESSION_PREFIX."username"]))
+		{
+			exit();
+		}
+	}
 	
 	public function index(){
 		require_once 'app/core/Config.php';
@@ -33,7 +42,9 @@ class editPageForm
 
 			$photos = new Database('photos', array(
 				'method'=>'selectByParent', 
-				'idx'=>$idx 
+				'idx'=>$idx, 
+				'lang'=>$lang, 
+				'type'=>$output['type'] 
 			));
 			$pictures = $photos->getter();
 
