@@ -150,7 +150,8 @@ class modules
 		$photos = new Database('photos', array(
 			'method'=>'deleteByParent', 
 			'idx'=>$idx, 
-			'type'=>$type 
+			'type'=>$type,
+			'lang'=>$lang 
 		));
 
 		if(count($args["serialPhotos"])){
