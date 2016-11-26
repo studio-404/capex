@@ -75,6 +75,22 @@
 					<div class="ContactTel"><?=$data['contactNumber']?></div>
 					<div class="Title1">ან მოგვწერეთ</div>
 					<div class="ContactMail"><?=$data['email']?></div>
+					<div class="row aditionalAdresses">
+						<div class="col s12 m6 l6 first">
+							<!-- <p>სხვა მისამართი <strong>233</strong></p>
+							<p>თბილისი საქართველო <strong>0112</strong></p>
+							<p><strong>Email: contact@capitalexpress.ge</strong></p>
+							<p>ტელ: <strong>+99532 2 438 905</strong></p> -->
+							<?=$data['address1']?>
+							<p>&nbsp;</p>
+							<p>&nbsp;</p>
+						</div>
+						<div class="col s12 m6 l6 second">
+							<?=$data['address2']?>
+							<p>&nbsp;</p>
+							<p>&nbsp;</p>
+						</div> 
+					</div>
 				</div>
 			</div>
 			<div class="container ContactMapDiv">

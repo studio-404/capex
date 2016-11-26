@@ -48,6 +48,8 @@ class modules
 		$out['map'] = "";
 		$out['agreement'] = "";
 		$out['facebook'] = "";
+		$out['address1'] = "";
+		$out['address2'] = "";
 		$select = "SELECT `description` FROM `usefull` WHERE `type`=:type AND `lang`=:lang AND `visibility`!=:one AND `status`!=:one ORDER BY `id` ASC";
 		$prepare = $this->conn->prepare($select);
 		$prepare->execute(array(
@@ -57,11 +59,13 @@ class modules
 		));
 		if($prepare->rowCount()){
 			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
-			$out['phone'] = $fetch[0]['description'];
-			$out['email'] = $fetch[1]['description'];
-			$out['map'] = $fetch[2]['description'];
-			$out['agreement'] = $fetch[3]['description'];
-			$out['facebook'] = $fetch[4]['description'];
+			$out['phone'] = @$fetch[0]['description'];
+			$out['email'] = @$fetch[1]['description'];
+			$out['map'] = @$fetch[2]['description'];
+			$out['agreement'] = @$fetch[3]['description'];
+			$out['facebook'] = @$fetch[4]['description'];
+			$out['address1'] = @$fetch[5]['description'];
+			$out['address2'] = @$fetch[6]['description'];
 		}
 		
 		return $out;

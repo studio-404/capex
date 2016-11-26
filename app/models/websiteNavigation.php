@@ -28,6 +28,7 @@ class websiteNavigation
 					<a href=\"javascript:void(0)\" onclick=\"changeVisibility('%s','%s')\">
 						<i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"ხილვადობის შეცვლა\">%s</i>
 					</a>
+
 					<a href=\"javascript:void(0)\" onclick=\"editPage('%s','%s')\">
 						<i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"რედაქტირება\">mode_edit</i>
 					</a>
