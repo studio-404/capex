@@ -102,8 +102,8 @@ function initMap() {
 			    if($data["getStatements"][0]["loan_status"]==2)
 			    {
 			    ?>
-					<div class="item loansitem">სულ სესხი <span><?=$data["getStatements"][0]["demended_loan"]?> ლარი</span></div>
-					<div class="item loansitem2">ყოველთვიური გადასახადი <span><?=($data["getStatements"][0]["demended_loan"] / $data["getStatements"][0]["demended_month"])?> ლარი</span></div>
+					<div class="item loansitem">სულ სესხი <span>N/A</span></div>
+					<div class="item loansitem2">ყოველთვიური გადასახადი <span>N/A</span></div>
 					<div class="item dateicon">ბოლო გადახდის თარიღი <span><?=date("d/m/Y")?></span></div>
 				<?php 
 				}else{
@@ -123,7 +123,7 @@ function initMap() {
 			<div class="ControlRoomContent">
 				<?php
 				// echo "<pre>";
-				// print_r($data['getStatements']);
+				// print_r($data['service']);
 				// echo "</pre>";
 				?>
 				<table class="bordered CapexTable">
@@ -140,19 +140,30 @@ function initMap() {
 			        	<?php
 			        	if($data["getStatements"][0]["loan_status"]==2)
 			        	{ // get loan GRAFIKI
+			        		foreach ($data['service']['Data'] as $value) {
+
+			        			$http = "https://webapi.smartfin.ge/mcl/index.php?userid=".$data['getStatements'][0]["personal_number"]."&userauth=".$data['getStatements'][0]["password"]."&page=loandetails&loanid=".$value['LoanID'];
+			        			$file_get_content = trim(file_get_contents($http), "\xEF\xBB\xBF");
+								$details = json_decode($file_get_content, true); 
+
+			        			?>
+
+								<tr>
+									<td><?=$details["Data"][0]['NextScheduleDateText']?></td>
+									<td><?=$details["Data"][0]['OSBalance']?> <span><?=$details["Data"][0]['CCY']?></span></td>
+									<td><?=$details["Data"][0]["InterestRateTA"]?></td>
+									<td><?=$details["Data"][0]["LoanAmount"]?> <span><?=$value['CCY']?></span></td>
+								</tr>
+
+			        			<?php
+			        		}
 				        	?>
-							<tr class="active">
+							<!-- <tr class="active">
 					            <td>01.04.2016</td>
 					            <td>1340 <span>ლარი</span><label>l</label></td>
 					            <td>380 <span>ლარი</span><label>l</label></td>
 					            <td>700.90 <span>ლარი</span><label>l</label></td>
-					        </tr>
-					        <tr>
-					            <td>01.04.2016</td>
-					            <td>1340 <span>ლარი</span><label>l</label></td>
-					            <td>380 <span>ლარი</span><label>l</label></td>
-					            <td>700.90 <span>ლარი</span><label>l</label></td>
-					        </tr>
+					        </tr> -->
 				        	<?php
 			        	}else{
 			        		?>

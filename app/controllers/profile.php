@@ -59,6 +59,11 @@ class Profile extends Controller
 		$header->email = strip_tags($contactData['email']);
 		$header->map = (isset($contactData['map'])) ? strip_tags($contactData['map']) : "";
 
+		/*GET Service*/
+		$http = "https://webapi.smartfin.ge/mcl/index.php?userid=".$getStatements[0]["personal_number"]."&userauth=".$getStatements[0]["password"]."&page=loans";
+		$file_get_content = trim(file_get_contents($http), "\xEF\xBB\xBF");
+		$service = json_decode($file_get_content, true); 
+
 		/* view */
 		$this->view('profile/index', [
 			"header"=>array(
@@ -74,7 +79,8 @@ class Profile extends Controller
 			"email"=>$header->email, 
 			"getStatements"=>$getStatements,
 			"updatePassword"=>$updatePassword->index(),
-			"map"=>$header->map
+			"map"=>$header->map, 
+			"service"=>$service 
 		]);
 	}
 }
