@@ -24,8 +24,20 @@ class recoverEmail
 				"Details"=>""
 			)
 		);
-
-		if($_SESSION['capex_secure'] == $secure){
+		if(empty($email) || $email==""){
+			$this->out = array(
+			"Error" => array(
+				"Code"=>1, 
+				"Text"=>"გთხოვთ შეავსოთ * (ფიფქით) აღნიშნული ველები !",
+				"Details"=>"!"
+			), 
+			"Success" => array(
+				"Code"=>0,
+				"Text"=>"",
+				"Details"=>""
+			)
+		);
+		}else if($_SESSION['capex_secure'] == $secure){
 
 			$args["sendTo"] = $email; 
 			$args["subject"] = "პაროლის აღდგენა";

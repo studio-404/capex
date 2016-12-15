@@ -80,21 +80,22 @@
             <div class="row">
               <div class="col l6 s12">
                 <h5>ადმინისტრირების პანელი</h5>
-                <p class="text-lighten-4">პანელი დამზადებულია სტუდია 404-ის მიერ</p>
+                <p class="text-lighten-4">v1.0.1</p>
               </div>
               <div class="col l4 offset-l2 s12">
                 <h5>ბმულები</h5>
-                <?=$data['footerNav']?>
+               	<?=$data['footerNav']?>
               </div>
             </div>
           </div>
           <div class="footer-copyright">
             <div class="container width-100-pr-20">
             <span class="black-text">© 2016 ყველა უფლება დაცულია !</span>
-            <a class="black-text right" href="http://ww.404.ge" target="_blank">სტუდია 404</a>
+            <!-- <a class="black-text right" href="http://ww.404.ge" target="_blank">სტუდია 404</a> -->
             </div>
           </div>
         </footer>
+
 
 	</section>
 </body>

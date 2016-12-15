@@ -20,7 +20,7 @@ class cities
 	private function select($args)
 	{
 		$fetch = array();
-		$select = "SELECT `id`, `names` FROM `cities` ORDER BY `names` ASC";
+		$select = "SELECT `id`, `names` FROM `cities` ORDER BY `id` ASC";
 		$prepare = $this->conn->prepare($select);
 		$prepare->execute();
 		if($prepare->rowCount()){

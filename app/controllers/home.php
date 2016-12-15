@@ -4,7 +4,7 @@ class Home extends Controller
 	
 	public function __construct()
 	{
-		unset($_SESSION['capex_user']);
+		
 	}
 
 	public function index($name = '')
@@ -47,6 +47,8 @@ class Home extends Controller
 		$header->email = (isset($contactData['email'])) ? strip_tags($contactData['email']) : "";
 		$header->map = (isset($contactData['map'])) ? strip_tags($contactData['map']) : "";
 		$header->facebook = (isset($contactData['facebook'])) ? strip_tags($contactData['facebook']) : "";
+		$header->workingHours = (isset($contactData['workingHours'])) ? strip_tags($contactData['workingHours'],"<strong>") : ""; 
+		
 		$address1 = (isset($contactData['address1'])) ? html_entity_decode($contactData['address1']) : "";
 		$address2 = (isset($contactData['address2'])) ? html_entity_decode($contactData['address2']) : "";
 

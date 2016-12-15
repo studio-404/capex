@@ -4,15 +4,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Capital Express
-</title>
+<title>Capital Express</title>
 <script src="<?=$data["header"]["public"]?>js/web/jquery-3.1.1.min.js"></script>
 <script src="<?=$data["header"]["public"]?>js/web/jquery-ui.js"></script>
 <script src="<?=$data["header"]["public"]?>js/web/jquery.ui.touch-punch.js"></script>
 <script src="<?=$data["header"]["public"]?>js/web/materialize.js"></script>
 <script src="<?=$data["header"]["public"]?>js/web/scripts.js"></script>
 
-<link href="http://www.twins.ho.ua/credit/css/jquery-ui.min.css" rel="stylesheet" />
+<link href="<?=$data["header"]["public"]?>css/web/jquery-ui.min.css" rel="stylesheet" />
 <link href="<?=$data["header"]["public"]?>css/web/materialize.css" rel="stylesheet" />
 <link href="<?=$data["header"]["public"]?>css/web/bootstrap.css" rel="stylesheet" />
 <link href="<?=$data["header"]["public"]?>css/web/animate.css" rel="stylesheet" />
@@ -30,8 +29,6 @@
 <?=$data['aboutModel']?>
 <?=$data['headerModel']?>
 
-
-
 <div id="fullpage">
     <div class="section fp-auto-height" id="section0">
         <?=$data['homepageModel']?>
@@ -48,14 +45,14 @@
 								<div id="line1">
 									<div class="lineInner1"></div>
 								</div>
-								<div class="ScrollingTitle">რამდენის სესხება გსურთ?</div>
+								<div class="ScrollingTitle">რა ვადით გსურთ სესხის აღება?</div>
 								<div id="line2">
 									<div class="lineInner2"></div>
 								</div>
 								<div class="result">
 									<span class="money"><label>300</label>l</span>
 									<span class="month"><label>3</label> თვით</span>
-									<span class="procent">თვეში <div><label>9</label><strong>l</strong></div></span>
+									<span class="procent">თვეში <div><label>45</label><strong>l</strong></div></span>
 								</div>
 							</div>
 						</div>
@@ -77,10 +74,6 @@
 					<div class="ContactMail"><?=$data['email']?></div>
 					<div class="row aditionalAdresses">
 						<div class="col s12 m6 l6 first">
-							<!-- <p>სხვა მისამართი <strong>233</strong></p>
-							<p>თბილისი საქართველო <strong>0112</strong></p>
-							<p><strong>Email: contact@capitalexpress.ge</strong></p>
-							<p>ტელ: <strong>+99532 2 438 905</strong></p> -->
 							<?=$data['address1']?>
 							<p>&nbsp;</p>
 							<p>&nbsp;</p>
@@ -120,10 +113,6 @@ function initMap() {
 }
 </script>
 
-
-
-
-
 <script type="text/javascript">
 if (document.documentElement.clientWidth > 900) {
     $(document).ready(function() {
@@ -138,13 +127,7 @@ if (document.documentElement.clientWidth > 900) {
 		
     });
 }	
-	
 </script>
-
-
-
-
-
 
 </body>
 </html>    

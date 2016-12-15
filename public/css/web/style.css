@@ -147,7 +147,7 @@ section {background-size:100% 100% !important;}
 }
 .AuthorizationButton,
 a.AuthorizationButton {
-	border:solid #2853a9 1px;
+	border:solid #133056 1px;
 	font-family:NotoBold;
 	display: inline-block;
 	color:#133056;
@@ -403,7 +403,8 @@ label.TitleLabel{
 	padding-top:140px;
 }
 #ControlRoom .RoomSidebar {
-	background:#ffca30;
+	/*background:#ffca30;*/
+	background:#133056;
 	border-radius:5px;
 	padding:10px 17px 30px 17px;
 	color:#fff;
@@ -428,21 +429,14 @@ label.TitleLabel{
 }
 
 #ControlRoom .RoomSidebar .item:after {
-
 	content:'';
-
 	position: absolute;
-
 	bottom:0;
-
 	left:0;
-
 	background:url('../../img/line.png') no-repeat bottom;
-
+	background-size: 100% 1px;
 	width:100%;
-
 	height:20px;
-
 }
 
 #ControlRoom .RoomSidebar .item span {
@@ -471,10 +465,10 @@ label.TitleLabel{
 }
 
 #ControlRoom .RoomSidebar .item.loansitem {
-
-	background:url('../../img/loansitem.png') no-repeat left;
-
-	background-position: 7px;
+	background:url('../../img/gela.png') no-repeat left;
+	background-size: 33px;
+	background-position: 0;
+	background-repeat: no-repeat;
 
 }
 
@@ -533,7 +527,7 @@ label.TitleLabel{
 
 .CapexTable tr td {
 
-	border-bottom:solid #acacac 2px;
+	border-bottom:solid #acacac 1px;
 
 	padding-bottom:7px;
 
@@ -588,11 +582,8 @@ label.TitleLabel{
 
 
 .CapexTable tr th {
-
-	border-bottom:solid #acacac 2px;
-
+	border-bottom:solid #acacac 1px;
 	padding-bottom:15px;
-
 }
 
 
@@ -614,7 +605,7 @@ label.TitleLabel{
 	font-family: "NotoRegular";
 	text-align: left;
 }
-.aditionalAdresses .first strong{
+.aditionalAdresses .second strong{
 	font-family: "Roboto";
 }
 
@@ -1488,8 +1479,41 @@ a.animated-button.victoria-two:after {
 	font-family: "nasalization" !important;
 }
 
-
- .fp-slide,
-.fp-tableCell{
+.fp-slide, .fp-tableCell{
     height: auto !important;
+}
+.ui-datepicker-calendar thead{
+	border-bottom: none !important;
+}
+.ui-datepicker-year{
+	color: black;
+}
+.ui-datepicker-month, .ui-datepicker th, .ui-datepicker-year, .ui-datepicker-year option{
+	font-family: NotoRegular;
+}
+.ui-datepicker-div .ui-widget-header{
+	border: none !important;
+	background-color: #feca30;
+	color: white;
+}
+.ui-datepicker-calendar .ui-state-hover{
+	border: none !important;
+	right: 2px !important;
+	background-color: #feca30 !important;
+}
+.ui-state-highlight, .ui-datepicker-current-day .ui-state-active{
+	background: #feca30 !important;
+	color: white !important;
+	border: none !important;
+}
+.ui-state-hover{
+	color: white !important;
+}
+.modal-message-box{
+	font-size: 18px;
+	color: red;
+}
+.modal-message-box-auth{
+	font-size: 18px;
+	color: red;
 }

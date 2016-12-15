@@ -176,9 +176,13 @@ class statements
 	{
 		$fetch = array();
 		$itemPerPage = $args['itemPerPage'];
-		$from = (isset($_GET['pn']) && $_GET['pn']>0) ? (($_GET['pn']-1)*$itemPerPage) : 0;
+		$from = (isset($args['pn']) && $args['pn']>0) ? (($args['pn']-1)*$itemPerPage) : 0;
 		
-		$select = "SELECT (SELECT COUNT(`id`) FROM `statements` WHERE `status`!=:one) as counted, `id`, `date` as insert_date,`personal_number`, `name`, `surname`, `dob` as date_of_birth, `faddress` as address, (SELECT `cities`.`names` FROM `cities` WHERE `cities`.`id`=`statements`.`city`) as city, `mobile`, `email`, `jobTitle` as job, `position` as job_position, `jobphone` as job_phone, `monthly_income` as salary, `contactPerson` as contact_person, `contactPersonNumber` as contact_person_number, `demended_loan`, `demended_month` FROM `statements` WHERE `status`!=:one ORDER BY `date` DESC LIMIT ".$from.",".$itemPerPage;
+		if(!isset($args['personal_number']) || empty($args['personal_number'])){
+			$select = "SELECT (SELECT COUNT(`id`) FROM `statements` WHERE `status`!=:one) as counted, `id`, `date` as insert_date,`personal_number`, `name`, `surname`, `dob` as date_of_birth, `faddress` as address, (SELECT `cities`.`names` FROM `cities` WHERE `cities`.`id`=`statements`.`city`) as city, `mobile`, `email`, `jobTitle` as job, `position` as job_position, `jobphone` as job_phone, `monthly_income` as salary, `contactPerson` as contact_person, `contactPersonNumber` as contact_person_number, `demended_loan`, `demended_month` FROM `statements` WHERE `status`!=:one ORDER BY `date` DESC LIMIT ".$from.",".$itemPerPage;
+		}else{
+			$select = "SELECT (SELECT COUNT(`id`) FROM `statements` WHERE `status`!=:one) as counted, `id`, `date` as insert_date,`personal_number`, `name`, `surname`, `dob` as date_of_birth, `faddress` as address, (SELECT `cities`.`names` FROM `cities` WHERE `cities`.`id`=`statements`.`city`) as city, `mobile`, `email`, `jobTitle` as job, `position` as job_position, `jobphone` as job_phone, `monthly_income` as salary, `contactPerson` as contact_person, `contactPersonNumber` as contact_person_number, `demended_loan`, `demended_month` FROM `statements` WHERE `status`!=:one AND `personal_number`=".$args['personal_number'];
+		}
 		$prepare = $this->conn->prepare($select); 
 		$prepare->execute(array(
 			":one"=>1

@@ -7,6 +7,7 @@ class header
 	public $map;
 	public $agreement;
 	public $facebook;
+	public $workingHours;
 
 	public function __construct()
 	{
@@ -30,18 +31,32 @@ class header
 		$out .= "<div class=\"nav_bar\">";
 		$out .= "<div class=\"CloseMenu\"></div>";
 		$out .= "</div>";
+		if(isset($_SESSION["URL"][0]) && $_SESSION["URL"][0]=="profile"){
+			$out .= "<li><a class=\"MenuCloseClick2\" href=\"/\">მთავარი</a></li>";
+		}else{
+			$out .= "<li><a class=\"MenuCloseClick2\" href=\"#Home\">მთავარი</a></li>";	
+		}
 		
-		$out .= "<li><a class=\"MenuCloseClick2\" href=\"#Home\">მთავარი</a></li>";
 		$out .= "<li><a class=\"MenuCloseClick2 OpenModalClick\" href=\"#QuestionModal\">კითხვა პასუხი</a></li>";
 		$out .= "<li><a class=\"MenuCloseClick2 OpenModalClick\" href=\"#AboutUsPopup\">ჩვენს შესახებ</a></li>";
-		$out .= "<li id=\"contactLink\"><a class=\"MenuCloseClick ScrollAnimate\" href=\"#Contact\">კონტაქტი</a></li>";
 
-		$out .= "<li><a class=\"MenuCloseClick2 workingHour tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"სამუშაო საათები\" href=\"javascript:void(0)\">ორშ-პარ <strong>10:00 - 18:00</strong></a></li>";
+		if(isset($_SESSION["URL"][0]) && $_SESSION["URL"][0]=="profile"){
+			$out .= "<li><a class=\"MenuCloseClick ScrollAnimate\" href=\"/#Contact\">კონტაქტი</a></li>";
+		}else{
+			$out .= "<li><a class=\"MenuCloseClick ScrollAnimate\" href=\"#Contact\">კონტაქტი</a></li>";	
+		}
+		
+
+		$out .= "<li><a class=\"MenuCloseClick2 workingHour tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"სამუშაო საათები\" href=\"javascript:void(0)\">".$this->workingHours."</a></li>";
 
 		if(!isset($_SESSION['capex_user'])){
 			$out .= "<a class=\"AuthorizationButton OpenModalClick waves-effect waves-orange\" href=\"#AuthorizationPopup\">ავტორიზაცია</a>";
 		}else{
-			$out .= "<a class=\"AuthorizationButton waves-effect waves-orange\" href=\"/\">გასვლა</a>";
+			if(isset($_SESSION["URL"][0]) && $_SESSION["URL"][0]=="profile"){
+				$out .= "<a class=\"AuthorizationButton waves-effect waves-orange\" href=\"javascript:void(0)\" onclick=\"unsetSession()\">გასვლა</a>";
+			}else{
+				$out .= "<a class=\"AuthorizationButton OpenModalClick waves-effect waves-orange\" href=\"/profile/index\">პროფილი</a>";
+			}
 		}
 		
 		$out .= "</div>";

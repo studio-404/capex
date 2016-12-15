@@ -47,9 +47,11 @@ class modules
 		$out['email'] = "";
 		$out['map'] = "";
 		$out['agreement'] = "";
+		$out['agreement2'] = "";
 		$out['facebook'] = "";
 		$out['address1'] = "";
 		$out['address2'] = "";
+		$out['workingHours'] = "";
 		$select = "SELECT `description` FROM `usefull` WHERE `type`=:type AND `lang`=:lang AND `visibility`!=:one AND `status`!=:one ORDER BY `id` ASC";
 		$prepare = $this->conn->prepare($select);
 		$prepare->execute(array(
@@ -66,6 +68,8 @@ class modules
 			$out['facebook'] = @$fetch[4]['description'];
 			$out['address1'] = @$fetch[5]['description'];
 			$out['address2'] = @$fetch[6]['description'];
+			$out['workingHours'] = @$fetch[7]['description'];
+			$out['agreement2'] = @$fetch[8]['description'];
 		}
 		
 		return $out;

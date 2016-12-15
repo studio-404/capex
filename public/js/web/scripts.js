@@ -20,6 +20,27 @@ $( function() {
     $(".drop1").text( $( "#line1" ).slider1( "value" ) );
 });
 
+var calc = function(month, money){
+    var perc = 1;
+    if(month<=5 && money<=1000){
+      perc = 15;
+    }else if(month<=5 && money>1000){
+      perc = 12.5;
+    }else if(month<=8){
+      perc = 12.5;
+    }else if(month<=11){
+      perc = 11;
+    }else if(month<=17){
+      perc = 10;
+    }else if(month<=23){
+      perc = 9;
+    }else if(month==24){
+      perc = 8;
+    }
+
+    var out = (money * perc) / 100;
+    return out;
+};
 
 $( function() {
     $( "#line2" ).slider1({
@@ -44,11 +65,13 @@ $( function() {
   } );
 
   function summa1(a){
-    $(".procent label").text(a * $( "#line2" ).slider1( "value" ) / 100);
+    // $(".procent label").text(a * $( "#line2" ).slider1( "value" ) / 100);
+    $(".procent label").text(calc($( "#line2" ).slider1( "value" ), a));
   };
 
   function summa2(a){
-    $(".procent label").text($( "#line1" ).slider1( "value" ) * a / 100);
+    // $(".procent label").text($( "#line1" ).slider1( "value" ) * a / 100);
+    $(".procent label").text(calc(a, $( "#line1" ).slider1( "value" )));
   };
 
   function Credit(elem, drop, col, step, starts) {
@@ -266,10 +289,11 @@ var makeStatement = function(){
       if(obj.Error.Code==1){
         $(".modal-message-box").html(obj.Error.Text);
       }else if(obj.Success.Code==1){
-        $(".modal-message-box").html(obj.Success.Text);
-        $("#loanForm input[type='text']").each(function(){
-          $(this).val('');
-        });
+        $("#ApplicationModal").css("width","50%");
+        $(".AutorizationForm").html('<div class="modal-message-box" style="font-size:16px">'+obj.Success.Text+'</div>'); 
+        setTimeout(function(){
+          location.href = Config.website;
+        }, 3000);
       }else{
         $(".modal-message-box").html("E");
       }
@@ -281,7 +305,7 @@ var signintry = function(user, pass){
   var ajaxFile = "/callapi";
   $(".modal-message-box-auth").html("გთხოვთ დაელოდოთ...");
   if(typeof user == "undefined" || typeof pass == "undefined" || user=="" || pass==""){
-    $(".modal-message-box-auth").html("მომხმარებლის სახელი ან პაროლი არასწორია !");
+    $(".modal-message-box-auth").html("გთხოვთ შეავსოთ * (ფიფქით) აღნიშნული ველები !");
   }else{
     $.ajax({
       method: "POST",
@@ -328,6 +352,7 @@ var updateProfile = function(){
         $(".modal-message-box").html(obj.Error.Text);
       }else if(obj.Success.Code==1){
         $(".modal-message-box").html(obj.Success.Text);
+        location.reload();
       }else{
         $(".modal-message-box").html("E");
       }
@@ -371,10 +396,15 @@ var reButton = function(){
     }).done(function( msg ) {
       var obj = $.parseJSON(msg);
       if(obj.Error.Code==1){
+        $(".modal-message-box-recover").css({"font-size":"18px", "color":"red"}); 
         $(".modal-message-box-recover").html(obj.Error.Text);
       }else if(obj.Success.Code==1){
-        $(".modal-message-box-recover").html(obj.Success.Text);
-        $("#recover-email").val('');
+        // $(".modal-message-box-recover").html(obj.Success.Text);
+        $("#recover").css("width","50%");
+        $(".modal-content").html('<div class="modal-message-box-recover" style="font-size:16px">'+obj.Success.Text+'</div>'); 
+        setTimeout(function(){
+          location.href = Config.website;
+        },3000);        
       }else{
         $(".modal-message-box-recover").html("E");
       }
@@ -401,5 +431,21 @@ var reGetMoney = function(){
         $(".modal-message-box-recover").html("E");
       }
       scrollTop();
+  });
+};
+
+var unsetSession = function(){
+  var ajaxFile = "/unsetSession";
+  $.ajax({
+      method: "POST",
+      url: Config.ajax + ajaxFile,
+      data: { unset:true }
+    }).done(function( msg ) {
+      var obj = $.parseJSON(msg);
+      if(obj.Error.Code==1){
+       
+      }else if(obj.Success.Code==1){
+        location.reload();
+      }
   });
 };

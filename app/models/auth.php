@@ -19,12 +19,12 @@ class auth
 		$out .= "<div class=\"input-field col-sm-12\">";
 		$out .= "<div class=\"form-group\">";
 		$out .= "<input id=\"PersonalNumber\" name=\"PersonalNumber\" type=\"text\" class=\"\">";
-		$out .= "<label for=\"PersonalNumber\">პირადი ნომერი</label>";
+		$out .= "<label for=\"PersonalNumber\">პირადი ნომერი <font color=\"red\">*</font></label>";
 		$out .= "</div></div>";
 		$out .= "<div class=\"input-field col-sm-12\">";
 		$out .= "<div class=\"form-group\">";
 		$out .= "<input id=\"PersonalPass\" name=\"PersonalPass\" type=\"password\" class=\"\">";
-		$out .= "<label for=\"PersonalPass\">პაროლი</label>";
+		$out .= "<label for=\"PersonalPass\">პაროლი <font color=\"red\">*</font></label>";
 		$out .= "</div></div>";
 
 		$out .= "<div class=\"input-field col-sm-12\">";

@@ -59,6 +59,7 @@ class searchStatement
 					'IP მისამართი: ',
 					$val['ip']
 				);
+
 				$table .= sprintf("
 					<tr>
 					<td><strong>%s</strong></td>
@@ -67,6 +68,39 @@ class searchStatement
 					'პირადი ნომერი: ',
 					$val['personal_number']
 				);
+
+				$editable_ = sprintf(
+					"<div class=\"editable_password\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"password",
+					$val['password'],  
+					$pid,
+					$val['password']
+				);
+				$table .= sprintf("
+					<tr>
+					<td><strong>%s</strong></td>
+					<td>%s</td>
+					</tr>",
+					'პაროლი:',
+					$editable_
+				);
+
+				$editable_ = sprintf(
+					"<div class=\"editable_loanid\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
+					"loanid",
+					$val['loanid'],  
+					$pid,
+					$val['loanid']
+				);
+				$table .= sprintf("
+					<tr>
+					<td><strong>%s</strong></td>
+					<td>%s</td>
+					</tr>",
+					'სესხის ს.კ.: ',
+					$editable_
+				);
+
 
 				$editable_ = sprintf(
 					"<div class=\"editable_name\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
@@ -321,21 +355,7 @@ class searchStatement
 					$editable_
 				);
 
-				$editable_ = sprintf(
-					"<div class=\"editable_password\" onclick=\"updateCol('%s','%s','%s')\">%s</div>",
-					"password",
-					$val['password'],  
-					$pid,
-					$val['password']
-				);
-				$table .= sprintf("
-					<tr>
-					<td><strong>%s</strong></td>
-					<td>%s</td>
-					</tr>",
-					'პაროლი:',
-					$editable_
-				);
+				
 
 				$status = ($val["loan_status"]==2) ? "checked='checked'" : "";
 				

@@ -3,6 +3,7 @@ class loan
 {
 	public $cities;
 	public $agreement;
+	public $agreement2;
 	public function __construct()
 	{
 		$contactData = new Database('modules', array(
@@ -11,6 +12,7 @@ class loan
 		));
 		$contactData = $contactData->getter();
 		$this->agreement = strip_tags($contactData['agreement'],'<a>');
+		$this->agreement2 = strip_tags($contactData['agreement2'],'<a>');
 
 		try{
 			$dom = new DOMDocument();
@@ -22,6 +24,16 @@ class loan
 				$node->setAttribute("target","_blank");
 			}
 			$this->agreement = $dom->saveHtml();
+
+			$dom2 = new DOMDocument();
+			@$dom2->loadHTML(mb_convert_encoding($this->agreement2, 'HTML-ENTITIES', 'UTF-8'));
+			$x2 = new DOMXPath($dom2);
+
+			foreach($x2->query("//a") as $node)
+			{   
+				$node->setAttribute("target","_blank");
+			}
+			$this->agreement2 = $dom2->saveHtml();
 		}catch(Exception $e){}
 	}
 
@@ -67,9 +79,13 @@ class loan
 
 		$out .= "<div class=\"input-field col-sm-4\">";
 		$out .= "<div class=\"form-group\">";
-		$out .= "<input id=\"loan-dob\" name=\"loan-dob\" type=\"text\" value=\"".date("d/m/Y")."\">";
+		$out .= "<input id=\"loan-dob\" name=\"loan-dob\" style=\"color:#555555\" class=\"loan-dob\" type=\"text\" value=\"".date("d/m/Y", time())."\">";
 		$out .= "<label for=\"loan-dob\">დაბადების თარიღი ( დღე/თვე/წელი ) <font color=\"red\">*</font></label>";
 		$out .= "</div></div>";
+
+		$out .= "<script type=\"text/javascript\">";
+		$out .= " $(\".loan-dob\").datepicker({ dateFormat: \"dd/mm/yy\"}).attr('readonly','readonly');";
+		$out .= "</script>";
 
 		$out .= "<div class=\"input-field col-sm-4\">";
 		$out .= "<div class=\"form-group\">";
@@ -95,7 +111,7 @@ class loan
 
 		$out .= "<div class=\"input-field col-sm-4\">";
 		$out .= "<div class=\"form-group\">";
-		$out .= "<input id=\"loan-mobile\" name=\"loan-mobile\" type=\"text\" class=\"\">";
+		$out .= "<input id=\"loan-mobile\" name=\"loan-mobile\" type=\"text\" class=\"\" placeholder=\"5********\">";
 		$out .= "<label for=\"loan-mobile\">მობილურის ნომერი <font color=\"red\">*</font></label>";
 		$out .= "</div></div>";
 
@@ -120,7 +136,7 @@ class loan
 		$out .= "<div class=\"input-field col-sm-4\">";
 		$out .= "<div class=\"form-group\">";
 		$out .= "<input id=\"loan-position\" name=\"loan-position\" type=\"text\" class=\"\">";
-		$out .= "<label for=\"loan-position\">საქმიანობა პოზიცია</label>";
+		$out .= "<label for=\"loan-position\">საქმიანობა / პოზიცია</label>";
 		$out .= "</div></div>";
 
 		$out .= "<div class=\"input-field col-sm-4\">";
@@ -137,7 +153,7 @@ class loan
 
 		$out .= "<div class=\"input-field col-sm-4\">";
 		$out .= "<div class=\"form-group\">";
-		$out .= "<input id=\"loan-contactPersonNumber\" name=\"loan-contactPersonNumber\" type=\"text\" class=\"\">";
+		$out .= "<input id=\"loan-contactPersonNumber\" name=\"loan-contactPersonNumber\" placeholder=\"5********\" type=\"text\" class=\"\">";
 		$out .= "<label for=\"loan-contactPersonNumber\">საკონტაქტო პირის ტელეფონი <font color=\"red\">*</font></label>";
 		$out .= "</div></div>";
 
@@ -154,13 +170,13 @@ class loan
 
 		$out .= "<div class=\"input-field col-sm-4\">";
 		$out .= "<div class=\"form-group\">";
-		$out .= "<input id=\"loan-password\" name=\"loan-password\" type=\"text\" class=\"\">";
+		$out .= "<input id=\"loan-password\" name=\"loan-password\" type=\"password\" class=\"\">";
 		$out .= "<label for=\"loan-password\">პაროლი <font color=\"red\">*</font></label>";
 		$out .= "</div></div>";
 
 		$out .= "<div class=\"input-field col-sm-4\">";
 		$out .= "<div class=\"form-group\">";
-		$out .= "<input id=\"loan-repassword\" name=\"loan-repassword\" type=\"text\" class=\"\">";
+		$out .= "<input id=\"loan-repassword\" name=\"loan-repassword\" type=\"password\" onpaste=\"return false;\">";
 		$out .= "<label for=\"loan-repassword\">გაიმეორე პაროლი <font color=\"red\">*</font></label>";
 		$out .= "</div></div>";
 
@@ -168,10 +184,10 @@ class loan
 		$out .= "<div class=\"form-group\">";
 		$out .= "<div class=\"ApplicationFooterText\">";
 		$out .= "<input type=\"checkbox\" class=\"filled-in\" id=\"checkbox1\" name=\"checkbox1\" />";
-      	$out .= "<label for=\"checkbox1\" style=\"display:inline-block\">გავეცანი და ვეთანხმები ".$this->agreement." და პერსონალური მონაცემთა დამუშავების პირობებს</label> ";
+      	$out .= "<label for=\"checkbox1\" style=\"display:inline-block\">გავეცანი და ვეთანხმები ".$this->agreement." პირობებს</label> ";
 		
-		// $out .= "<input type=\"checkbox\" class=\"filled-in\" id=\"checkbox2\" name=\"checkbox2\" />";
-      	// $out .= "<label for=\"checkbox2\" style=\"display:inline-block\">საკრედიტო ისტორიის გადამოწმება სს კრედიტინფო საქართველოს მონაცემთა ბაზაში</label>";
+		$out .= "<input type=\"checkbox\" class=\"filled-in\" id=\"checkbox2\" name=\"checkbox2\" />";
+      	$out .= "<label for=\"checkbox2\" style=\"display:inline-block\"> გავეცანი და ვეთანხმები  ".$this->agreement2."</label>";
 		$out .= "</div></div></div>";
 
 		$out .= "<div class=\"input-field col-sm-3\">";

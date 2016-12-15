@@ -46,9 +46,14 @@ class loane
 
 		$out .= "<div class=\"input-field col-sm-4\">";
 		$out .= "<div class=\"form-group\">";
-		$out .= "<input id=\"loan-dob\" name=\"loan-dob\" type=\"text\" value=\"".htmlentities($this->data[0]["dob"])."\">";
+		$out .= "<input id=\"loan-dob\" name=\"loan-dob\" style=\"color:#555555\" class=\"loan-dob\" type=\"text\" value=\"".htmlentities($this->data[0]["dob"])."\">";
 		$out .= "<label for=\"loan-dob\">დაბადების თარიღი ( დღე/თვე/წელი ) <font color=\"red\">*</font></label>";
 		$out .= "</div></div>";
+
+		$out .= "<script type=\"text/javascript\">";
+		$out .= " $(\".loan-dob\").datepicker({ dateFormat: \"dd/mm/yy\"}).attr('readonly','readonly');";
+		$out .= "</script>";
+
 
 		$out .= "<div class=\"input-field col-sm-4\">";
 		$out .= "<div class=\"form-group\">";

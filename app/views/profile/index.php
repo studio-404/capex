@@ -11,7 +11,7 @@
 <script src="<?=$data["header"]["public"]?>js/web/materialize.js"></script>
 <script src="<?=$data["header"]["public"]?>js/web/scripts.js"></script>
 
-<link href="http://www.twins.ho.ua/credit/css/jquery-ui.min.css" rel="stylesheet" />
+<link href="<?=$data["header"]["public"]?>css/web/jquery-ui.min.css" rel="stylesheet" />
 <link href="<?=$data["header"]["public"]?>css/web/materialize.css" rel="stylesheet" />
 <link href="<?=$data["header"]["public"]?>css/web/bootstrap.css" rel="stylesheet" />
 <link href="<?=$data["header"]["public"]?>css/web/style.css" rel="stylesheet" />
@@ -102,9 +102,45 @@ function initMap() {
 			    if($data["getStatements"][0]["loan_status"]==2)
 			    {
 			    ?>
-					<div class="item loansitem">სულ სესხი <span>N/A</span></div>
-					<div class="item loansitem2">ყოველთვიური გადასახადი <span>N/A</span></div>
-					<div class="item dateicon">ბოლო გადახდის თარიღი <span><?=date("d/m/Y")?></span></div>
+					<div class="item loansitem">
+						სესხის მიმდინარე ბალანსი
+						<span>
+							<?php 
+								if(
+									isset($data['service2']['Data'][0]['OSBalance']) && 
+									$data['service2']['Data'][0]['CCY']
+								){
+									echo $data['service2']['Data'][0]['OSBalance']." ".$data['service2']['Data'][0]['CCY'];	
+								}else{
+									echo "N/A"; 
+								}
+								
+							?>
+						</span>
+					</div>
+					<div class="item loansitem2">
+						მიმდინარე გადასახადი
+						<span>
+							<?php 
+							if(
+								isset($data['service2']['Data'][0]['Principal']) &&
+								isset($data['service2']['Data'][0]['InterestToday']) &&
+								isset($data['service2']['Data'][0]['Penalty']) &&
+								isset($data['service2']['Data'][0]['CCY'])
+							){
+								echo $data['service2']['Data'][0]['Principal']+$data['service2']['Data'][0]['InterestToday']+$data['service2']['Data'][0]['Penalty']." ".$data['service2']['Data'][0]['CCY'];	
+							}else{
+								echo "N/A";
+							}							
+							?></span></div>
+					<div class="item dateicon">ბოლო გადახდის თარიღი <span>
+					<?php 
+						if(isset($data['service2']['Data'][0]['CoverDateText'])){
+							echo $data['service2']['Data'][0]['CoverDateText'];	
+						}else{
+							echo "N/A";
+						}						
+					?></span></div>
 				<?php 
 				}else{
 					?>	
@@ -123,7 +159,7 @@ function initMap() {
 			<div class="ControlRoomContent">
 				<?php
 				// echo "<pre>";
-				// print_r($data['service']);
+				// print_r($data['service2']);
 				// echo "</pre>";
 				?>
 				<table class="bordered CapexTable">
@@ -138,33 +174,20 @@ function initMap() {
 
 			        <tbody>
 			        	<?php
-			        	if($data["getStatements"][0]["loan_status"]==2)
+			        	if($data["getStatements"][0]["loan_status"]==2 && count($data['service']['Data']))
 			        	{ // get loan GRAFIKI
 			        		foreach ($data['service']['Data'] as $value) {
-
-			        			$http = "https://webapi.smartfin.ge/mcl/index.php?userid=".$data['getStatements'][0]["personal_number"]."&userauth=".$data['getStatements'][0]["password"]."&page=loandetails&loanid=".$value['LoanID'];
-			        			$file_get_content = trim(file_get_contents($http), "\xEF\xBB\xBF");
-								$details = json_decode($file_get_content, true); 
-
 			        			?>
-
+	
 								<tr>
-									<td><?=$details["Data"][0]['NextScheduleDateText']?></td>
-									<td><?=$details["Data"][0]['OSBalance']?> <span><?=$details["Data"][0]['CCY']?></span></td>
-									<td><?=$details["Data"][0]["InterestRateTA"]?></td>
-									<td><?=$details["Data"][0]["LoanAmount"]?> <span><?=$value['CCY']?></span></td>
+									<td><?=$value['OperDateText']?></td>
+									<td><?=$value['OSBalance']?></td>
+									<td><?=$value['Interest']?></td>
+									<td><?=$value['TotalAmount']?></td>
 								</tr>
 
 			        			<?php
 			        		}
-				        	?>
-							<!-- <tr class="active">
-					            <td>01.04.2016</td>
-					            <td>1340 <span>ლარი</span><label>l</label></td>
-					            <td>380 <span>ლარი</span><label>l</label></td>
-					            <td>700.90 <span>ლარი</span><label>l</label></td>
-					        </tr> -->
-				        	<?php
 			        	}else{
 			        		?>
 			        		<tr>

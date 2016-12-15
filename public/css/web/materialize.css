@@ -5672,7 +5672,7 @@ input[type=search]:disabled + label,
 input[type=search][readonly="readonly"] + label,
 textarea.materialize-textarea:disabled + label,
 textarea.materialize-textarea[readonly="readonly"] + label {
-  color:#feca30;
+  color: #133056;
 }
 
 input:not([type]):focus:not([readonly]),
@@ -5705,7 +5705,7 @@ input[type=tel]:focus:not([readonly]) + label,
 input[type=number]:focus:not([readonly]) + label,
 input[type=search]:focus:not([readonly]) + label,
 textarea.materialize-textarea:focus:not([readonly]) + label {
-  color: #feca30;
+  color: #133056;
 }
 
 input:not([type]).valid, input:not([type]):focus.valid,
@@ -5881,7 +5881,7 @@ textarea.materialize-textarea + label:after {
 }
 
 .input-field label {
-  color: #9e9e9e;
+  color: #133056;
   position: absolute;
   top: 0.8rem;
   font-size: 1rem;

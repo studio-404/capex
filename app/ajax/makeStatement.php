@@ -69,6 +69,34 @@ class makeStatement
 					"Details"=>""
 				)
 			);
+		}else if(strlen($params['loan-pid'])!=11)
+		{
+			$this->out = array(
+				"Error" => array(
+					"Code"=>1, 
+					"Text"=>"პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან !",
+					"Details"=>"!"
+				), 
+				"Success" => array(
+					"Code"=>0,
+					"Text"=>"",
+					"Details"=>""
+				)
+			);
+		}else if(!filter_var($params['loan-email'], FILTER_VALIDATE_EMAIL))
+		{
+			$this->out = array(
+				"Error" => array(
+					"Code"=>1, 
+					"Text"=>"ელ-ფოსტის ფორმატი არასწორია !",
+					"Details"=>"!"
+				), 
+				"Success" => array(
+					"Code"=>0,
+					"Text"=>"",
+					"Details"=>""
+				)
+			);
 		}else if($checkUserExists->index($params['loan-pid'], $params['loan-email'])){
 			$this->out = array(
 				"Error" => array(
@@ -87,7 +115,21 @@ class makeStatement
 			$this->out = array(
 				"Error" => array(
 					"Code"=>1, 
-					"Text"=>"გთხოვთ დაეთანხმოთ წესებს და ისტორიის გადამოწმებას სს კრედიტინფო საქართველოს მონაცემთა ბაზაში !",
+					"Text"=>"გთხოვთ დაეთანხმოთ ხელშეკრულების პირობებს !",
+					"Details"=>"!"
+				), 
+				"Success" => array(
+					"Code"=>0,
+					"Text"=>"",
+					"Details"=>""
+				)
+			);
+		}else if( !isset($params['checkbox2']) || $params['checkbox2'] != "on")
+		{
+			$this->out = array(
+				"Error" => array(
+					"Code"=>1, 
+					"Text"=>"გთხოვთ დაეთანხმოთ პერსონალური მონაცემთა დამუშავების პირობებს !",
 					"Details"=>"!"
 				), 
 				"Success" => array(
@@ -146,7 +188,7 @@ class makeStatement
 						),
 						"Success"=>array(
 							"Code"=>1, 
-							"Text"=>"ოპერაცია შესრულდა წარმატებით, პასუხს მიიღებთ SMS შეტყობინებით 15 წუთის განმავლობაში !",
+							"Text"=>"ოპერაცია შესრულდა წარმატებით !",
 							"Details"=>""
 						)
 					);

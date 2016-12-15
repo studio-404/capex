@@ -26,7 +26,7 @@ class recover
 		$out .= "<div class=\"form-group\">";
 		$out .= "<input id=\"secure\" name=\"secure\" type=\"hidden\" value=\"".$secure."\" />";
 		$out .= "<input id=\"recover-email\" name=\"recover-email\" type=\"text\" class=\"\">";
-		$out .= "<label for=\"recover-email\">ელ-ფოსტა</label>";
+		$out .= "<label for=\"recover-email\">ელ-ფოსტა <font color=\"red\">*</font></label>";
 		$out .= "</div></div>";
 
 
